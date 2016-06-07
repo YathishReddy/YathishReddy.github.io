@@ -1,2 +1,3 @@
 name: Yathish Reddy
 markdown: kramdown
+permalink: /blog/:year/:month/:day/:title
