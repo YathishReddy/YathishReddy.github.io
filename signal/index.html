@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Signal Weekly</title>
+<meta name="description" content="Signal Weekly by Yathish Reddy: the week's AI research across LLMs, vision, agents, on-device inference, small models and infrastructure, explained in plain language.">
+<meta property="og:title" content="Signal Weekly">
+<meta property="og:description" content="The week's AI research, explained in plain language. Every Saturday.">
+<meta property="og:url" content="https://yathishreddy.github.io/signal/">
+<link rel="alternate" type="application/rss+xml" title="Signal Weekly" href="../feed.xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#F5F7F8; --surface:#FFFFFF; --ink:#14202A; --muted:#56636F; --line:#D9E0E5; --accent:#1F5FAD; --accent-soft:#E3ECF7;
+  --serif:"Literata",Georgia,"Times New Roman",serif;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){color-scheme:dark;--bg:#0D1318;--surface:#151D24;--ink:#E3E9EE;--muted:#97A4B0;--line:#26323C;--accent:#82B2EE;--accent-soft:#1A2A3D}
+}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0D1318;--surface:#151D24;--ink:#E3E9EE;--muted:#97A4B0;--line:#26323C;--accent:#82B2EE;--accent-soft:#1A2A3D}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;padding-inline:20px;padding-block:0 56px}
+a{color:var(--accent);text-underline-offset:3px}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+.wrap{max-width:820px;margin:0 auto}
+.sitebar{display:flex;justify-content:space-between;align-items:center;gap:8px 16px;flex-wrap:wrap;padding-block:16px;border-bottom:1px solid var(--line);font-size:14px}
+.sitebar a{text-decoration:none}
+.sitebar .home{font-family:var(--serif);font-weight:700;color:var(--ink);font-size:17px}
+.sitebar nav{display:flex;gap:16px}
+.sitebar nav a{color:var(--muted)}
+header.m{padding-block:48px 28px;border-bottom:2px solid var(--ink)}
+.kick{font:500 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+h1{font-family:var(--serif);font-weight:700;font-size:clamp(38px,7vw,58px);line-height:1;letter-spacing:-.015em;margin:0 0 18px}
+.intro{font-family:var(--serif);font-size:19px;line-height:1.5;max-width:58ch;margin:0 0 14px;text-wrap:pretty}
+.meta{color:var(--muted);font-size:15px;max-width:62ch;margin:0}
+.subscribe{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.btn{display:inline-flex;align-items:center;font:500 14px/1 var(--sans);padding:11px 16px;border-radius:6px;text-decoration:none;border:1px solid var(--line);color:var(--ink);background:var(--surface)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn:hover{border-color:var(--ink)}
+h2{font:500 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:40px 0 4px}
+.issues{list-style:none;margin:0;padding:0}
+.issues li{border-bottom:1px solid var(--line)}
+.issues a.row{display:grid;grid-template-columns:92px minmax(0,1fr);gap:6px 24px;padding-block:22px;text-decoration:none;color:inherit}
+.issues a.row:hover h3{color:var(--accent)}
+.no{font:500 13px/1.6 var(--mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.no b{display:block;font-size:28px;line-height:1.1;color:var(--ink);font-weight:500}
+.issues h3{font-family:var(--serif);font-size:22px;line-height:1.25;margin:0 0 6px;font-weight:600;text-wrap:balance}
+.issues p{margin:0 0 8px;color:var(--muted);font-size:15px;max-width:60ch}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.pills span{font:500 12px/1 var(--sans);padding:6px 9px;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
+@media (max-width:520px){.issues a.row{grid-template-columns:1fr}.no b{display:inline;font-size:20px;margin-right:8px}}
+.how{margin-top:40px;padding:18px 20px;background:var(--surface);border:1px solid var(--line);border-radius:8px;font-size:15px}
+.how h3{font-family:var(--serif);font-size:18px;margin:0 0 8px}
+.how p{margin:0 0 8px;max-width:64ch}
+.how p:last-child{margin:0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="sitebar">
+    <a class="home" href="../index.html">Yathish Reddy</a>
+    <nav aria-label="Site"><a href="../index.html#work">Work</a><a href="../feed.xml">RSS</a></nav>
+  </div>
+
+  <header class="m">
+    <p class="kick">An AI research digest · every Saturday</p>
+    <h1>Signal Weekly</h1>
+    <p class="intro">Each week I pick the AI papers, releases and repos worth your time, and explain each one so that anyone with basic maths can follow it.</p>
+    <p class="meta">Six columns: LLMs, vision, agentic AI, on-device inference, small models under 1B parameters, and AI infrastructure. Every item says who measured the numbers, and every issue ends with the older ideas the new work builds on.</p>
+    <div class="subscribe">
+      <a class="btn primary" href="2026-09-26/index.html">Read the latest issue</a>
+      <a class="btn" href="../feed.xml">Subscribe with RSS</a>
+    </div>
+  </header>
+
+  <h2>All issues</h2>
+  <ul class="issues">
+    <li>
+      <a class="row" href="2026-09-26/index.html">
+        <span class="no"><b>01</b>26 Sep 2026</span>
+        <span>
+          <h3>Same answers for fewer tokens</h3>
+          <p>Reasoning models that write less, a 27B model in 5.9 GB, a 14 MB tool-calling model, and agents that improve their own harnesses without overfitting. 18 picks from 19–26 Sep.</p>
+          <span class="pills"><span>Ember-1</span><span>Ternary Bonsai 2</span><span>RRSI</span><span>tokenizers v1</span></span>
+        </span>
+      </a>
+    </li>
+  </ul>
+
+  <div class="how">
+    <h3>How to read it</h3>
+    <p>Each card opens into five parts: the idea in plain words, how it works, the maths done by hand, why it matters, and what to read with care.</p>
+    <p>Most numbers come from the vendors or authors themselves. The cards say so. Treat a benchmark as a claim until someone independent repeats it.</p>
+  </div>
+</div>
+</body>
+</html>

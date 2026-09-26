@@ -1,30 +1,18 @@
----
-layout: null
----
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>{{ site.title | xml_escape }}</title>
-    <description>{{ site.description | xml_escape }}</description>
-    <link>{{ site.url }}{{ site.baseurl }}/</link>
-    <atom:link href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}" rel="self" type="application/rss+xml"/>
-    <pubDate>{{ site.time | date_to_rfc822 }}</pubDate>
-    <lastBuildDate>{{ site.time | date_to_rfc822 }}</lastBuildDate>
-    <generator>Jekyll v{{ jekyll.version }}</generator>
-    {% for post in site.posts limit:10 %}
-      <item>
-        <title>{{ post.title | xml_escape }}</title>
-        <description>{{ post.content | xml_escape }}</description>
-        <pubDate>{{ post.date | date_to_rfc822 }}</pubDate>
-        <link>{{ post.url | prepend: site.baseurl | prepend: site.url }}</link>
-        <guid isPermaLink="true">{{ post.url | prepend: site.baseurl | prepend: site.url }}</guid>
-        {% for tag in post.tags %}
-        <category>{{ tag | xml_escape }}</category>
-        {% endfor %}
-        {% for cat in post.categories %}
-        <category>{{ cat | xml_escape }}</category>
-        {% endfor %}
-      </item>
-    {% endfor %}
+    <title>Signal Weekly</title>
+    <link>https://yathishreddy.github.io/signal/</link>
+    <atom:link href="https://yathishreddy.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <description>The week's AI research across LLMs, vision, agents, on-device inference, small models and infrastructure, explained in plain language. By Yathish Reddy.</description>
+    <language>en</language>
+    <lastBuildDate>Sat, 26 Sep 2026 08:00:00 +0530</lastBuildDate>
+    <item>
+      <title>Issue 01: Same answers for fewer tokens</title>
+      <link>https://yathishreddy.github.io/signal/2026-09-26/</link>
+      <guid isPermaLink="true">https://yathishreddy.github.io/signal/2026-09-26/</guid>
+      <pubDate>Sat, 26 Sep 2026 08:00:00 +0530</pubDate>
+      <description>Reasoning models that write less, a 27B model in 5.9 GB, a 14 MB tool-calling model, and agents that improve their own harnesses without overfitting. 18 picks from 19–26 Sep 2026.</description>
+    </item>
   </channel>
 </rss>

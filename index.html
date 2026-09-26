@@ -1,5 +1,399 @@
----
-layout: home
-title: Home
-comments: false
----
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Yathish Reddy</title>
+<meta name="description" content="Yathish Reddy builds machine learning models that run on phones and edge devices. Software engineer at Google, formerly Lead Engineer at Samsung R&D. Writes Signal Weekly.">
+<meta property="og:title" content="Yathish Reddy">
+<meta property="og:description" content="On-device ML engineer in Bengaluru. Camera AI, edge inference, and a weekly plain-language AI research digest.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://yathishreddy.github.io/">
+<link rel="alternate" type="application/rss+xml" title="Signal Weekly" href="feed.xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#F5F7F8; --surface:#FFFFFF; --surface-2:#EBEFF2; --ink:#14202A; --muted:#56636F; --line:#D9E0E5;
+  --accent:#1F5FAD; --accent-soft:#E3ECF7;
+  --serif:"Literata",Georgia,"Times New Roman",serif;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0D1318; --surface:#151D24; --surface-2:#1C262F; --ink:#E3E9EE; --muted:#97A4B0; --line:#26323C;
+    --accent:#82B2EE; --accent-soft:#1A2A3D;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0D1318; --surface:#151D24; --surface-2:#1C262F; --ink:#E3E9EE; --muted:#97A4B0; --line:#26323C;
+  --accent:#82B2EE; --accent-soft:#1A2A3D;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.65;padding-inline:20px;padding-block:0 56px;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-underline-offset:3px;text-decoration-thickness:1px}
+a:hover{text-decoration-thickness:2px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+.wrap{max-width:1060px;margin:0 auto}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--bg);border-bottom:1px solid var(--line);margin-inline:-20px;padding-inline:20px}
+.top .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:58px;flex-wrap:wrap}
+.brand{font-family:var(--serif);font-weight:700;font-size:18px;color:var(--ink);text-decoration:none;letter-spacing:-.01em}
+.top nav{display:flex;gap:4px 20px;flex-wrap:wrap;font-size:14px}
+.top nav a{color:var(--muted);text-decoration:none;padding-block:4px}
+.top nav a:hover{color:var(--ink)}
+.top nav a.hl{color:var(--accent);font-weight:500}
+
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:48px;align-items:center;padding-block:64px 56px;border-bottom:1px solid var(--line)}
+.eyebrow{font:500 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 18px}
+.hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(40px,7vw,64px);line-height:1.02;letter-spacing:-.02em;margin:0 0 22px;text-wrap:balance}
+.lead{font-family:var(--serif);font-size:clamp(19px,2.4vw,23px);line-height:1.45;margin:0 0 18px;max-width:34ch;text-wrap:pretty}
+.hero p.body{max-width:60ch;margin:0 0 26px;color:var(--ink)}
+.actions{display:flex;gap:10px 12px;flex-wrap:wrap;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:8px;font:500 14px/1 var(--sans);padding:11px 16px;border-radius:6px;text-decoration:none;border:1px solid var(--line);color:var(--ink);background:var(--surface)}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn.primary:hover{opacity:.9}
+.cfa{display:flex;flex-direction:column;gap:10px;margin:0}
+.cfa canvas{width:100%;max-width:260px;aspect-ratio:1;border-radius:4px;border:1px solid var(--line);display:block}
+.cfa figcaption{font:12px/1.45 var(--mono);color:var(--muted)}
+@media (max-width:640px){
+  .top .wrap{flex-wrap:nowrap;min-height:52px}
+  .top nav{flex-wrap:nowrap;overflow-x:auto;gap:16px;scrollbar-width:none}
+  .top nav a:not(.hl){display:none}
+}
+@media (max-width:760px){
+  .hero{grid-template-columns:1fr;gap:32px;padding-block:40px 40px}
+  .cfa{flex-direction:row;align-items:center;gap:14px}
+  .cfa canvas{width:104px;flex-shrink:0}
+}
+
+/* sections */
+section.s{display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px 48px;padding-block:52px;border-bottom:1px solid var(--line);scroll-margin-top:64px}
+.s-label h2{font:500 12px/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:6px 0 0;position:sticky;top:84px}
+.s-body > *:first-child{margin-top:0}
+.s-body h3{font-family:var(--serif);font-size:24px;line-height:1.25;margin:0 0 6px;font-weight:600;text-wrap:balance}
+.s-body p{max-width:64ch;margin:0 0 14px}
+.role-meta{font:13px/1.5 var(--mono);color:var(--muted);margin:0 0 16px;display:flex;flex-wrap:wrap;gap:4px 14px}
+@media (max-width:760px){
+  section.s{grid-template-columns:1fr;gap:14px;padding-block:40px}
+  .s-label h2{position:static}
+}
+
+/* now tags */
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.tags span{font:500 12.5px/1 var(--sans);padding:7px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
+
+/* projects */
+.org + .org{margin-top:44px}
+.projects{display:grid;gap:0;margin-top:22px;border-top:1px solid var(--line)}
+.proj{display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:8px 28px;padding-block:22px;border-bottom:1px solid var(--line)}
+.proj h4{font-family:var(--serif);font-size:19px;line-height:1.3;margin:0 0 3px;font-weight:600}
+.proj .when{font:12.5px/1.4 var(--mono);color:var(--muted);margin:0 0 10px}
+.proj p{margin:0;font-size:15.5px}
+.figure{align-self:start;text-align:right;padding-top:2px}
+.figure b{display:block;font:500 26px/1.1 var(--mono);color:var(--accent);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.figure span{display:block;font-size:12.5px;line-height:1.35;color:var(--muted);margin-top:6px}
+@media (max-width:560px){
+  .proj{grid-template-columns:1fr}
+  .figure{text-align:left;display:flex;align-items:baseline;gap:10px;padding-top:6px}
+  .figure span{margin-top:0}
+}
+.intern{margin-top:26px;padding:16px 18px;background:var(--surface);border:1px solid var(--line);border-radius:6px;font-size:15px}
+.intern p{margin:0}
+
+/* patents */
+.patents{list-style:none;margin:18px 0 0;padding:0;border-top:1px solid var(--line)}
+.patents li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 24px;padding-block:14px;border-bottom:1px solid var(--line)}
+.patents .t{font-weight:500}
+.patents .n{font:12.5px/1.5 var(--mono);color:var(--muted);text-align:right;white-space:nowrap}
+.patents .who{grid-column:1/-1;font-size:13.5px;color:var(--muted)}
+@media (max-width:560px){.patents li{grid-template-columns:1fr}.patents .n{text-align:left;white-space:normal}}
+
+/* education */
+.edu{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:4px}
+.edu article{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:18px 20px}
+.edu h3{font-size:19px}
+.edu p{font-size:15px}
+.edu p:last-child{margin-bottom:0}
+@media (max-width:700px){.edu{grid-template-columns:1fr}}
+.courses{font-size:14.5px;color:var(--muted);margin-top:18px}
+
+/* awards / skills */
+.awards{margin:0;padding:0;list-style:none;display:grid;gap:12px}
+.awards li{display:grid;grid-template-columns:72px minmax(0,1fr);gap:14px}
+.awards .y{font:500 13px/1.7 var(--mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.skills{margin-top:30px}
+.skills h3{font-size:18px;margin-bottom:10px}
+.skills .tags span{background:var(--surface-2);color:var(--ink)}
+
+/* newsletter */
+.signal{background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.signal-head{padding:24px 24px 20px;border-bottom:1px solid var(--line)}
+.signal-head .kick{font:500 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+.signal-head h3{font-size:28px;margin:0 0 8px}
+.signal-head p{margin:0;max-width:62ch}
+.cols{display:flex;flex-wrap:wrap;gap:8px;padding:16px 24px;border-bottom:1px solid var(--line);background:var(--bg)}
+.cols span{font:500 12.5px/1 var(--sans);display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+.cols i{width:8px;height:8px;border-radius:50%;background:var(--c);display:block}
+.latest{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px 28px;align-items:center;padding:22px 24px}
+.latest .issue-no{font:500 12.5px/1.4 var(--mono);color:var(--muted);margin:0 0 4px}
+.latest h4{font-family:var(--serif);font-size:20px;line-height:1.3;margin:0 0 6px;font-weight:600}
+.latest p{margin:0;font-size:15px;color:var(--muted);max-width:58ch}
+@media (max-width:640px){.latest{grid-template-columns:1fr}}
+
+/* contact */
+.contact-list{display:grid;gap:10px;margin-top:6px;font-size:15.5px}
+.contact-list div{display:grid;grid-template-columns:90px minmax(0,1fr);gap:12px}
+.contact-list dt,.contact-list .k{font:500 12.5px/1.9 var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.contact-list .v{overflow-wrap:anywhere}
+
+footer.f{padding-block:28px 0;font-size:13.5px;color:var(--muted);display:flex;justify-content:space-between;gap:8px 20px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#">Yathish Reddy</a>
+    <nav aria-label="Sections">
+      <a href="#now">Now</a>
+      <a href="#work">Work</a>
+      <a href="#patents">Patents</a>
+      <a href="#education">Education</a>
+      <a class="hl" href="signal/index.html">Signal Weekly</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero" aria-label="Introduction">
+    <div>
+      <p class="eyebrow">On-device ML · Bengaluru</p>
+      <h1>Yathish Reddy</h1>
+      <p class="lead">I build machine learning models that run on the device in your hand. They have to be fast, small, and good enough that you never notice them.</p>
+      <p class="body">I'm a software engineer at Google, working on on-device ML. Before that I spent seven years at Samsung R&amp;D in Bengaluru, where the camera models I worked on shipped in Galaxy flagship phones and led to five patent filings. I also write <a href="signal/index.html">Signal Weekly</a>, a plain-language digest of the week's AI research.</p>
+      <div class="actions">
+        <a class="btn primary" href="signal/index.html">Read Signal Weekly</a>
+        <a class="btn" href="https://www.linkedin.com/in/yathish-reddy-m" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn" href="https://github.com/YathishReddy" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+    <figure class="cfa" aria-label="Illustration of a camera sensor colour mosaic turning into a full-colour image">
+      <canvas id="cfa" width="260" height="260" aria-hidden="true"></canvas>
+      <figcaption>Raw RGGB mosaic, top left, to full colour, bottom right. I spent a lot of my Samsung years on the step in between.</figcaption>
+    </figure>
+  </section>
+
+  <section class="s" id="now">
+    <div class="s-label"><h2>Now</h2></div>
+    <div class="s-body">
+      <h3>Software Engineer, Google</h3>
+      <p class="role-meta"><span>Bengaluru</span><span>Jun 2025 – present</span></p>
+      <p>At Google I work on the frameworks that get ML models onto devices, and on the evaluation tools that check the models still behave once they're there. I write models in JAX and test them for robustness and for parity with their reference versions.</p>
+      <p>I also train and tune real-time vision models, including Video Bokeh and panoptic segmentation. And I build hardware profiling tools that show where the time goes on the Edge TPU, so we can get the most out of it and keep inference latency low.</p>
+      <div class="tags" aria-label="Current focus">
+        <span>On-device ML enablement</span><span>JAX</span><span>Edge TPU profiling</span><span>Video Bokeh</span><span>Panoptic segmentation</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="s" id="work">
+    <div class="s-label"><h2>Work</h2></div>
+    <div class="s-body">
+      <div class="org">
+        <h3>Lead Engineer, Samsung R&amp;D Institute</h3>
+        <p class="role-meta"><span>Bengaluru</span><span>Jun 2018 – Jun 2025</span></p>
+        <p>I joined Samsung straight out of NITK and stayed seven years. I started in networking and moved into camera AI, and most of my patents come from that second half. The work covered the whole path: capturing data, building datasets, training and validating models, optimising them for the phone's NPU, and designing the image and video pipelines they run inside.</p>
+
+        <div class="projects">
+          <article class="proj">
+            <div>
+              <h4>AI demosaic and post-processing for the camera pipeline</h4>
+              <p class="when">Jan 2024 – Jun 2025</p>
+              <p>Newer camera sensors don't use the classic Bayer colour pattern, so the usual demosaic methods don't fit them. I designed a directional interpolation method for these non-Bayer sensors, built to run well on the NPU, and we filed a patent on it. After that I worked on a lightweight network that removes chromatic aberration, the colour fringing you see on high-contrast edges. That included its own data pipeline, loss functions and fringe-mask detection.</p>
+            </div>
+            <div class="figure"><b>&lt;100 ms</b><span>per 12 MP image for chromatic aberration removal</span></div>
+          </article>
+
+          <article class="proj">
+            <div>
+              <h4>Tetra AI Super Resolution for Galaxy flagships</h4>
+              <p class="when">Jan 2023 – Jan 2024</p>
+              <p>This is the project I'm proudest of. We built lightweight super-resolution models that sit inside the camera ISP and run when you zoom from 10× to 100× on a Galaxy flagship. I led it end to end, from data capture and dataset preparation through training, tuning, validation and deployment. People rated the results 2 points higher on MOS (mean opinion score) than the previous solution. The project won the Ascendant Star of the Year and Super Tech awards in 2024.</p>
+            </div>
+            <div class="figure"><b>+2 MOS</b><span>perceptual quality gain at 10×–100× zoom</span></div>
+          </article>
+
+          <article class="proj">
+            <div>
+              <h4>Motion classifier for real-time video stabilisation</h4>
+              <p class="when">Jan 2022 – Dec 2022</p>
+              <p>Stabilisation works better when it knows how the camera is moving: walking, panning or held still. I built a small, fast classifier that spots a change in motion within 133 ms with 99% accuracy. Its output tunes the stabilisation filters, so the video stays steady as you change what you're doing. This one is patented.</p>
+            </div>
+            <div class="figure"><b>133 ms</b><span>to detect a motion change, at 99% accuracy</span></div>
+          </article>
+
+          <article class="proj">
+            <div>
+              <h4>4G/5G small cells and wireless intrusion prevention</h4>
+              <p class="when">Jun 2018 – Jan 2022</p>
+              <p>My first years were in networking. I built routing, IP security and plug-and-play features for what became the world's first commercial 5G small cell, and for enhanced 4G femto cells. I also wrote a lightweight database sync tool for redundancy, built automated test suites, and fixed routing issues with a 4-hour turnaround.</p>
+            </div>
+            <div class="figure"><b>22 s</b><span>database redundancy sync with the tool I built</span></div>
+          </article>
+        </div>
+
+        <div class="intern">
+          <p><b>Before all that:</b> in the summer of 2017 I interned at Samsung R&amp;D. I ported a VoLTE monitoring and analysis tool to Java Spark so it could process up to 1 TB of call logs on a four-PC cluster.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="s" id="patents">
+    <div class="s-label"><h2>Patents</h2></div>
+    <div class="s-body">
+      <p>Five filings from my camera work at Samsung, all with the same core team. They follow the projects above: stabilisation first, then demosaic, restoration and zoom.</p>
+      <ul class="patents">
+        <li><span class="t">Full Frame Media Stabilization in Electronic Devices</span><span class="n">App. 202341007888 · 2023</span><span class="who">R. N. Gadde, A. Sankararao, Pravin Nair, Y. Reddy, Sarvesh</span></li>
+        <li><span class="t">Camera Motion Type Estimation in Real-Time for Capturing Image or Video</span><span class="n">App. 202341007835 · 2023</span><span class="who">Y. Reddy, A. Sankararao, Pravin Nair, R. N. Gadde, Sarvesh</span></li>
+        <li><span class="t">Position Dependent Directional Interpolation with Gradient Conditioning for Demosaic of Non-Bayer CFAs</span><span class="n">App. 202441044080 · 2024</span><span class="who">Pravin Nair, Sarvesh, Y. Reddy, A. Sankararao, S. S. Sharma, R. N. Gadde, D. Kim, D. Park, J. Kim, J. Park</span></li>
+        <li><span class="t">Lightweight High Texture Image Restoration Using Pre-Trained Texture Prior</span><span class="n">Provisional filed · 2024</span><span class="who">R. N. Gadde, Y. Reddy, A. Sankararao, Pravin Nair, Sarvesh, S. S. Sharma</span></li>
+        <li><span class="t">Context Aware Image Restoration and Enhancement for High Zoom Captures</span><span class="n">Provisional filed · 2024</span><span class="who">S. S. Sharma, R. N. Gadde, Y. Reddy, A. Sankararao, Pravin Nair, Sarvesh</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="s" id="education">
+    <div class="s-label"><h2>Education</h2></div>
+    <div class="s-body">
+      <div class="edu">
+        <article>
+          <h3>MTech, Artificial Intelligence</h3>
+          <p class="role-meta"><span>IISc Bengaluru</span><span>2021 – 2024</span><span>CGPA 8.5</span></p>
+          <p>I did this while working at Samsung. My thesis was on frame interpolation for video stabilisation: a plug-and-play preprocessing module that improves distortion, cropping ratio and stability for existing off-the-shelf stabilisation methods.</p>
+        </article>
+        <article>
+          <h3>BTech, Computer Science</h3>
+          <p class="role-meta"><span>NITK Surathkal</span><span>2014 – 2018</span><span>CGPA 7.97</span></p>
+          <p>Four years of computer science, and the place this website started, back when it said "second-year undergrad."</p>
+        </article>
+      </div>
+      <p class="courses">Coursework I still lean on: linear algebra, optimisation theory, random processes, machine learning, deep learning and digital image processing.</p>
+    </div>
+  </section>
+
+  <section class="s" id="awards">
+    <div class="s-label"><h2>Recognition</h2></div>
+    <div class="s-body">
+      <ul class="awards">
+        <li><span class="y">2024</span><span><b>Ascendant Star of the Year and Super Tech Award</b>, for commercialising Tetra Super Resolution and its 10×–100× zoom on Samsung flagships.</span></li>
+        <li><span class="y">2019–21</span><span><b>Spot Award, Certificate of Excellence, Samsung Citizen Award and Annual Award</b>, for fast issue resolution, 4G/5G module work, and contributions to the world's first indoor AU release for Verizon and Jio.</span></li>
+      </ul>
+      <div class="skills">
+        <h3>Tools I use</h3>
+        <div class="tags"><span>Python</span><span>C++</span><span>C</span><span>JAX</span><span>TensorFlow</span><span>PyTorch</span><span>scikit-learn</span><span>OpenCV</span><span>SciPy</span><span>Bash</span><span>Linux</span><span>LaTeX</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="s" id="signal">
+    <div class="s-label"><h2>Newsletter</h2></div>
+    <div class="s-body">
+      <div class="signal">
+        <div class="signal-head">
+          <p class="kick">Weekly · every Saturday</p>
+          <h3>Signal Weekly</h3>
+          <p>I read a lot of AI research every week, so I started writing up the pieces that matter. Every item is explained so that anyone with basic maths can follow it, and each issue ends with the older ideas the new work builds on.</p>
+        </div>
+        <div class="cols" aria-label="Columns covered">
+          <span style="--c:#4B4FC4"><i></i>LLMs</span>
+          <span style="--c:#B06A12"><i></i>Vision</span>
+          <span style="--c:#0D7F7A"><i></i>Agentic AI</span>
+          <span style="--c:#3C7D2A"><i></i>On-device inference</span>
+          <span style="--c:#8A3F8F"><i></i>Small models</span>
+          <span style="--c:#A8394F"><i></i>AI infrastructure</span>
+        </div>
+        <div class="latest">
+          <div>
+            <p class="issue-no">Latest · Issue 01 · 19–26 Sep 2026 · 18 picks</p>
+            <h4>Same answers for fewer tokens</h4>
+            <p>Reasoning models that write less, a 27B model squeezed into 5.9 GB, and agents that improve their own harnesses without overfitting.</p>
+          </div>
+          <div class="actions">
+            <a class="btn primary" href="signal/2026-09-26/index.html">Read issue 01</a>
+            <a class="btn" href="signal/index.html">All issues</a>
+            <a class="btn" href="feed.xml">RSS</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="s" id="contact">
+    <div class="s-label"><h2>Contact</h2></div>
+    <div class="s-body">
+      <p>If you're working on on-device ML, camera pipelines or edge inference, I'm always happy to talk. Email or LinkedIn is the best way to reach me.</p>
+      <div class="contact-list">
+        <div><span class="k">Email</span><span class="v"><a href="mailto:yathish13mreddy@gmail.com">yathish13mreddy@gmail.com</a></span></div>
+        <div><span class="k">LinkedIn</span><span class="v"><a href="https://www.linkedin.com/in/yathish-reddy-m" target="_blank" rel="noopener">in/yathish-reddy-m</a></span></div>
+        <div><span class="k">GitHub</span><span class="v"><a href="https://github.com/YathishReddy" target="_blank" rel="noopener">YathishReddy</a></span></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="f">
+    <span>© 2026 Yathish Reddy · Bengaluru</span>
+    <span>Plain HTML on GitHub Pages · <a href="feed.xml">RSS</a></span>
+  </footer>
+</main>
+
+<script>
+/* Bayer RGGB mosaic that resolves into full colour along the diagonal */
+(function(){
+  var c=document.getElementById("cfa"); if(!c||!c.getContext) return;
+  var dpr=Math.min(window.devicePixelRatio||1,2), S=260;
+  c.width=S*dpr; c.height=S*dpr;
+  var g=c.getContext("2d"); g.scale(dpr,dpr);
+  var N=20, cell=S/N;
+  function scene(x,y){ /* a soft sunset-like gradient scene, values 0..1 */
+    var u=x/N, v=y/N;
+    var r=0.35+0.55*(1-v)+0.1*Math.sin(u*5);
+    var gg=0.25+0.45*u*(1-v)+0.3*v*0.6;
+    var b=0.3+0.55*v+0.15*Math.cos(u*4);
+    return [Math.min(1,r),Math.min(1,gg),Math.min(1,b)];
+  }
+  for(var y=0;y<N;y++){
+    for(var x=0;x<N;x++){
+      var col=scene(x+.5,y+.5);
+      var t=((x+y)/(2*N-2)); /* 0 top-left .. 1 bottom-right */
+      var mix=Math.max(0,Math.min(1,(t-0.32)/0.36));
+      var ch=(y%2===0)?(x%2===0?0:1):(x%2===0?1:2); /* RGGB */
+      var raw=[0,0,0]; raw[ch]=col[ch];
+      var out=[0,1,2].map(function(i){return Math.round(255*(raw[i]*(1-mix)+col[i]*mix));});
+      g.fillStyle="rgb("+out.join(",")+")";
+      g.fillRect(x*cell,y*cell,cell+0.5,cell+0.5);
+    }
+  }
+  g.strokeStyle="rgba(0,0,0,0.18)"; g.lineWidth=0.5;
+  for(var i=1;i<N;i++){
+    var fade=1-i/N;
+    g.globalAlpha=fade*0.9;
+    g.beginPath(); g.moveTo(i*cell,0); g.lineTo(i*cell,S*fade+cell*2); g.stroke();
+    g.beginPath(); g.moveTo(0,i*cell); g.lineTo(S*fade+cell*2,i*cell); g.stroke();
+  }
+  g.globalAlpha=1;
+})();
+</script>
+</body>
+</html>
