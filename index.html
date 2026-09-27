@@ -168,6 +168,16 @@ section.s{display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px 48px;p
 .contact-list .v{overflow-wrap:anywhere}
 
 footer.f{padding-block:28px 0;font-size:13.5px;color:var(--muted);display:flex;justify-content:space-between;gap:8px 20px;flex-wrap:wrap}
+
+/* tablet: single column sections, roomier content */
+@media (max-width:900px){
+  section.s{grid-template-columns:1fr;gap:14px;padding-block:44px}
+  .s-label h2{position:static}
+  .hero{grid-template-columns:minmax(0,1fr) 200px;gap:32px}
+}
+@media (max-width:760px){.hero{grid-template-columns:1fr}}
+.top nav a{padding-block:10px}
+.contact-list a,.patents a{display:inline-block;padding-block:2px}
 </style>
 </head>
 <body>
