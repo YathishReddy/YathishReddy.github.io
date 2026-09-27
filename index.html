@@ -17,6 +17,7 @@
 :root{
   --bg:#F5F7F8; --surface:#FFFFFF; --surface-2:#EBEFF2; --ink:#14202A; --muted:#56636F; --line:#D9E0E5;
   --accent:#1F5FAD; --accent-soft:#E3ECF7;
+  --sig-bg:#14202A; --sig-ink:#F2F5F8; --sig-muted:#A9B6C2; --sig-line:#2E3C49; --sig-accent:#8FBDF5;
   --serif:"Literata",Georgia,"Times New Roman",serif;
   --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
@@ -26,12 +27,14 @@
     color-scheme:dark;
     --bg:#0D1318; --surface:#151D24; --surface-2:#1C262F; --ink:#E3E9EE; --muted:#97A4B0; --line:#26323C;
     --accent:#82B2EE; --accent-soft:#1A2A3D;
+    --sig-bg:#1A2B3D; --sig-ink:#EEF3F8; --sig-muted:#A7B5C3; --sig-line:#304457; --sig-accent:#9CC5F7;
   }
 }
 :root[data-theme="dark"]{
   color-scheme:dark;
   --bg:#0D1318; --surface:#151D24; --surface-2:#1C262F; --ink:#E3E9EE; --muted:#97A4B0; --line:#26323C;
   --accent:#82B2EE; --accent-soft:#1A2A3D;
+    --sig-bg:#1A2B3D; --sig-ink:#EEF3F8; --sig-muted:#A7B5C3; --sig-line:#304457; --sig-accent:#9CC5F7;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -52,7 +55,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 .top nav a.hl{color:var(--accent);font-weight:500}
 
 /* hero */
-.hero{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:48px;align-items:center;padding-block:64px 56px;border-bottom:1px solid var(--line)}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:48px;align-items:center;padding-block:64px 40px}
 .eyebrow{font:500 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 18px}
 .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(40px,7vw,64px);line-height:1.02;letter-spacing:-.02em;margin:0 0 22px;text-wrap:balance}
 .lead{font-family:var(--serif);font-size:clamp(19px,2.4vw,23px);line-height:1.45;margin:0 0 18px;max-width:34ch;text-wrap:pretty}
@@ -74,6 +77,8 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
   .hero{grid-template-columns:1fr;gap:32px;padding-block:40px 40px}
   .cfa{flex-direction:row;align-items:center;gap:14px}
   .cfa canvas{width:104px;flex-shrink:0}
+  .cfa{display:none}
+  .hero{padding-block:36px 24px}
 }
 
 /* sections */
@@ -136,18 +141,24 @@ section.s{display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px 48px;p
 .skills .tags span{background:var(--surface-2);color:var(--ink)}
 
 /* newsletter */
-.signal{background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:hidden}
-.signal-head{padding:24px 24px 20px;border-bottom:1px solid var(--line)}
-.signal-head .kick{font:500 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
-.signal-head h3{font-size:28px;margin:0 0 8px}
-.signal-head p{margin:0;max-width:62ch}
-.cols{display:flex;flex-wrap:wrap;gap:8px;padding:16px 24px;border-bottom:1px solid var(--line);background:var(--bg)}
-.cols span{font:500 12.5px/1 var(--sans);display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+.featured{padding-block:32px 4px}
+.signal{background:var(--sig-bg);color:var(--sig-ink);border-radius:10px;overflow:hidden}
+.signal a{color:var(--sig-accent)}
+.signal-head{padding:30px 30px 22px}
+.signal-head .kick{font:500 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--sig-accent);margin:0 0 12px}
+.signal-head h2{font-family:var(--serif);font-weight:700;font-size:clamp(30px,4.6vw,42px);line-height:1.05;letter-spacing:-.015em;margin:0 0 12px}
+.signal-head p{margin:0;max-width:60ch;font-family:var(--serif);font-size:18px;line-height:1.5}
+.cols{display:flex;flex-wrap:wrap;gap:8px;padding:0 30px 24px}
+.cols span{font:500 12.5px/1 var(--sans);display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border:1px solid var(--sig-line);border-radius:999px;color:var(--sig-ink)}
 .cols i{width:8px;height:8px;border-radius:50%;background:var(--c);display:block}
-.latest{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px 28px;align-items:center;padding:22px 24px}
-.latest .issue-no{font:500 12.5px/1.4 var(--mono);color:var(--muted);margin:0 0 4px}
-.latest h4{font-family:var(--serif);font-size:20px;line-height:1.3;margin:0 0 6px;font-weight:600}
-.latest p{margin:0;font-size:15px;color:var(--muted);max-width:58ch}
+.latest{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px 28px;align-items:center;padding:22px 30px 26px;border-top:1px solid var(--sig-line)}
+.latest .issue-no{font:500 12.5px/1.4 var(--mono);color:var(--sig-muted);margin:0 0 4px}
+.latest h4{font-family:var(--serif);font-size:21px;line-height:1.3;margin:0 0 6px;font-weight:600}
+.latest p{margin:0;font-size:15px;color:var(--sig-muted);max-width:58ch}
+.signal .btn{background:transparent;color:var(--sig-ink);border-color:var(--sig-line)}
+.signal .btn:hover{border-color:var(--sig-ink)}
+.signal .btn.primary{background:var(--sig-accent);color:var(--sig-bg);border-color:var(--sig-accent)}
+@media (max-width:560px){.signal-head{padding:24px 20px 18px}.cols{padding:0 20px 20px}.latest{padding:20px}}
 @media (max-width:640px){.latest{grid-template-columns:1fr}}
 
 /* contact */
@@ -181,9 +192,9 @@ footer.f{padding-block:28px 0;font-size:13.5px;color:var(--muted);display:flex;j
       <p class="eyebrow">On-device ML · Bengaluru</p>
       <h1>Yathish Reddy</h1>
       <p class="lead">I build machine learning models that run on the device in your hand. They have to be fast, small, and good enough that you never notice them.</p>
-      <p class="body">I'm a software engineer at Google, working on on-device ML. Before that I spent seven years at Samsung R&amp;D in Bengaluru, where the camera models I worked on shipped in Galaxy flagship phones and led to five patent filings. I also curate <a href="signal/index.html">Signal Weekly</a>, a weekly pick of the AI research that matters, explained in plain language anyone can follow.</p>
+      <p class="body">I'm a software engineer at Google, working on on-device ML. Before that I spent seven years at Samsung R&amp;D in Bengaluru, where the camera models I worked on shipped in Galaxy flagship phones and led to five patent filings.</p>
       <div class="actions">
-        <a class="btn primary" href="signal/index.html">Read Signal Weekly</a>
+        <a class="btn primary" href="#contact">Get in touch</a>
         <a class="btn" href="https://www.linkedin.com/in/yathish-reddy-m-720593a6" target="_blank" rel="noopener">LinkedIn</a>
         <a class="btn" href="https://github.com/YathishReddy" target="_blank" rel="noopener">GitHub</a>
       </div>
@@ -192,6 +203,36 @@ footer.f{padding-block:28px 0;font-size:13.5px;color:var(--muted);display:flex;j
       <canvas id="cfa" width="260" height="260" aria-hidden="true"></canvas>
       <figcaption>Raw RGGB mosaic, top left, to full colour, bottom right. I spent a lot of my Samsung years on the step in between.</figcaption>
     </figure>
+  </section>
+
+  <section class="featured" id="signal" aria-label="Signal Weekly">
+    <div class="signal">
+      <div class="signal-head">
+        <p class="kick">Curated by me · every Saturday</p>
+        <h2>Signal Weekly</h2>
+        <p>I curate a weekly pick of the AI research that matters, explained in plain language anyone can follow. Each issue also traces the older ideas the new work builds on.</p>
+      </div>
+      <div class="cols" aria-label="Columns covered">
+        <span style="--c:#9A9EF5"><i></i>LLMs</span>
+        <span style="--c:#E3A55A"><i></i>Vision</span>
+        <span style="--c:#4FC7C0"><i></i>Agentic AI</span>
+        <span style="--c:#86C66F"><i></i>On-device inference</span>
+        <span style="--c:#DE9AE3"><i></i>Small models</span>
+        <span style="--c:#EE8499"><i></i>AI infrastructure</span>
+      </div>
+      <div class="latest">
+        <div>
+          <p class="issue-no">Latest · Issue 01 · 19–26 Sep 2026 · 18 picks</p>
+          <h4>Same answers for fewer tokens</h4>
+          <p>Reasoning models that write less, a 27B model squeezed into 5.9 GB, and agents that improve their own harnesses without overfitting.</p>
+        </div>
+        <div class="actions">
+          <a class="btn primary" href="signal/2026-09-26/index.html">Read issue 01</a>
+          <a class="btn" href="signal/index.html">All issues</a>
+          <a class="btn" href="feed.xml">RSS</a>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section class="s" id="now">
@@ -307,38 +348,6 @@ footer.f{padding-block:28px 0;font-size:13.5px;color:var(--muted);display:flex;j
     </div>
   </section>
 
-  <section class="s" id="signal">
-    <div class="s-label"><h2>Newsletter</h2></div>
-    <div class="s-body">
-      <div class="signal">
-        <div class="signal-head">
-          <p class="kick">Weekly · every Saturday</p>
-          <h3>Signal Weekly</h3>
-          <p>I go through a lot of AI research every week and pick out the pieces that matter. Every item is explained so that anyone with basic maths can follow it, and each issue ends with the older ideas the new work builds on.</p>
-        </div>
-        <div class="cols" aria-label="Columns covered">
-          <span style="--c:#4B4FC4"><i></i>LLMs</span>
-          <span style="--c:#B06A12"><i></i>Vision</span>
-          <span style="--c:#0D7F7A"><i></i>Agentic AI</span>
-          <span style="--c:#3C7D2A"><i></i>On-device inference</span>
-          <span style="--c:#8A3F8F"><i></i>Small models</span>
-          <span style="--c:#A8394F"><i></i>AI infrastructure</span>
-        </div>
-        <div class="latest">
-          <div>
-            <p class="issue-no">Latest · Issue 01 · 19–26 Sep 2026 · 18 picks</p>
-            <h4>Same answers for fewer tokens</h4>
-            <p>Reasoning models that write less, a 27B model squeezed into 5.9 GB, and agents that improve their own harnesses without overfitting.</p>
-          </div>
-          <div class="actions">
-            <a class="btn primary" href="signal/2026-09-26/index.html">Read issue 01</a>
-            <a class="btn" href="signal/index.html">All issues</a>
-            <a class="btn" href="feed.xml">RSS</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <section class="s" id="contact">
     <div class="s-label"><h2>Contact</h2></div>
