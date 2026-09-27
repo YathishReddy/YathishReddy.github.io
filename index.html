@@ -189,10 +189,9 @@ footer.f{padding-block:28px 0;font-size:13.5px;color:var(--muted);display:flex;j
 
   <section class="hero" aria-label="Introduction">
     <div>
-      <p class="eyebrow">On-device ML · Bengaluru</p>
       <h1>Yathish Reddy</h1>
-      <p class="lead">I build machine learning models that run on the device in your hand. They have to be fast, small, and good enough that you never notice them.</p>
-      <p class="body">I'm a software engineer at Google, working on on-device ML. Before that I spent seven years at Samsung R&amp;D in Bengaluru, where the camera models I worked on shipped in Galaxy flagship phones and led to five patent filings.</p>
+      <p class="lead">I build machine learning models that run on the devices people carry every day. They need to be fast, compact and accurate enough to work without being noticed.</p>
+      <p class="body">I am a software engineer at Google, working on on-device machine learning. Before this, I spent seven years at Samsung R&amp;D in Bengaluru, where the camera models I developed shipped in Galaxy flagship phones and resulted in five patent filings.</p>
       <div class="actions">
         <a class="btn primary" href="#contact">Get in touch</a>
         <a class="btn" href="https://www.linkedin.com/in/yathish-reddy-m-720593a6" target="_blank" rel="noopener">LinkedIn</a>
@@ -201,7 +200,7 @@ footer.f{padding-block:28px 0;font-size:13.5px;color:var(--muted);display:flex;j
     </div>
     <figure class="cfa" aria-label="Illustration of a camera sensor colour mosaic turning into a full-colour image">
       <canvas id="cfa" width="260" height="260" aria-hidden="true"></canvas>
-      <figcaption>Raw RGGB mosaic, top left, to full colour, bottom right. I spent a lot of my Samsung years on the step in between.</figcaption>
+      <figcaption>A raw RGGB sensor mosaic (top left) resolving into a full-colour image (bottom right). Much of my work at Samsung focused on the step in between.</figcaption>
     </figure>
   </section>
 
@@ -210,7 +209,7 @@ footer.f{padding-block:28px 0;font-size:13.5px;color:var(--muted);display:flex;j
       <div class="signal-head">
         <p class="kick">Curated by me · every Saturday</p>
         <h2>Signal Weekly</h2>
-        <p>I curate a weekly pick of the AI research that matters, explained in plain language anyone can follow. Each issue also traces the older ideas the new work builds on.</p>
+        <p>I curate a weekly selection of the most important AI research, explained in plain language. Each item opens with a short summary, and readers can go deeper into figures, results and the underlying technique.</p>
       </div>
       <div class="cols" aria-label="Columns covered">
         <span style="--c:#9A9EF5"><i></i>LLMs</span>
@@ -240,8 +239,8 @@ footer.f{padding-block:28px 0;font-size:13.5px;color:var(--muted);display:flex;j
     <div class="s-body">
       <h3>Software Engineer, Google</h3>
       <p class="role-meta"><span>Bengaluru</span><span>Jun 2025 – present</span></p>
-      <p>At Google I work on the frameworks that get ML models onto devices, and on the evaluation tools that check the models still behave once they're there. I write models in JAX and test them for robustness and for parity with their reference versions.</p>
-      <p>I also train and tune real-time vision models, including Video Bokeh and panoptic segmentation. And I build hardware profiling tools that show where the time goes on the Edge TPU, so we can get the most out of it and keep inference latency low.</p>
+      <p>At Google, I work on the frameworks that bring machine learning models onto devices, and on the evaluation tools that verify their behaviour once deployed. I author models in JAX and test them for robustness and for parity with their reference implementations.</p>
+      <p>I also train and optimise real-time vision models, including Video Bokeh and panoptic segmentation, and I build hardware profiling tools that show where time is spent on the Edge TPU. This helps us use the hardware efficiently and keep inference latency low.</p>
       <div class="tags" aria-label="Current focus">
         <span>On-device ML enablement</span><span>JAX</span><span>Edge TPU profiling</span><span>Video Bokeh</span><span>Panoptic segmentation</span>
       </div>
@@ -254,14 +253,14 @@ footer.f{padding-block:28px 0;font-size:13.5px;color:var(--muted);display:flex;j
       <div class="org">
         <h3>Lead Engineer, Samsung R&amp;D Institute</h3>
         <p class="role-meta"><span>Bengaluru</span><span>Jun 2018 – Jun 2025</span></p>
-        <p>I joined Samsung straight out of NITK and stayed seven years. I started in networking and moved into camera AI, and most of my patents come from that second half. The work covered the whole path: capturing data, building datasets, training and validating models, optimising them for the phone's NPU, and designing the image and video pipelines they run inside.</p>
+        <p>I joined Samsung directly after graduating from NITK and remained there for seven years. I began in networking and later moved into camera AI, where most of my patents originate. The work spanned the full pipeline: data capture, dataset preparation, model training and validation, NPU optimisation, and the design of the image and video pipelines in which the models run.</p>
 
         <div class="projects">
           <article class="proj">
             <div>
               <h4>AI demosaic and post-processing for the camera pipeline</h4>
               <p class="when">Jan 2024 – Jun 2025</p>
-              <p>Newer camera sensors don't use the classic Bayer colour pattern, so the usual demosaic methods don't fit them. I designed a directional interpolation method for these non-Bayer sensors, built to run well on the NPU, and we filed a patent on it. After that I worked on a lightweight network that removes chromatic aberration, the colour fringing you see on high-contrast edges. That included its own data pipeline, loss functions and fringe-mask detection.</p>
+              <p>Newer camera sensors do not use the classic Bayer colour pattern, so conventional demosaic methods are a poor fit. I designed a directional interpolation method for these non-Bayer sensors with an NPU-friendly architecture, and we filed a patent on it. I then developed a lightweight network that removes chromatic aberration, the colour fringing visible along high-contrast edges, together with its data pipeline, loss functions and fringe-mask detection.</p>
             </div>
             <div class="figure"><b>&lt;100 ms</b><span>per 12 MP image for chromatic aberration removal</span></div>
           </article>
@@ -270,7 +269,7 @@ footer.f{padding-block:28px 0;font-size:13.5px;color:var(--muted);display:flex;j
             <div>
               <h4>Tetra AI Super Resolution for Galaxy flagships</h4>
               <p class="when">Jan 2023 – Jan 2024</p>
-              <p>This is the project I'm proudest of. We built lightweight super-resolution models that sit inside the camera ISP and run when you zoom from 10× to 100× on a Galaxy flagship. I led it end to end, from data capture and dataset preparation through training, tuning, validation and deployment. People rated the results 2 points higher on MOS (mean opinion score) than the previous solution. The project won the Ascendant Star of the Year and Super Tech awards in 2024.</p>
+              <p>This is the project I am most proud of. We built lightweight super-resolution models that run inside the camera ISP for 10× to 100× zoom on Galaxy flagship phones. I led the work end to end, from data capture and dataset preparation through training, tuning, validation and deployment. The results scored 2 points higher on MOS (mean opinion score) than the previous solution, and the project received the Ascendant Star of the Year and Super Tech awards in 2024.</p>
             </div>
             <div class="figure"><b>+2 MOS</b><span>perceptual quality gain at 10×–100× zoom</span></div>
           </article>
@@ -279,7 +278,7 @@ footer.f{padding-block:28px 0;font-size:13.5px;color:var(--muted);display:flex;j
             <div>
               <h4>Motion classifier for real-time video stabilisation</h4>
               <p class="when">Jan 2022 – Dec 2022</p>
-              <p>Stabilisation works better when it knows how the camera is moving: walking, panning or held still. I built a small, fast classifier that spots a change in motion within 133 ms with 99% accuracy. Its output tunes the stabilisation filters, so the video stays steady as you change what you're doing. This one is patented.</p>
+              <p>Video stabilisation performs better when it knows how the camera is moving, for example while walking, panning or holding still. I built a lightweight classifier that detects a change in motion within 133 ms at 99% accuracy. Its output tunes the stabilisation filters so that the video remains steady as the user's movement changes. This work is patented.</p>
             </div>
             <div class="figure"><b>133 ms</b><span>to detect a motion change, at 99% accuracy</span></div>
           </article>
@@ -288,14 +287,14 @@ footer.f{padding-block:28px 0;font-size:13.5px;color:var(--muted);display:flex;j
             <div>
               <h4>4G/5G small cells and wireless intrusion prevention</h4>
               <p class="when">Jun 2018 – Jan 2022</p>
-              <p>My first years were in networking. I built routing, IP security and plug-and-play features for what became the world's first commercial 5G small cell, and for enhanced 4G femto cells. I also wrote a lightweight database sync tool for redundancy, built automated test suites, and fixed routing issues with a 4-hour turnaround.</p>
+              <p>My first years at Samsung were in networking. I implemented routing, IP security and plug-and-play features for the world's first commercial 5G small cell and for enhanced 4G femto cells. I also wrote a lightweight database synchronisation tool for redundancy, built automated test suites, and resolved routing issues with a four-hour turnaround.</p>
             </div>
             <div class="figure"><b>22 s</b><span>database redundancy sync with the tool I built</span></div>
           </article>
         </div>
 
         <div class="intern">
-          <p><b>Before all that:</b> in the summer of 2017 I interned at Samsung R&amp;D. I ported a VoLTE monitoring and analysis tool to Java Spark so it could process up to 1 TB of call logs on a four-PC cluster.</p>
+          <p><b>Internship, 2017:</b> During a summer internship at Samsung R&amp;D, I ported a VoLTE monitoring and analysis tool to Java Spark, enabling it to process up to 1 TB of call logs on a four-machine cluster.</p>
         </div>
       </div>
     </div>
@@ -304,7 +303,7 @@ footer.f{padding-block:28px 0;font-size:13.5px;color:var(--muted);display:flex;j
   <section class="s" id="patents">
     <div class="s-label"><h2>Patents</h2></div>
     <div class="s-body">
-      <p>Five filings from my camera work at Samsung, all with the same core team. They follow the projects above: stabilisation first, then demosaic, restoration and zoom.</p>
+      <p>Five filings from my camera work at Samsung, developed with the same core team. They follow the projects above: stabilisation first, followed by demosaic, restoration and zoom.</p>
       <ul class="patents">
         <li><span class="t">Full Frame Media Stabilization in Electronic Devices</span><span class="n">App. 202341007888 · 2023</span><span class="who">R. N. Gadde, A. Sankararao, Pravin Nair, Y. Reddy, Sarvesh</span></li>
         <li><span class="t">Camera Motion Type Estimation in Real-Time for Capturing Image or Video</span><span class="n">App. 202341007835 · 2023</span><span class="who">Y. Reddy, A. Sankararao, Pravin Nair, R. N. Gadde, Sarvesh</span></li>
@@ -322,15 +321,15 @@ footer.f{padding-block:28px 0;font-size:13.5px;color:var(--muted);display:flex;j
         <article>
           <h3>MTech, Artificial Intelligence</h3>
           <p class="role-meta"><span>IISc Bengaluru</span><span>2021 – 2024</span><span>CGPA 8.5</span></p>
-          <p>I did this while working at Samsung. My thesis was on frame interpolation for video stabilisation: a plug-and-play preprocessing module that improves distortion, cropping ratio and stability for existing off-the-shelf stabilisation methods.</p>
+          <p>Completed alongside my work at Samsung. My thesis proposed a frame-interpolation module for video stabilisation: a plug-and-play preprocessing step that improves distortion, cropping ratio and stability for existing stabilisation methods.</p>
         </article>
         <article>
           <h3>BTech, Computer Science</h3>
           <p class="role-meta"><span>NITK Surathkal</span><span>2014 – 2018</span><span>CGPA 7.97</span></p>
-          <p>Four years of computer science, and the place this website started, back when it said "second-year undergrad."</p>
+          <p>Four years of computer science, and where the first version of this website was built.</p>
         </article>
       </div>
-      <p class="courses">Coursework I still lean on: linear algebra, optimisation theory, random processes, machine learning, deep learning and digital image processing.</p>
+      <p class="courses">Relevant coursework: linear algebra, optimisation theory, random processes, machine learning, deep learning and digital image processing.</p>
     </div>
   </section>
 
@@ -342,7 +341,7 @@ footer.f{padding-block:28px 0;font-size:13.5px;color:var(--muted);display:flex;j
         <li><span class="y">2019–21</span><span><b>Spot Award, Certificate of Excellence, Samsung Citizen Award and Annual Award</b>, for fast issue resolution, 4G/5G module work, and contributions to the world's first indoor AU release for Verizon and Jio.</span></li>
       </ul>
       <div class="skills">
-        <h3>Tools I use</h3>
+        <h3>Tools and languages</h3>
         <div class="tags"><span>Python</span><span>C++</span><span>C</span><span>JAX</span><span>TensorFlow</span><span>PyTorch</span><span>scikit-learn</span><span>OpenCV</span><span>SciPy</span><span>Bash</span><span>Linux</span><span>LaTeX</span></div>
       </div>
     </div>
@@ -352,7 +351,7 @@ footer.f{padding-block:28px 0;font-size:13.5px;color:var(--muted);display:flex;j
   <section class="s" id="contact">
     <div class="s-label"><h2>Contact</h2></div>
     <div class="s-body">
-      <p>If you're working on on-device ML, camera pipelines or edge inference, I'm always happy to talk. Email or LinkedIn is the best way to reach me.</p>
+      <p>I am always glad to hear from people working on on-device machine learning, camera pipelines or edge inference. Email or LinkedIn is the best way to reach me.</p>
       <div class="contact-list">
         <div><span class="k">Email</span><span class="v"><a href="mailto:yathish13mreddy@gmail.com">yathish13mreddy@gmail.com</a></span></div>
         <div><span class="k">LinkedIn</span><span class="v"><a href="https://www.linkedin.com/in/yathish-reddy-m-720593a6" target="_blank" rel="noopener">in/yathish-reddy-m-720593a6</a></span></div>
