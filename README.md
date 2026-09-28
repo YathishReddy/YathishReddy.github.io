@@ -7,6 +7,7 @@ index.html                 profile
 signal/index.html          newsletter archive
 signal/YYYY-MM-DD/index.html  one folder per issue
 feed.xml                   RSS for Signal Weekly
+signal/subscribe/          subscribe page (Feedly, Inoreader, copy feed URL)
 .nojekyll                  tells GitHub Pages to serve files as-is
 ```
 

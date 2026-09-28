@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Subscribe to Signal Weekly</title>
+<meta name="description" content="Follow Signal Weekly, an AI research digest curated by Yathish Reddy, in any RSS reader.">
+<meta property="og:title" content="Subscribe to Signal Weekly">
+<meta property="og:url" content="https://yathishreddy.github.io/signal/subscribe/">
+<link rel="alternate" type="application/rss+xml" title="Signal Weekly" href="../../feed.xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#F5F7F8; --surface:#FFFFFF; --ink:#14202A; --muted:#56636F; --line:#D9E0E5; --accent:#1F5FAD; --accent-soft:#E3ECF7; --ok:#1E7A45;
+  --serif:"Literata",Georgia,"Times New Roman",serif;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){color-scheme:dark;--bg:#0D1318;--surface:#151D24;--ink:#E3E9EE;--muted:#97A4B0;--line:#26323C;--accent:#82B2EE;--accent-soft:#1A2A3D;--ok:#6FCF97}
+}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0D1318;--surface:#151D24;--ink:#E3E9EE;--muted:#97A4B0;--line:#26323C;--accent:#82B2EE;--accent-soft:#1A2A3D;--ok:#6FCF97}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;padding-inline:20px;padding-block:0 56px}
+a{color:var(--accent);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+.wrap{max-width:760px;margin:0 auto}
+.sitebar{display:flex;justify-content:space-between;align-items:center;gap:8px 16px;flex-wrap:wrap;padding-block:16px;border-bottom:1px solid var(--line);font-size:14px}
+.sitebar a{text-decoration:none}
+.sitebar .home{font-family:var(--serif);font-weight:700;color:var(--ink);font-size:17px}
+.sitebar nav{display:flex;gap:16px}
+.sitebar nav a{color:var(--muted);padding-block:10px;display:inline-block}
+header.m{padding-block:44px 24px}
+.kick{font:500 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+h1{font-family:var(--serif);font-weight:700;font-size:clamp(34px,6vw,50px);line-height:1.05;letter-spacing:-.015em;margin:0 0 16px;text-wrap:balance}
+.intro{font-family:var(--serif);font-size:19px;line-height:1.5;max-width:58ch;margin:0;text-wrap:pretty}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:22px 22px 20px;margin-top:8px}
+.panel h2{font:600 13px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+.readers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:520px){.readers{grid-template-columns:1fr}}
+.reader{display:flex;flex-direction:column;gap:4px;padding:14px 16px;border:1px solid var(--line);border-radius:8px;text-decoration:none;color:var(--ink);background:var(--bg)}
+.reader:hover{border-color:var(--accent)}
+.reader b{font:600 16px/1.3 var(--sans)}
+.reader span{font-size:13.5px;color:var(--muted)}
+.reader i{font-style:normal;color:var(--accent);font-size:13.5px;font-weight:500;margin-top:4px}
+.copyrow{display:flex;gap:10px;flex-wrap:wrap}
+.copyrow input{flex:1 1 280px;min-width:0;font:14px/1.2 var(--mono);padding:12px 12px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;font:500 14px/1 var(--sans);padding:12px 16px;border-radius:6px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);cursor:pointer;min-height:44px}
+.status{font-size:13.5px;color:var(--ok);min-height:20px;margin:8px 0 0}
+.steps{margin:0;padding-left:20px;display:grid;gap:6px;font-size:15px}
+.note{font-size:14px;color:var(--muted);margin:14px 0 0}
+section{margin-top:18px}
+.what p{margin:0 0 10px;max-width:62ch}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="sitebar">
+    <a class="home" href="../../index.html">Yathish Reddy</a>
+    <nav aria-label="Site"><a href="../index.html">All issues</a><a href="../../index.html#work">Work</a></nav>
+  </div>
+
+  <header class="m">
+    <p class="kick">Signal Weekly · every Saturday</p>
+    <h1>Subscribe to Signal Weekly</h1>
+    <p class="intro">Each new issue appears in your feed reader automatically on Saturday morning (IST). Choose a reader below, or copy the feed address into the app you already use.</p>
+  </header>
+
+  <section class="panel" aria-labelledby="h-one">
+    <h2 id="h-one">One-click subscribe</h2>
+    <div class="readers">
+      <a class="reader" id="feedly" href="https://feedly.com/i/subscription/feed%2Fhttps%3A%2F%2Fyathishreddy.github.io%2Ffeed.xml" target="_blank" rel="noopener">
+        <b>Feedly</b><span>Web, iOS and Android. Free account.</span><i>Subscribe in Feedly ↗</i>
+      </a>
+      <a class="reader" id="inoreader" href="https://www.inoreader.com/?add_feed=https%3A%2F%2Fyathishreddy.github.io%2Ffeed.xml" target="_blank" rel="noopener">
+        <b>Inoreader</b><span>Web, iOS and Android. Free account.</span><i>Subscribe in Inoreader ↗</i>
+      </a>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="h-two">
+    <h2 id="h-two">Any other reader</h2>
+    <label for="feed-url" style="display:block;font-size:14.5px;margin-bottom:8px">Copy this address and paste it into your reader's "Add feed" or "Subscribe" option:</label>
+    <div class="copyrow">
+      <input id="feed-url" type="text" readonly value="https://yathishreddy.github.io/feed.xml" aria-label="Feed address">
+      <button class="btn" id="copy" type="button">Copy address</button>
+    </div>
+    <p class="status" id="status" role="status" aria-live="polite"></p>
+    <p style="margin:6px 0 0;font-size:15px">This works in any RSS reader, including NetNewsWire, Reeder, Readwise Reader, NewsBlur, The Old Reader and Thunderbird.</p>
+    <p class="note">Many readers also find the feed automatically if you paste <b>yathishreddy.github.io</b> as the address.</p>
+  </section>
+
+  <section class="what" aria-labelledby="h-three">
+    <h2 id="h-three" style="font:600 13px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:30px 0 12px">What is RSS?</h2>
+    <p>RSS is an open format that lets a reader app check websites for new posts and collect them in one place. There is no sign-up on this site and no email address is shared; you can unsubscribe at any time from within your reader.</p>
+    <p>You can also read every issue directly in the <a href="../index.html">Signal Weekly archive</a>.</p>
+  </section>
+</div>
+<script>
+(function(){
+  var btn=document.getElementById("copy"), inp=document.getElementById("feed-url"), st=document.getElementById("status");
+  function fallback(){ inp.focus(); inp.select(); try{ document.execCommand("copy"); st.textContent="Address copied."; }catch(e){ st.textContent="Press Ctrl+C or ⌘C to copy the selected address."; } }
+  btn.addEventListener("click",function(){
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(inp.value).then(function(){ st.textContent="Address copied. Paste it into your reader."; }, fallback);
+    } else fallback();
+  });
+  inp.addEventListener("focus",function(){ inp.select(); });
+})();
+</script>
+</body>
+</html>
