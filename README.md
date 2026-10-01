@@ -18,3 +18,7 @@ signal/subscribe/          subscribe page (Feedly, Inoreader, copy feed URL)
 4. Generate the feed item and paste it at the top of `feed.xml` (update `lastBuildDate`):
    `node scripts/feed-item.mjs signal/YYYY-MM-DD/index.html "Issue NN: Title" "Sat, DD Mon YYYY 08:00:00 +0530"`
    It builds a rich summary of every pick, with each link pointing back to this site.
+
+## Substack post (abridged)
+`node scripts/substack-post.mjs signal/YYYY-MM-DD/index.html id1,id2,... "Title" "Subtitle"`
+prints a short, paste-ready post with six highlights. Every link points back to this site.
