@@ -64,50 +64,21 @@ section{margin-top:18px}
   <header class="m">
     <p class="kick">Signal Weekly · every Saturday</p>
     <h1>Subscribe to Signal Weekly</h1>
-    <p class="intro">Each new issue appears in your feed reader automatically on Saturday morning (IST). Choose a reader below, or copy the feed address into the app you already use.</p>
+    <p class="intro">Each new issue appears in Inoreader automatically on Saturday morning (IST), with a summary of every pick and a link back to the full issue on this site.</p>
   </header>
 
   <section class="panel" aria-labelledby="h-one">
-    <h2 id="h-one">One-click subscribe</h2>
+    <h2 id="h-one">Follow in Inoreader</h2>
     <div class="readers">
-      <a class="reader" id="feedly" href="https://feedly.com/i/subscription/feed%2Fhttps%3A%2F%2Fyathishreddy.github.io%2Ffeed.xml" target="_blank" rel="noopener">
-        <b>Feedly</b><span>Web, iOS and Android. Free account.</span><i>Subscribe in Feedly ↗</i>
-      </a>
       <a class="reader" id="inoreader" href="https://www.inoreader.com/?add_feed=https%3A%2F%2Fyathishreddy.github.io%2Ffeed.xml" target="_blank" rel="noopener">
         <b>Inoreader</b><span>Web, iOS and Android. Free account.</span><i>Subscribe in Inoreader ↗</i>
       </a>
     </div>
   </section>
 
-  <section class="panel" aria-labelledby="h-two">
-    <h2 id="h-two">Any other reader</h2>
-    <label for="feed-url" style="display:block;font-size:14.5px;margin-bottom:8px">Copy this address and paste it into your reader's "Add feed" or "Subscribe" option:</label>
-    <div class="copyrow">
-      <input id="feed-url" type="text" readonly value="https://yathishreddy.github.io/feed.xml" aria-label="Feed address">
-      <button class="btn" id="copy" type="button">Copy address</button>
-    </div>
-    <p class="status" id="status" role="status" aria-live="polite"></p>
-    <p style="margin:6px 0 0;font-size:15px">This works in any RSS reader, including NetNewsWire, Reeder, Readwise Reader, NewsBlur, The Old Reader and Thunderbird.</p>
-    <p class="note">Many readers also find the feed automatically if you paste <b>yathishreddy.github.io</b> as the address.</p>
-  </section>
-
   <section class="what" aria-labelledby="h-three">
-    <h2 id="h-three" style="font:600 13px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:30px 0 12px">What is RSS?</h2>
-    <p>RSS is an open format that lets a reader app check websites for new posts and collect them in one place. There is no sign-up on this site and no email address is shared; you can unsubscribe at any time from within your reader.</p>
-    <p>You can also read every issue directly in the <a href="../index.html">Signal Weekly archive</a>.</p>
+    <p>No sign-up is needed on this site and no email address is shared. You can unsubscribe at any time from within Inoreader, and you can also read every issue in the <a href="../index.html">Signal Weekly archive</a>.</p>
   </section>
 </div>
-<script>
-(function(){
-  var btn=document.getElementById("copy"), inp=document.getElementById("feed-url"), st=document.getElementById("status");
-  function fallback(){ inp.focus(); inp.select(); try{ document.execCommand("copy"); st.textContent="Address copied."; }catch(e){ st.textContent="Press Ctrl+C or ⌘C to copy the selected address."; } }
-  btn.addEventListener("click",function(){
-    if(navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(inp.value).then(function(){ st.textContent="Address copied. Paste it into your reader."; }, fallback);
-    } else fallback();
-  });
-  inp.addEventListener("focus",function(){ inp.select(); });
-})();
-</script>
 </body>
 </html>
