@@ -12,6 +12,7 @@
 <link rel="alternate" type="application/rss+xml" title="Signal Weekly" href="../../feed.xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="../assets/lineage.css">
 <style>
 :root{
   --bg:#F2F4F6; --surface:#FFFFFF; --surface-2:#E8ECF0; --ink:#15202B; --muted:#586674; --line:#D5DCE3;
@@ -121,20 +122,6 @@ section.col{padding-block:22px 6px;scroll-margin-top:70px}
 .also ul{margin:0;padding-left:18px;display:grid;gap:8px}
 .also li a{text-underline-offset:3px;display:inline-block;padding-block:2px}
 
-/* lineage */
-.lineage{margin-top:40px;padding-top:22px;border-top:2px solid var(--ink)}
-.lineage h2{font-family:var(--serif);font-size:30px;margin:0 0 6px}
-.lineage > p{color:var(--muted);max-width:70ch;margin:0 0 18px}
-.lin-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-@media (max-width:760px){.lin-grid{grid-template-columns:1fr}}
-.lin{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px 18px;scroll-margin-top:80px}
-.lin:target{outline:2px solid var(--accent)}
-.lin h3{font-family:var(--serif);font-size:18px;margin:0 0 2px}
-.lin .src{font:12px/1.4 var(--mono);color:var(--muted);margin:0 0 10px}
-.lin p{margin:0 0 10px;font-size:14.5px}
-.lin .used{font-size:13.5px;color:var(--muted);margin:0}
-.lin .used b{color:var(--ink);font-weight:600}
-.cite-kind{font:500 10.5px/1 var(--mono);text-transform:uppercase;letter-spacing:.06em;padding:3px 6px;border-radius:3px;border:1px solid var(--line);color:var(--muted);margin-left:6px;vertical-align:2px}
 
 .foot{margin-top:36px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:16px;display:grid;gap:6px}
 
@@ -192,7 +179,6 @@ details.deep .deep-body{padding:0 16px 18px;border-top:1px solid var(--line)}
 /* touch targets */
 .sitebar nav a{padding-block:10px;display:inline-block}
 .links a{display:inline-block;padding-block:6px}
-.lin .used a{display:inline-block;padding-block:2px}
 /* tables: keep first column readable, compact on phones */
 .tbl td:first-child,.tbl th:first-child{min-width:130px}
 /* dialog: full screen sheet on phones */
@@ -244,11 +230,7 @@ details.deep .deep-body{padding:0 16px 18px;border-top:1px solid var(--line)}
     </ul>
   </aside>
 
-  <section class="lineage" id="lineage">
-    <h2>Where these ideas come from</h2>
-    <p>Most of this week's work builds on a small number of earlier ideas. Each entry explains the idea, where it first appeared and how this week's work uses it. <span class="cite-kind">cited</span> means the new work names the source directly; <span class="cite-kind">background</span> means it is the standard origin of the technique used.</p>
-    <div class="lin-grid" id="lin-grid"></div>
-  </section>
+  <section class="lineage" id="lineage" aria-label="Where these ideas come from"></section>
 
   <footer class="foot">
     <div><b>Sources scanned for this issue:</b> arXiv (read through alphaXiv), Hugging Face papers and blog, project repositories, vendor announcements, newsletters and news coverage, and public release trackers. This week every card uses a chart drawn from the source's own numbers rather than a reproduced figure.</div>
@@ -259,6 +241,7 @@ details.deep .deep-body{padding:0 16px 18px;border-top:1px solid var(--line)}
 
 <dialog id="dlg" aria-labelledby="d-title"><div class="d-inner" id="d-inner"></div></dialog>
 
+<script src="../assets/lineage.js"></script>
 <script>
 const COLS=[
  {id:"llm",name:"LLMs & language models",c:"--c-llm",blurb:"Google answered GPT-6 and Opus 5.5 with Gemini 4 Argon, Anthropic's mid-size model caught up with its flagship, and a new paper lets models rewrite their own context.",glance:"Gemini 4 Argon leads on long-context tests, and Sonnet 5.5 nearly matches Opus 5.5 at half the price."},
@@ -655,14 +638,8 @@ document.getElementById("columns").innerHTML=COLS.map(col=>`
  </section>`).join("");
 renderFilters(); applyFilter();
 
-/* ---- lineage ---- */
-document.getElementById("lin-grid").innerHTML=LINEAGE.map(l=>`
- <article class="lin" id="lin-${l.id}">
-  <h3>${esc(l.title)}<span class="cite-kind">${l.kind}</span></h3>
-  <p class="src"><a href="${l.url}" target="_blank" rel="noopener">${esc(l.src)}</a></p>
-  <p>${esc(l.idea)}</p>
-  <p class="used"><b>Used this week:</b> ${l.used.map(([cid,t])=>`<a href="#${cid}" data-open="${cid}">${esc(byId[cid].title.split(":")[0])}</a>: ${esc(t)}`).join(" ")}</p>
- </article>`).join("");
+/* ---- lineage (shared component: ../assets/lineage.js) ---- */
+SignalLineage.render({lineage:LINEAGE,cards:CARDS,cols:COLS});
 
 /* ---- dialog (levels 2 and 3) ---- */
 const dlg=document.getElementById("dlg"), inner=document.getElementById("d-inner");
