@@ -445,7 +445,7 @@ const CARDS=[
  links:[["Liquid AI blog","https://www.liquid.ai/blog/d1-open"],["Model card","https://huggingface.co/LiquidAI/d1-omni-600M"],["Decision-model docs","https://docs.liquid.ai/lfm/models/decision-models"]]},
 
 {id:"pplxlate06",col:"slm",org:"Perplexity",date:"7 Oct",title:"pplx-embed-v2-late-0.6B: a 594M multi-vector retriever that can search a 9B model's index",
- tldr:"Perplexity's 594M model stores one 128-dimension vector per token for text, images and PDF pages, and shares a vector space with a 9B sibling, so it can query that model's index.",
+ tldr:"Perplexity's 594M model stores one 128-dimension vector per token for text, images and PDF pages, and shares a vector space with a 9B sibling, so it can query its index.",
  stat:["90.1%","agentic PDF question answering (MADQA), 594M parameters; the 9B scores 92.4%"],badge:"model · open weights (MIT)",
  chart:{title:"ViDoRe v3 image retrieval, nDCG@10 (%)",fmt:v=>v.toFixed(1)+"%",rows:[["0.6B query, 0.6B index",62.3],["0.6B query, 9B index",63.5],["9B query, 9B index",65.2]],hl:[1],caption:"Perplexity blog, 7 October 2026. Because both models share one vector space, a small query encoder recovers part of the gap to the 9B model."},
  table:{cols:["Benchmark","0.6B","9B"],num:[1,2],rows:[["Domain-specific text, 72 tasks (nDCG@10)","78.0%","81.3%"],["ViDoRe v3 Markdown (nDCG@10)","61.2%","64.7%"],["ViDoRe v3 visual (nDCG@10)","62.3%","65.2%"],["Q2D-Web combined (Recall@1000)","73.6%","74.8%"],["MADQA accuracy","90.1%","92.4%"]],hl:[0],note:"Reported by Perplexity; no technical report has been published yet."},
