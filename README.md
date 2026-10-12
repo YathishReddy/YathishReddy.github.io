@@ -9,6 +9,12 @@ signal/YYYY-MM-DD/index.html  one folder per issue
 feed.xml                   RSS for Signal Weekly
 signal/subscribe/          subscribe page (Feedly, Inoreader, copy feed URL)
 .nojekyll                  tells GitHub Pages to serve files as-is
+favicon.svg / .ico, apple-touch-icon.png, icon-192/512.png, site.webmanifest   site icon
+```
+
+Every page's `<head>` includes the five icon tags (`rel="icon"` ×2, `apple-touch-icon`, `manifest`, `theme-color`). Copy them into any new page.
+
+```
 ```
 
 ## Adding an issue
