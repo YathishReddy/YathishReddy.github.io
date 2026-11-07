@@ -1,0 +1,758 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="canonical" href="https://yathishreddy.github.io/signal/2026-11-07/">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#14202A">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Signal Weekly 07</title>
+<meta name="description" content="Signal Weekly, Issue 07 (1 – 7 Nov 2026): 18 AI research picks across LLMs, vision, agents, on-device inference, small models and infrastructure, each with a summary, key chart, results and a technical deep dive.">
+<meta property="og:title" content="Signal Weekly · Issue 07">
+<meta property="og:description" content="Agents tune the stack: 18 AI picks from 1 – 7 Nov 2026, from one-line summaries to technical deep dives.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://yathishreddy.github.io/signal/2026-11-07/">
+<link rel="alternate" type="application/rss+xml" title="Signal Weekly" href="../../feed.xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="../assets/lineage.css">
+<style>
+:root{
+  --bg:#F2F4F6; --surface:#FFFFFF; --surface-2:#E8ECF0; --ink:#15202B; --muted:#586674; --line:#D5DCE3;
+  --accent:#1F5FAD; --fig-bg:#FFFFFF;
+  --c-llm:#4B4FC4; --c-vision:#B06A12; --c-agent:#0D7F7A; --c-device:#3C7D2A; --c-infra:#A8394F; --c-slm:#8A3F8F;
+  --shadow:0 1px 2px rgba(21,32,43,.06),0 6px 20px rgba(21,32,43,.06);
+  --serif:"Literata",Georgia,"Times New Roman",serif;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0E141A; --surface:#161E26; --surface-2:#1E2831; --ink:#E4EAF0; --muted:#98A6B3; --line:#2A3641;
+    --accent:#7FB0F0; --fig-bg:#F4F6F8;
+    --c-llm:#9A9EF5; --c-vision:#E3A55A; --c-agent:#4FC7C0; --c-device:#86C66F; --c-infra:#EE8499; --c-slm:#DE9AE3;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0E141A; --surface:#161E26; --surface-2:#1E2831; --ink:#E4EAF0; --muted:#98A6B3; --line:#2A3641;
+  --accent:#7FB0F0; --fig-bg:#F4F6F8;
+  --c-llm:#9A9EF5; --c-vision:#E3A55A; --c-agent:#4FC7C0; --c-device:#86C66F; --c-infra:#EE8499; --c-slm:#DE9AE3;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55;padding-inline:16px;padding-block:0 48px}
+.wrap{max-width:1180px;margin:0 auto}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+
+/* site bar */
+.sitebar{display:flex;justify-content:space-between;align-items:center;gap:8px 16px;flex-wrap:wrap;padding-block:14px;border-bottom:1px solid var(--line);font-size:14px}
+.sitebar a{text-decoration:none}
+.sitebar .home{font-family:var(--serif);font-weight:700;color:var(--ink);font-size:16px}
+.sitebar nav{display:flex;gap:16px;flex-wrap:wrap}
+.sitebar nav a{color:var(--muted)}
+.sitebar nav a:hover{color:var(--ink)}
+
+/* masthead */
+.mast{display:grid;grid-template-columns:1fr auto;gap:8px 24px;align-items:end;padding-block:28px 18px;border-bottom:2px solid var(--ink)}
+.mast h1{font-family:var(--serif);font-weight:700;font-size:clamp(34px,6vw,54px);line-height:1;margin:0;letter-spacing:-.01em}
+.mast .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+.issue{font-family:var(--mono);font-size:12px;color:var(--muted);text-align:right;line-height:1.7}
+.issue b{color:var(--ink);font-weight:500}
+.lede{font-family:var(--serif);font-size:18px;line-height:1.5;max-width:70ch;margin:18px 0 18px;text-wrap:pretty}
+@media (max-width:620px){.mast{grid-template-columns:1fr}.issue{text-align:left}}
+
+/* week at a glance */
+.glance{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px 18px 6px;margin-bottom:6px}
+.glance h2{font:600 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+.glance ul{list-style:none;margin:0;padding:0}
+.glance li{border-top:1px solid var(--line)}
+.glance li:first-child{border-top:0}
+.glance a{display:grid;grid-template-columns:190px minmax(0,1fr);gap:4px 16px;padding-block:10px;text-decoration:none;color:var(--ink)}
+.glance a:hover .g-line{text-decoration:underline;text-underline-offset:3px}
+.glance .g-col{font:500 13px/1.4 var(--sans);color:var(--c);display:flex;gap:8px;align-items:center}
+.glance .g-col i{width:8px;height:8px;border-radius:50%;background:var(--c);flex-shrink:0}
+.glance .g-line{font-size:14.5px}
+@media (max-width:640px){.glance a{grid-template-columns:1fr}}
+
+/* how to read */
+.levels{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;color:var(--muted);padding-block:12px 2px}
+.levels b{font:500 11px/1 var(--mono);color:var(--ink);background:var(--surface-2);padding:3px 6px;border-radius:3px;margin-right:6px}
+
+/* filter bar */
+.filters{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;gap:8px;flex-wrap:wrap;padding-block:14px;border-bottom:1px solid var(--line);margin-bottom:8px}
+.chip{font:500 13px/1 var(--sans);border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:8px 12px;border-radius:999px;cursor:pointer;display:inline-flex;gap:7px;align-items:center}
+.chip .dot{width:8px;height:8px;border-radius:50%;background:var(--c)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+/* sections */
+section.col{padding-block:22px 6px;scroll-margin-top:70px}
+.col-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.col-head h2{font-family:var(--serif);font-size:24px;margin:0;font-weight:600;text-wrap:balance}
+.col-head .tag{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--c);border:1px solid var(--c);padding:4px 7px;border-radius:3px}
+.col-head p{margin:0;color:var(--muted);font-size:14px;flex-basis:100%}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.grid{grid-template-columns:1fr}}
+
+/* cards: level 1 */
+.card{all:unset;box-sizing:border-box;cursor:pointer;background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;transition:transform .15s ease,box-shadow .15s ease}
+.card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.thumb{aspect-ratio:16/9;max-width:100%;background:var(--fig-bg);border-bottom:3px solid var(--c);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:contain;padding:6px;display:block}
+.thumb.chart-thumb{background:var(--surface-2);padding:14px 16px}
+.thumb.chart-thumb svg{width:100%;height:100%}
+.thumb.stat-only{background:var(--surface-2);flex-direction:column;gap:6px;padding:12px;text-align:center}
+.thumb.stat-only b{font:500 clamp(24px,3vw,32px)/1.1 var(--mono);color:var(--c);font-variant-numeric:tabular-nums}
+.thumb.stat-only span{font-size:12.5px;color:var(--muted);max-width:26ch}
+.c-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
+.meta{display:flex;justify-content:space-between;gap:8px;font:12px/1.3 var(--mono);color:var(--muted)}
+.card h3{font-family:var(--serif);font-size:18px;line-height:1.28;margin:0;font-weight:600;text-wrap:balance}
+.card .tldr{margin:0;font-size:14px;color:var(--ink)}
+.card .tldr b{font:600 10.5px/1 var(--mono);letter-spacing:.06em;color:var(--c);margin-right:6px}
+.c-foot{margin-top:auto;display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding-top:10px;border-top:1px dashed var(--line)}
+.c-foot .s b{font:500 15px/1 var(--mono);color:var(--c);font-variant-numeric:tabular-nums;margin-right:6px}
+.c-foot .s span{font-size:12px;color:var(--muted)}
+.c-foot .more{font:500 12px/1 var(--sans);color:var(--accent);white-space:nowrap}
+
+/* also strip */
+.also{margin-top:26px;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px 18px}
+.also h2{font:600 13px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;margin:0 0 10px;color:var(--muted)}
+.also ul{margin:0;padding-left:18px;display:grid;gap:8px}
+.also li a{text-underline-offset:3px;display:inline-block;padding-block:2px}
+
+
+.foot{margin-top:36px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:16px;display:grid;gap:6px}
+
+/* dialog: level 2 and 3 */
+dialog{border:none;padding:0;background:var(--surface);color:var(--ink);border-radius:10px;width:min(880px,calc(100vw - 20px));max-height:calc(100vh - 28px);box-shadow:0 20px 60px rgba(0,0,0,.35)}
+dialog::backdrop{background:rgba(10,15,20,.55)}
+.d-inner{padding:22px 26px 28px;overflow:auto;max-height:calc(100vh - 28px);border-top:4px solid var(--c)}
+@media (max-width:560px){.d-inner{padding:18px 16px 22px}}
+.d-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.d-top h2{font-family:var(--serif);font-size:25px;line-height:1.2;margin:4px 0 0;text-wrap:balance}
+.close{all:unset;cursor:pointer;font:500 13px/1 var(--mono);padding:8px 10px;border:1px solid var(--line);border-radius:4px;color:var(--muted);flex-shrink:0}
+.d-meta{font:12px/1.4 var(--mono);color:var(--muted)}
+.d-tldr{font-family:var(--serif);font-size:18px;line-height:1.5;margin:14px 0 0;max-width:70ch}
+.d-body h4{font:600 11.5px/1 var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--c);margin:22px 0 8px}
+.d-body p{margin:0 0 10px;max-width:70ch}
+.d-body ol{margin:0;padding-left:20px;display:grid;gap:6px;max-width:68ch}
+figure.fig{margin:18px 0 0;background:var(--fig-bg);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+figure.fig img{display:block;width:100%;max-height:420px;object-fit:contain;padding:10px}
+figure.fig figcaption{background:var(--surface);border-top:1px solid var(--line);padding:9px 12px;font-size:13px;color:var(--muted)}
+figure.fig figcaption a{white-space:nowrap}
+figure.fig .missing{display:none;padding:22px 14px;text-align:center;font-size:14px;color:#41505C}
+figure.fig.broken img{display:none}
+figure.fig.broken .missing{display:block}
+figure.chart{margin:18px 0 0;background:var(--surface-2);border-radius:6px;padding:14px 16px 10px}
+figure.chart figcaption{font-size:13px;color:var(--muted);margin-top:4px}
+figure.chart .ct{font:600 13px/1.3 var(--sans);margin:0 0 8px}
+figure.chart svg{display:block;width:100%;height:auto}
+.legend{display:flex;gap:14px;font-size:12.5px;color:var(--muted);margin:0 0 6px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.tbl{overflow-x:auto;margin-top:6px;border:1px solid var(--line);border-radius:6px}
+.tbl table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:420px}
+.tbl th,.tbl td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl th{font:600 11.5px/1.3 var(--mono);text-transform:uppercase;letter-spacing:.04em;color:var(--muted);background:var(--surface-2)}
+.tbl td.n,.tbl th.n{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--mono);font-size:13px;white-space:nowrap}
+.tbl tr:last-child td{border-bottom:0}
+.tbl tr.hl td{background:color-mix(in srgb,var(--c) 12%,transparent);font-weight:600}
+.tnote{font-size:12.5px;color:var(--muted);margin:6px 0 0}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+@media (max-width:640px){.two{grid-template-columns:1fr}}
+.caveat{border-left:3px solid var(--line);padding-left:12px;color:var(--muted);font-size:14px;max-width:68ch}
+details.deep{margin-top:24px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+details.deep > summary{cursor:pointer;list-style:none;padding:14px 16px;font:600 14px/1.3 var(--sans);display:flex;justify-content:space-between;gap:10px;align-items:center}
+details.deep > summary::-webkit-details-marker{display:none}
+details.deep > summary span{font:400 12.5px/1.3 var(--sans);color:var(--muted)}
+details.deep > summary::after{content:"+";font:500 18px/1 var(--mono);color:var(--c)}
+details.deep[open] > summary::after{content:"−"}
+details.deep .deep-body{padding:0 16px 18px;border-top:1px solid var(--line)}
+.mathbox{background:var(--surface);border:1px solid var(--line);border-radius:5px;padding:12px 14px;font-size:14px;max-width:70ch}
+.mathbox code{font-family:var(--mono);font-size:13px}
+.builds{display:flex;flex-wrap:wrap;gap:8px}
+.builds a{font:500 12.5px/1 var(--sans);text-decoration:none;border:1px solid var(--line);padding:7px 10px;border-radius:999px;color:var(--ink);background:var(--surface)}
+.links{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:14px}
+@media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
+
+/* touch targets */
+.sitebar nav a{padding-block:10px;display:inline-block}
+.links a{display:inline-block;padding-block:6px}
+/* tables: keep first column readable, compact on phones */
+.tbl td:first-child,.tbl th:first-child{min-width:130px}
+/* dialog: full screen sheet on phones */
+@media (max-width:560px){
+  dialog{width:100vw;max-width:100vw;height:100dvh;max-height:100dvh;margin:0;border-radius:0}
+  .d-inner{max-height:100dvh;height:100%;padding-top:calc(16px + env(safe-area-inset-top,0px));padding-bottom:calc(24px + env(safe-area-inset-bottom,0px))}
+  .d-top h2{font-size:21px}
+  .d-tldr{font-size:16.5px}
+  .tbl table{font-size:12.5px;min-width:360px}
+  .tbl th,.tbl td{padding:7px 8px}
+  details.deep > summary span{display:none}
+  figure.fig img{max-height:300px}
+}
+/* tablet: two card columns already; widen dialog */
+@media (min-width:561px) and (max-width:1024px){ dialog{width:calc(100vw - 48px)} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="sitebar">
+    <a class="home" href="../../index.html">Yathish Reddy</a>
+    <nav aria-label="Site"><a href="../index.html">All issues</a><a href="../subscribe/index.html">Subscribe</a></nav>
+  </div>
+  <header class="mast">
+    <div>
+      <p class="kicker">An AI research digest curated by Yathish Reddy</p>
+      <h1>Signal Weekly</h1>
+    </div>
+    <div class="issue"><b>Issue 07</b><br>1 – 7 Nov 2026<br>18 picks · 6 columns</div>
+  </header>
+  <p class="lede">This week coding agents moved into the serving stack, and open agents moved closer to the frontier. Thinking Machines released Inkling 2 Small, a 594B mixture-of-experts model with 17B active parameters and Apache 2.0 weights promised, while Tencent took Hy4 out of preview and, by its own figures, leads none of 12 headline tests. The open NorthCUA family reports 88.6% on OSWorld-Verified, and ScamWorld found that frontier web agents completed the fraudulent action in 11% to 35% of scam encounters. On devices, BitLLM makes low-bit decoding on phone GPUs faster than 16-bit, and a 31.6M-parameter Turkish speech recogniser beats Whisper small. In infrastructure, Together AI's compiler and SpecPilot use agent loops to speed up inference engines, and REINFORCE Zero shows that bit-exact kernels make asynchronous RL simple.</p>
+
+  <section class="glance" aria-label="The week at a glance">
+    <h2>The week at a glance</h2>
+    <ul id="glance"></ul>
+  </section>
+  <div class="levels" aria-label="How to read this issue"><span><b>1</b>Card: a one-line summary</span><span><b>2</b>Open: key figure, results and why it matters</span><span><b>3</b>Deep dive: method, worked maths and prior work</span></div>
+
+  <nav class="filters" id="filters" aria-label="Filter columns"></nav>
+  <main id="columns"></main>
+
+  <aside class="also">
+    <h2>Also shipped this week</h2>
+    <ul>
+      <li><b><a href="https://claude.com/blog/message-threads" target="_blank" rel="noopener">Claude message threads ↗</a></b> (Anthropic, 2 Nov): a public beta in the Messages API in which agents send only new messages plus the previous response ID, while Claude still reads the full conversation. Anthropic reports about 35% lower median time to first token for 500K–1M-token requests; threads expire five minutes after the last request and billing is unchanged.</li>
+      <li><b><a href="https://vllm.ai/blog/2026-11-04-introducing-kinference" target="_blank" rel="noopener">Kinference ↗</a></b> (Buoyant, 4 Nov): an Apache-2.0 inference control plane for vLLM on Kubernetes that adds token rate limits, per-tenant cost tracking, KV-cache-aware load balancing and YAML routing policies. Buoyant reports 7.4× the goodput of standard Kubernetes load balancing on a shared-prefix workload and about 3.5× on multi-turn traffic.</li>
+      <li><b><a href="https://github.com/vllm-project/vllm/releases" target="_blank" rel="noopener">vLLM v0.33.0 ↗</a></b> (vLLM project, 2 Nov): 927 commits from 389 contributors, adding Reflection Beam-1.0 and Flint, moving AMD to ROCm 10.0 and PyTorch 2.14.0, and removing Medusa and the MLP speculator. One DeepSeek-V4.1-Flash plus DSpark benchmark on GB300 rose from 1,373 to 3,390 output tokens per second.</li>
+    </ul>
+  </aside>
+
+  <section class="lineage" id="lineage" aria-label="Where these ideas come from"></section>
+
+  <footer class="foot">
+    <div><b>Sources scanned for this issue:</b> arXiv, Hugging Face papers, models and blog, GitHub repositories, vendor announcements, newsletters and news coverage, and public release trackers. Figures are taken from the original papers, repositories and vendor pages and credited on each card. Charts drawn on this page use only numbers stated in those sources, and charts reproduced from a source carry a note that their numbers are the authors' or vendor's own.</div>
+    <div>Charts are drawn from numbers published in the original papers, blogs and repositories, with a link to each source. Most numbers are reported by the vendors or authors themselves, and each item says so. A benchmark result should be treated as a claim until it is independently reproduced.</div>
+    <div><a href="../index.html">← All issues</a> · <a href="../../index.html">About Yathish</a></div>
+  </footer>
+</div>
+
+<dialog id="dlg" aria-labelledby="d-title"><div class="d-inner" id="d-inner"></div></dialog>
+
+<script src="../assets/lineage.js"></script>
+<script>
+const COLS=[
+ {id:"llm",name:"LLMs & language models",c:"--c-llm",blurb:"Thinking Machines released Inkling 2 Small, a 594B expert model with 17B active parameters, on its Tinker platform, with Apache 2.0 weights promised for next week. Tencent took Hy4 out of preview with vision and computer use, but by its own figures it does not lead on any of 12 headline tests. A Tencent and Xi'an Jiaotong paper teaches a reasoning model when to stop thinking, and cuts its output by over 40% on maths without losing accuracy.",glance:"Thinking Machines' 594B Inkling 2 Small with open weights promised, Tencent's Hy4 out of preview, and a DPO recipe for shorter reasoning."},
+{id:"vision",name:"Vision models",c:"--c-vision",blurb:"OpenAI's GPT Image 2.6 arrives in two API variants, Flare for speed and Sunburst for detail, and adds GIF output; on DesignArena the new Sunburst is first, but only 5 Elo points above its predecessor. Wave Forcing pipelines denoising across eight GPUs to stream video at 134.8 frames per second. Kuaishou's Kling team explains the captioning, prompt-rewriting and reward models behind its video generator.",glance:"Faster OpenAI image models with GIFs, real-time video generation spread across GPUs, and how Kling's understanding stack steers its video model."},
+ {id:"agent",name:"Agentic AI",c:"--c-agent",blurb:"Open computer-use agents caught up with trillion-parameter models this week: a 397B open model family now reports the top OSWorld-Verified score among the systems it compares. Two other papers test agents outside the usual sandbox, on reconstructed scam websites and on real robot arms.",glance:"Open computer-use models top OSWorld-Verified, web agents still pay scammers, and open models learn to drive robots."},
+{id:"device",name:"On-device inference",c:"--c-device",blurb:"Three systems papers tackle the slow parts of local AI: low-bit decoding on phone GPUs, training small specialist add-ons on a phone using forward passes only, and loading models on shared-memory laptops and Jetson boards.",glance:"Faster low-bit decoding on phone GPUs, overnight training on an iPhone, and model loading cut by up to 72%."},
+ {id:"slm",name:"SLMs under 1B parameters",c:"--c-slm",blurb:"Three sub-billion models with narrow, practical jobs: a 31.6M Turkish speech recogniser trained from scratch, a 0.88B vision-language model that does certified exact arithmetic in a browser, and a 0.8B guard that checks a chatbot's answer token by token. Each comes with weights and measured deployment numbers.",glance:"Small models doing one job well: speech-to-text, exact arithmetic and streaming safety checks."},
+{id:"infra",name:"AI infrastructure",c:"--c-infra",blurb:"Agents are now optimising the serving stack itself: Together AI's compiler rewrites forward passes as traffic shifts, and SpecPilot more than doubles the speed-up from speculative decoding. On the training side, REINFORCE Zero shows that once trainer and vLLM compute identical probabilities, asynchronous RL needs no rejection gates.",glance:"Coding agents tune inference engines and drafters; aligned kernels make asynchronous RL simple."}
+];
+
+/* Each card: level 1 = title, tldr, stat, thumbnail; level 2 = fig/chart, table, short, why, caveat; level 3 = how, math, deepTable, deepFig, builds, links */
+const CARDS=[
+{id:"inkling2",
+ col:"llm",
+ org:"Thinking Machines Lab",
+ date:"5 Nov",
+ title:"Inkling 2 Small: a 594B expert model from Thinking Machines, with Apache 2.0 weights promised",
+ tldr:"Inkling 2 Small is a 594B mixture-of-experts model with 17B active parameters that accepts text and images. It is on Tinker now, and open weights are promised for next week.",
+ stat:["17B of 594B","parameters active per token (Thinking Machines)"],
+ badge:"model · weights pending (Apache 2.0)",
+ chart:{title:"DeepSWE v1.1 (%), as tabulated by Thinking Machines from external sources",fmt:v=>v.toFixed(1)+"%",rows:[["DeepSeek-V4.1-Flash-1017",77.0],["Inkling 2 Small",72.1],["Kimi K3",68.5],["GLM-5.3-Flash",63.4],["Muse Spark Open",60.0]],hl:[1],caption:"Thinking Machines says it used externally reported scores (Artificial Analysis, Vals, Scale AI, Surge) for all models. Source: Thinking Machines launch post."},
+ table:{cols:["Benchmark (Thinking Machines table)","Inkling 2 Small","DeepSeek-V4.1-Flash-1017","Kimi K3","Muse Spark Open"],num:[1,2,3,4],rows:[["HLE-Diamond (%)","28.7","25.3","26.9","26.3"],["Vibe Code Bench v1.1 (%)","81.6","87.7","85.0","76.2"],["FrontierCode v2.0 (%)","25.4","28.5","17.3","7.6"],["PostTrainBench v1.2 (%)","31.9","30.5","31.5","–"],["DesignArena Website (Elo)","1340","1297","1334","1303"],["GDPVal-AA v2.1 (Elo)","1630","1746","1543","1401"]],hl:[0],note:"From the launch post's comparison table; dashes mark scores not available. Inkling 2 Small leads its open peers on HLE-Diamond and DesignArena, but DeepSeek's smaller-priced Flash model leads on most coding rows."},
+ deepTable:{title:"Independent results from Vals AI",cols:["Vals AI benchmark","Inkling 2 Small (%)","Rank"],num:[1],rows:[["Vals Index","56.08","19 of 34"],["Finance Agent v2.1","67.54","4 of 37"],["Vals Legal Index","73.89","7 of 35"],["SAGE","88.57","8 of 29"],["Vibe Code Bench v1.1","81.55","28 of 125"],["Terminal-Bench 4.0","12.63","41 of 61"],["Terminal-Bench-Science","2.86","33 of 44"]],hl:[1],note:"Measured by Vals AI, not by Thinking Machines. Vals lists a cost of $3.509 per Vals Index test and a latency of 50 min 35 s."},
+ short:"Inkling 2 Small is a mixture-of-experts model with 594B total and 17B active parameters, a 292M vision encoder based on Perception Encoder, and pretraining phases at 512K and 1M tokens of context. It is available now for sampling and fine-tuning on the company's Tinker platform, and the company says full weights and checkpoints will follow under Apache 2.0 next week, after external safety testing. Thinking Machines cites a score of 31 on the Artificial Analysis Intelligence Index (30.6 in its own table).",
+ why:"If the weights arrive as promised, it becomes a large Apache 2.0 open-weight model that also has a hosted fine-tuning service built around it.",
+ caveat:"The weights are not yet out, the company lists weak chat presentation and poor tool choice in large codebases as known limits, and Vals AI measured only 12.63% on Terminal-Bench 4.0.",
+ how:["Pretrain a 594B mixture-of-experts model with 17B active parameters, extending context to 512K and then 1M tokens in later phases.","Post-train with reinforcement learning at 256K context, using compaction for longer trajectories, with variable effort settings.","Release on Tinker for sampling and fine-tuning first, then publish weights after external red-teaming."],
+ math:"Active share: 17 ÷ 594 ≈ <code>2.9%</code> of parameters per token. HLE-Diamond lead over Kimi K3: 28.7 − 26.9 = <code>1.8 points</code>; DeepSWE gap to DeepSeek-V4.1-Flash-1017: 72.1 − 77.0 = <code>−4.9 points</code>. The vision encoder is 292M ÷ 594B ≈ <code>0.05%</code> of the model.",
+ builds:["moe","rlvr"],
+ links:[["Thinking Machines: Introducing Inkling 2 Small","https://thinkingmachines.ai/news/inkling-2-small/"],["Vals AI results","https://www.vals.ai/models/thinkingmachines_inkling-2-small"]]},
+
+{id:"hy4",
+ col:"llm",
+ org:"Tencent Hunyuan",
+ date:"4 Nov",
+ title:"Hy4: Tencent's 770B model leaves preview with vision and computer use, and admits the gap to the frontier",
+ tldr:"Tencent's Hy4 adds image input and computer use to the 770B preview from August. Tencent's own tests place it third or fourth on most of 12 benchmarks, first on none.",
+ stat:["78.9","OSWorld 2.1, against 81.8 for Claude Opus 5.5 (Tencent)"],
+ badge:"model · API (weights planned)",
+ chart:{title:"Hy4 on Tencent's headline benchmarks (score), as reported by Tencent",fmt:v=>v.toFixed(1),rows:[["OSWorld 2.1",78.9],["E-Bench 2.0",70.0],["Hy-BrowseComp 2.0",59.9],["AutomationBench",56.2],["TenureTrail",53.6],["Terminal Bench 4.0",44.4],["ProgramBench",30.0]],hl:[0],caption:"Tencent-run results, relayed by Apiyi and explainx.ai; not independently reproduced. Hy4 ranks second on E-Bench 2.0 and third or fourth elsewhere among seven models."},
+ table:{cols:["Benchmark (Tencent)","Hy4","Claude Opus 5.5","GPT-6.1 Sol","Kimi K3.1 Pro"],num:[1,2,3,4],rows:[["OSWorld 2.1","78.9","81.8","75.2","79.6"],["Terminal Bench 4.0","44.4","66.4","55.5","66.8"],["ProgramBench","30.0","56.5","–","24.5"]],hl:[0],note:"Tencent-reported, as relayed by madrobot.blog and Apiyi; dashes mark values not given in those sources."},
+ short:"Hy4 is the full release of the 770B mixture-of-experts model Tencent previewed in August, and the first Hy model with native image understanding and command-line and desktop computer use. It is available through Tencent Cloud TokenHub, Tencent's own apps and OpenRouter at 6 yuan input and 18 yuan output per million tokens, with 50% off until 31 December. Tencent says it plans to open-source the weights; the August preview (49B active) is already on Hugging Face under Apache 2.0.",
+ why:"It is a large Chinese model that pairs vision with computer use at a low price, and Tencent is unusually direct that it still trails closed models on the hardest tasks.",
+ caveat:"Every score is Tencent's own, several on benchmarks Tencent built, and the final weights, licence and active-parameter count were not published at release.",
+ how:["Scale up pre-training and post-training data over the August Hy4 preview's 770B mixture-of-experts base.","Build visual understanding into the core model rather than adding a separate encoder, and train for command-line and GUI operation.","Ship through API and Tencent apps first, with weights and a system card promised later."],
+ math:"OSWorld 2.1 gap to Claude Opus 5.5: 81.8 − 78.9 = <code>2.9 points</code>; Terminal Bench 4.0 gap: 66.4 − 44.4 = <code>22.0 points</code>. Tencent's internal search hallucination rate falls from 15.76% to 5.45%, a relative cut of 10.31 ÷ 15.76 ≈ <code>65%</code>. Output costs 18 ÷ 6 = <code>3×</code> input; at the 50% discount, OpenRouter charges <code>$1.2505</code> per million output tokens.",
+ builds:["moe","osworld"],
+ links:[["Apiyi: Hy4 specifications, benchmarks and pricing","https://help.apiyi.com/en/tencent-hy4-770b-vision-computer-use-pricing-en.html"],["Digital Applied: what is confirmed about Hy4","https://www.digitalapplied.com/blog/tencent-hy4-release-what-is-confirmed"],["madrobot.blog: Hy4 release","https://madrobot.blog/2026/11/04/tencent-hy4-release-computer-use-open-weight/"],["Tencent Hunyuan: Hy4 announcement","https://hunyuan.tencent.com/research/hy4"]]},
+
+{id:"loco",
+ col:"llm",
+ org:"Xi'an Jiaotong University · WeChat AI (Tencent)",
+ date:"3 Nov",
+ title:"LoCo: teaching a reasoning model when to stop thinking, one decision at a time",
+ tldr:"LoCo finds points where a model keeps reasoning after it already has enough, and trains it with DPO to conclude there. Output shrinks 41.7–45.4% on maths with accuracy kept.",
+ stat:["−45.4%","completion length on AIME24, with accuracy up 3.34 points (authors)"],
+ badge:"paper · code promised",
+ chart:{title:"Reduction in completion length against the base model (%), DeepSeek-R1-Distill-Qwen-7B",fmt:v=>v.toFixed(1)+"%",rows:[["MATH-500",44.1],["AMC23",41.7],["Olympiad",44.6],["AIME24",45.4],["AIME25",45.2],["MBPP",36.3],["LiveCodeBench",24.7],["CodeContests",23.4]],hl:[3],caption:"Trained on maths traces only; the three coding benchmarks test transfer. Source: Yuan et al., Tables 1 and 2."},
+ table:{cols:["Benchmark","Base acc. (%)","LoCo acc. (%)","Base tokens","LoCo tokens","TokenSqueeze acc. (%)"],num:[1,2,3,4,5],rows:[["AIME24","50.83","54.17","13,493","7,364","48.75"],["AIME25","37.92","40.42","15,134","8,291","35.83"],["Olympiad","61.33","62.78","8,972","4,968","60.98"],["LiveCodeBench v5","41.77","42.51","12,319","9,278","41.69"],["CodeContests","18.48","20.61","14,900","11,413","19.09"]],hl:[0],note:"Means over eight samples per problem; standard deviations in the paper are large on AIME (about ±4–7 points), so small accuracy differences there are not conclusive."},
+ short:"Long reasoning models often reach the right answer and then keep deliberating. LoCo samples a model's own traces, uses a Qwen3-30B judge to flag steps where further reasoning looks unnecessary, freezes the trace up to that point, and regenerates shorter verified continuations from the same state. Pairs that save at least 300 tokens become DPO training data, so the model learns a local continue-or-conclude decision rather than a general preference for short answers. A LoRA adapter on DeepSeek-R1-Distill-Qwen-7B, trained for two epochs on four H20 GPUs, beat the DAST and TokenSqueeze baselines on accuracy-versus-length trade-off.",
+ why:"It is a cheap, self-supervised way to cut reasoning cost by roughly 40% that also transferred from maths to code.",
+ caveat:"Only one 7B distilled model was tested, AIME sets have 30 problems, and the code and model are promised rather than released.",
+ how:["Sample the model's own reasoning traces and flag candidate overthinking steps, re-checked by a judge model.","Freeze the trace at each flagged step and regenerate eight continuations, keeping verified ones that save at least 300 tokens.","Train with DPO on pairs that share the same prefix, preferring the shorter correct continuation over the original."],
+ math:"AIME24: 13,493 − 7,364 = 6,129 fewer tokens, or 6,129 ÷ 13,493 ≈ <code>45.4%</code>, while accuracy rises 54.17 − 50.83 = <code>3.34 points</code>. On MBPP accuracy is unchanged at 84.05% and tokens fall from 3,403 to 2,167, a <code>36.3%</code> cut.",
+ builds:["dpo","lora"],
+ links:[["arXiv: Think Less, Locally (2611.04814)","https://arxiv.org/abs/2611.04814"],["Code (announced)","https://github.com/MuyaoYuan/LoCo"]]},
+
+{id:"gptimage26",
+ col:"vision",
+ org:"OpenAI",
+ date:"4 Nov",
+ title:"GPT Image 2.6: two speed tiers, GIF output, and first place on DesignArena by a small margin",
+ tldr:"OpenAI's Images 2.6 ships as Flare (fast, about 6 s at low quality) and Sunburst (detail), adds GIF and SVG output, keeps 2.5 prices, and tops DesignArena by 5 Elo.",
+ stat:["1385","DesignArena Image Elo, Sunburst at max quality, ranked 1st (DesignArena)"],
+ badge:"model · API and ChatGPT",
+ chart:{title:"DesignArena Image leaderboard Elo, 7 Nov",fmt:v=>v.toFixed(0),rows:[["2.6 Sunburst (max, high)",1385],["2.5 Sunburst",1380],["2.6 Sunburst (auto, high)",1374],["2.6 Flare (auto, high)",1357],["2.5 Flare",1356],["2.6 Flare (low, medium)",1339],["2.6 Flare (low, low)",1316],["Nano Banana 2.1",1283]],hl:[0],caption:"Independent crowd preference ratings from DesignArena; brackets give quality and complexity settings. Margins are about ±1.6% for the new entries."},
+ table:{cols:["DesignArena entry","Elo","Generation time (s)"],num:[1,2],rows:[["GPT Image 2.6 Sunburst (max, high)","1385","67.1"],["GPT-Image-2.5 Sunburst","1380","23.4"],["GPT Image 2.6 Sunburst (auto, high)","1374","21.4"],["GPT Image 2.6 Flare (auto, high)","1357","12.6"],["GPT-Image-2.5 Flare","1356","16.2"],["GPT Image 2.6 Flare (low, low)","1316","6.3"]],hl:[0],note:"Generation times are as listed by DesignArena on 7 November and depend on its settings and load."},
+ deepTable:{title:"Preliminary LMArena results, 4 November (as compiled by Kingy AI)",cols:["Arena board","Model (medium)","Score","Raw rank"],num:[2,3],rows:[["Text-to-image","Sunburst","1409","2"],["Text-to-image","Flare","1384","4"],["Single-image edit","Sunburst","1476","3"],["Single-image edit","Flare","1462","5"],["Multi-image edit","Flare","1439","4"]],hl:[0],note:"Intervals were about ±9–13 points on 2,800–4,400 comparisons each; Arena and DesignArena scales are separate and should not be compared directly."},
+ short:"Images 2.6 reached all ChatGPT plans and Codex on 4 November, with two API models: gpt-image-2.6-flare, which can return a low-quality image in about six seconds, and gpt-image-2.6-sunburst, meant for detailed work and consistent multi-turn edits. OpenAI says generation is 50% faster overall, adds a complexity setting (low, medium or high) next to quality (low to max), GIF output of 2 to 64 frames, static SVG output, and image markup for guided edits in the API. Per-token prices are unchanged from 2.5 at $5 text input, $8 image input and $30 image output per million tokens.",
+ why:"Animated and vector output plus a cheap fast tier widen what an API image model can be used for without a price rise.",
+ caveat:"The quality gain is small in independent tests (Sunburst at max beats 2.5 Sunburst by 5 Elo but takes 67.1 s against 23.4 s), and OpenAI's own launch page could not be read for this summary.",
+ how:["Split the release into a fast model (Flare) and a detail and consistency model (Sunburst) at the same per-token price.","Expose separate planning (complexity) and rendering (quality) controls so users trade speed for detail.","Add GIF and SVG output on the generation endpoint and annotation-guided editing on the edit endpoint."],
+ math:"DesignArena: 1385 − 1380 = <code>5 Elo</code> over 2.5 Sunburst, inside a ±1.7% margin (about ±23 points). Time: 67.1 ÷ 23.4 ≈ <code>2.9×</code> slower at max quality. Flare on auto: (16.2 − 12.6) ÷ 16.2 ≈ <code>22%</code> faster than 2.5 Flare at +1 Elo. Default GIF: 9 frames × 200 ms = <code>1.8 s</code>. At $30 per million, 1,000 output tokens cost <code>$0.03</code>.",
+ builds:["diffusion"],
+ links:[["DesignArena Image leaderboard","https://www.designarena.ai/leaderboard/image"],["Kingy AI: specs, benchmarks and pricing","https://kingy.ai/blog/gpt-image-2-6-sunburst-flare/"],["GIGAZINE report","https://gigazine.net/gsc_news/en/20261105-openai-image-2-6/"],["OpenAI: Introducing Images 2.6","https://openai.com/index/introducing-images-2-6/"]]},
+
+{id:"waveforcing",
+ col:"vision",
+ org:"Shanghai Jiao Tong University (DENG Lab) and others",
+ date:"31 Oct · catch-up",
+ title:"Wave Forcing: streaming video at 134.8 frames per second by pipelining denoising across GPUs",
+ tldr:"Wave Forcing lets newer video chunks start denoising before older ones finish, spreading the stages over eight GPUs. A 1.3B Wan model streams at 134.8 frames per second.",
+ stat:["134.8 FPS","end-to-end, 4-step, eight H200s; 7.07× one GPU (authors)"],
+ badge:"paper · code",
+ chart:{title:"End-to-end frames per second, Wan2.1-T2V-1.3B base (higher is faster)",fmt:v=>v.toFixed(1),rows:[["Rolling Forcing, 5-step, 1 GPU",17.46],["Causal Forcing, 4-step, 1 GPU",19.06],["Rolling Forcing + causal attn, 8 GPUs",96.56],["Wave Forcing, 5-step, 8 GPUs",96.46],["Wave Forcing, 4-step, 8 GPUs",134.81]],hl:[4],caption:"Measured by the authors with BF16 and FlashAttention 3; GPU counts include denoising, cache-refresh and VAE decoding. Source: Jin et al., Table 1."},
+ table:{cols:["Method","VBench Total","Long-video Dynamic Degree","Subject preservation","Camera drift (lower is better)"],num:[1,2,3,4],rows:[["Rolling Forcing (5-step)","81.15","36.63","92.75","0.17"],["Causal Forcing (4-step)","79.61","96.61","71.11","11.14"],["Wave Forcing (4-step)","80.74","74.97","91.88","0.36"],["Wave Forcing (5-step)","81.64","91.45","97.10","0.37"]],hl:[3],note:"Long-video columns use 100-second clips. Causal Forcing's high motion score comes with the subject disappearing, which the authors flag as unusable."},
+ deepTable:{title:"Scaling to a 14B model (4-step, eight GPUs)",cols:["Configuration","DiT FPS","End-to-end FPS","Speed-up"],num:[1,2,3],rows:[["Single-GPU baseline","6.31","5.51","1.00×"],["Wave Runtime","28.74","28.64","5.20×"],["Wave Runtime + Sage + W8A8","33.64","33.50","6.08×"]],hl:[2],note:"Runtime tests use dummy DiT weights with a real VAE, so they measure speed only. Source: Jin et al., Table 4."},
+ short:"Chunk-by-chunk video generators normally finish denoising one chunk, then run an extra forward pass to refresh the cache, before starting the next, so even one-step models need two passes per chunk. Wave Forcing staggers the work like a wavefront: each GPU replica handles one denoising stage, newer chunks attend to earlier, cleaner chunks that are still in progress, and one finished chunk emerges per round once the pipeline fills. A three-stage training recipe adapts the model to this schedule, and a runtime called WaveRT delivers keys and values early and overlaps communication with computation.",
+ why:"It turns extra GPUs into real-time, long video output without dropping denoising steps, which matters for interactive world models and live generation.",
+ caveat:"Quality was tested only on the 1.3B Wan model at fixed settings, VBench misses some long-video failures, and the training recipe has several stages.",
+ how:["Assign one full-model replica to each denoising stage plus one to the cache refresh, so chunks at different stages run at once.","Train in three stages: mixed-noise denoising, motion supervision from teacher videos, then causal adaptation on self-generated history.","Run with WaveRT, which sends each layer's keys and values ahead of use, overlaps communication and pipelines VAE decoding."],
+ math:"Speed-up: 134.81 ÷ 19.06 ≈ <code>7.07×</code> on eight GPUs, or 134.81 ÷ 8 ≈ <code>16.9 FPS per GPU</code>, close to the 19.06 of one GPU alone. Long-video motion: 91.45 against Rolling Forcing's 36.63 is <code>2.5×</code> higher, with subject preservation up 97.10 − 92.75 = <code>4.35 points</code>.",
+ builds:["causvid","rollingforcing","wan"],
+ links:[["arXiv: Wave Forcing (2611.00859)","https://arxiv.org/abs/2611.00859"],["AI Weekly summary","https://aiweekly.co/alerts/wave-forcing-hits-1348-end-to-end-fps-streaming-video-on-eight-h200s-7x-over"]]},
+
+{id:"klingunderstand",
+ col:"vision",
+ org:"Kling Team (Kuaishou)",
+ date:"3 Nov",
+ title:"Behind Kling: the captioners, prompt rewriters and reward models that steer a video generator",
+ tldr:"Kling's team describes the understanding models around its video generator. Its own video reward model beats Gemini 4 Argon on pairwise preference, 77.86% against 73.54%.",
+ stat:["77.86%","pairwise preference accuracy of Kling's decision reward model, internal benchmark (Kling)"],
+ badge:"technical report",
+ chart:{title:"Macro pairwise preference accuracy on Kling's internal video benchmark (%)",fmt:v=>v.toFixed(1)+"%",rows:[["Gemini-3.8-Flash (prompted)",67.59],["Gemini-4-Argon (prompted)",73.54],["Kling general reward model",74.72],["Kling decision reward model",77.86]],hl:[3],caption:"Kling-built benchmark across nine quality dimensions; the authors note Gemini's score varied by up to 1.8 points across API gateways. Source: Kling Team, Table 17."},
+ table:{cols:["Public benchmark (accuracy, %)","Kling DRM","Kling GRM","Gemini-3.8-Flash","Best other listed"],num:[1,2,3,4],rows:[["VideoScore-Bench-v2","52.00","51.60","36.90","44.35 (VideoScore2)"],["VideoPhy2-test","44.23","38.53","47.80","47.80 (Gemini-3.8-Flash)"],["VideoGen-RewardBench","57.33","55.24","54.37","59.69 (VideoReward)"]],hl:[0],note:"Kling's text calls its decision model leading on all three, but its own Table 18 shows it ahead only on VideoScore-Bench-v2."},
+ deepTable:{title:"Text encoder choice: human preference against a Qwen text-encoder baseline",cols:["Kling-MLLM text-encoder configuration","Overall","Instruction following","Aesthetics"],num:[1,2,3],rows:[["Multimodal adaptation","1.10","1.04","1.11"],["+ multi-granular conditioning","1.22","1.11","1.22"],["+ conditioning stability","1.27","1.14","1.25"]],hl:[2],note:"Ratio (Good + Same) ÷ (Same + Bad) from side-by-side ratings; above 1.00 means a net gain. Same DiT, data and steps for each run."},
+ short:"The report argues that video quality is limited less by rendering than by how well the system understands what to draw, and walks through each understanding component around Kling's diffusion transformer. A shared Kling-MLLM (35B-A3B and 397B-A17B variants) is specialised into a dense video captioner, a reference-grounded captioner, prompt enhancers refined with reinforcement learning in which the video generator is part of the loop, a text encoder, and two reward models. Kling's captioners lead Gemini 4 Argon and Doubao 2.1 Lite on VidCapBench and UGC-VideoCap, and a text encoder trained for perception beat a stronger language model as conditioning.",
+ why:"It is a rare, detailed account from a leading video lab of the non-generator models that decide output quality, with measured effects for each.",
+ caveat:"Most benchmarks are internal, no models are released, and on two of three public reward benchmarks the report's own table contradicts its claim of leading.",
+ how:["Train one multimodal model on image, video, audio and interleaved inputs, then specialise it for each pipeline role.","Write dense captions for training videos, and train prompt enhancers to rewrite user prompts into that caption style, refined by RL with the generator in the loop.","Score candidate videos with a general reward model that explains defects and a fast decision model that scores many dimensions in one pass."],
+ math:"Decision over general reward model: 77.86 − 74.72 = <code>3.14 points</code> macro accuracy; over prompted Gemini-4-Argon: 77.86 − 73.54 = <code>4.32 points</code>. The smaller captioner activates 3 ÷ 35 ≈ <code>8.6%</code> of its parameters yet scores 95.06 against the 397B model's 95.50 on UGC-VideoCap average, a <code>0.44-point</code> gap.",
+ builds:["diffusion","recaption"],
+ links:[["arXiv: Behind Video Generation (2611.04916)","https://arxiv.org/abs/2611.04916"]]},
+
+{id:"northcua",
+ col:"agent",
+ org:"Shanghai Qiji Zhifeng (NorthCUA Team)",
+ date:"1 Nov",
+ title:"NorthCUA: an open computer-use agent family that tops OSWorld-Verified at 88.6%",
+ tldr:"NorthCUA releases 9B, 35B and 397B computer-use agents with their harness code. The 397B Pro reports 88.6% on OSWorld-Verified, above the trillion-parameter models it is compared with.",
+ stat:["88.6%","OSWorld-Verified score of NorthCUA-Pro, 397B total and 17B active parameters (reported by the authors)"],
+ badge:"paper · open weights · code",
+ chart:{title:"OSWorld-Verified score (%), as compiled in the NorthCUA report",fmt:v=>v.toFixed(1)+"%",rows:[["NorthCUA-Pro (397B / 17B)",88.6],["Qwen-CUA-Max (>1T)",87.6],["Qwen3.8-Max (2.4T / 95B)",86.1],["Claude Fable 5",86.0],["NorthCUA-Mini (35B / 3B)",85.3],["Kimi-K3 (2.8T / 104B)",84.8],["GPT-5.6 Sol",83.2],["NorthCUA-Nano (9B)",78.9]],hl:[0,4,7],caption:"Source: NorthCUA technical report, Table 8. Baseline figures follow each source's own protocol (some are the authors' re-runs); NorthCUA uses RL checkpoints on 361 tasks."},
+ table:{cols:["Model","Parameters","WebArena-Verified success (%)","OSWorld 2.0 full completion (%)","OSWorld 2.0 partial credit (%)"],num:[2,3,4],rows:[["NorthCUA-Nano","9B","67.2","13.0","45.6"],["NorthCUA-Mini","35B / 3B","70.4","18.5","50.1"],["NorthCUA-Pro","397B / 17B","73.9","30.6","66.8"],["Kimi-K3","2.8T / 104B","71.6","–","58.3"],["GPT-5.6 Sol","undisclosed","69.7","27.3","62.7"],["Claude Fable 5.1","undisclosed","–","41.7","77.9"]],hl:[2],note:"From Tables 9 and 10 of the report. On the long OSWorld 2.0 workflows, Anthropic's Claude Fable 5.1 remains well ahead of every open model listed."},
+ short:"NorthCUA is a training system and model family for agents that operate desktop and web software through screenshots, mouse and keyboard. An 'Experience Flywheel' generates executable tasks, a harness runs and checks them, and the verified trajectories (over 100,000, with more than 4 million interface steps) feed mid-training, long-horizon fine-tuning and joint desktop-and-web reinforcement learning. All three models are built on Qwen3.5 and released on Hugging Face with the harness code.",
+ why:"It gives practitioners open computer-use models at three sizes, including a 35B mixture-of-experts model with 3B active parameters, that the authors report match or beat much larger closed and open systems on standard desktop and web benchmarks.",
+ caveat:"All scores are self-reported and many baselines come from different papers and protocols, and the much harder OSWorld 2.0 full-completion rate is still only 30.6% for the largest model.",
+ how:["Generate executable desktop and web tasks with verifiers, run them in the NorthCUA Harness, and keep only verified trajectories; unsolved tasks are retried with evolving reusable skills.","Train Qwen3.5 base models through GUI mid-training and long-horizon supervised fine-tuning on that experience.","Run joint desktop–web reinforcement learning with group-relative policy optimisation, scoring fresh attempts with the task verifiers."],
+ math:"Pro versus Qwen3.8-Max on OSWorld-Verified: 88.6 − 86.1 = <code>2.5 points</code> with 2,400 ÷ 397 ≈ <code>6×</code> fewer total parameters. The Ultrafast variant cuts mean WebArena-Verified task time from 616.8 s to 266.8 s: 616.8 ÷ 266.8 ≈ <code>2.3×</code> faster, while keeping 60.6 ÷ 64.2 ≈ <code>94%</code> of full-generation success.",
+ builds:["osworld","webarena","rlvr"],
+ links:[["arXiv: NorthCUA Technical Report","https://arxiv.org/abs/2611.02102"],["Models on Hugging Face","https://huggingface.co/beipo-ai/models"],["Code (GitHub)","https://github.com/beipo-ai/NorthCUA"]]},
+
+{id:"scamworld",
+ col:"agent",
+ org:"Deakin, Fudan, Melbourne, Amazon, Shanghai Innovation Institute",
+ date:"3 Nov",
+ title:"ScamWorld: web agents from six labs were deceived by 11% to 35% of real scam websites",
+ tldr:"ScamWorld rebuilds 363 reported scam websites as safe local copies. Frontier web agents still made payments or handed over details in 11% to 35% of scam encounters.",
+ stat:["11–35%","share of scam-site episodes in which the agent completed the fraudulent action, across six backbone models (reported by the authors)"],
+ badge:"paper · benchmark · code",
+ chart:{title:"Deception rate by fraud family, pooled over six backbone models (%)",fmt:v=>v.toFixed(0)+"%",rows:[["Investment fraud",34],["Non-delivery fraud",31],["Subscription fraud",26],["Malicious downloads",8],["Credential phishing",7]],hl:[0],caption:"Source: ScamWorld paper, Section 4.2. Agents proceeded in 28% of payment scams but only 2% of scams asking for credentials, card details or wallet access."},
+ table:{cols:["Backbone","Deceived (lower is better)","Detected (higher is better)","Completed legitimate tasks"],num:[1,2,3],rows:[["GPT-5.6 Luna","0.11","0.79","0.94"],["Claude Haiku 5.5","0.18","0.79","1.00"],["Kimi K3","0.23","0.76","1.00"],["DeepSeek V4.1 Flash","0.35","0.65","1.00"]],hl:[0],note:"From Table 2 (430 tasks; 2,262 episodes on scam sites plus 53 legitimate sites). Gemini 3.8 Flash and Qwen3.8 Flash scored 0.18 and 0.26 deceived; the extracted table labels both only as \"3.8 Flash\", so they are not named separately here."},
+ short:"The authors collected 88,009 reported scam URLs, recovered complete pages, and rebuilt 363 scam websites across 16 scenarios, 38 fraud mechanisms and 26 languages. Each site shows an observable red flag before the final action, such as a deposit paid to a private individual. A standard AgentLab web agent was then given ordinary user requests on these sites, with six frontier models as the backbone.",
+ why:"Agents that shop and book on users' behalf are already meeting fraud written for humans, and this is a repeatable way to measure how often they fall for it.",
+ caveat:"Episodes start on the scam site itself, so how an agent would find it is not modelled, and the final responses are judged by an LLM (Cohen's κ 0.87 against human annotators).",
+ how:["Collect reported scam URLs, recover full pages including from the Wayback Machine, and annotate them against a catalogue of 38 fraud mechanisms.","Rebuild representative sites as persistent local websites with event logs, each showing a key red flag before the payment or disclosure step.","Give a web agent a normal user request on each site and record whether it completes the final action, stops and warns, or reports a false alarm."],
+ math:"In 220 of 492 deceived episodes the agent named a site-specific risk and proceeded anyway: 220 ÷ 492 = <code>45%</code>. A one-sentence warning in the user's request raised detection by 25 points and cut deception by 24 points, at a cost of 3 points of completion on legitimate sites. Of 363 sites, 186 fooled no model: 186 ÷ 363 ≈ <code>51%</code>.",
+ builds:["browsergym","webarena"],
+ links:[["arXiv: ScamWorld","https://arxiv.org/abs/2611.04879"],["alphaXiv page","https://www.alphaxiv.org/abs/2611.04879"],["Code (GitHub, named in the paper)","https://github.com/wuyoscar/scamworld-bench"]]},
+
+{id:"robouse",
+ col:"agent",
+ org:"Tsinghua University, UC Berkeley",
+ date:"1 Nov",
+ title:"uni-robot-agent: an open model drives robot arms through tool calls, for a twentieth of the cost",
+ tldr:"A shared tool harness lets open-weight Qwen3.8-Flash-Next control robots zero-shot. It scores 31.39 on RoboDojo, above GPT-6 Astra's published 28.97, at $1.09 per episode.",
+ stat:["31.39","RoboDojo score of open-weight Qwen3.8-Flash-Next with uni-robot-agent, against 28.97 for GPT-6 Astra with RoboProbe (reported by the authors)"],
+ badge:"paper · code",
+ chart:{title:"RoboDojo score (0–100), 42 simulated tasks, no privileged inputs",fmt:v=>v.toFixed(2),rows:[["GPT-6 Astra + uni-robot-agent",51.90],["Qwen3.8-Flash-Next + uni-robot-agent",31.39],["GPT-6 Astra + RoboProbe (published)",28.97],["DeepSeek-V4.1-Flash + uni-robot-agent",27.11],["Qwen3.8-Flash-Next + GAP harness",21.01],["Xiaomi-Robotics-1 (VLA)",20.07],["Qwen3.8-Flash-Next + RoboProbe",1.90]],hl:[1],caption:"Source: Table 1 of the paper (v2). Same Qwen model, different harnesses: 31.39, 21.01 and 1.90."},
+ table:{cols:["Real-world capability (out of 20)","π0.5, fine-tuned","Dream-1, zero-shot","GPT-6 Astra + harness","Qwen3.8-Flash-Next + harness"],num:[1,2,3,4],rows:[["Spatial understanding","11.25","6.50","17.00","9.00"],["Object generalisation","12.50","13.50","17.50","10.00"],["Instruction following","14.00","9.50","18.00","13.50"],["Compositional generalisation","6.00","10.00","20.00","13.00"],["Unseen tasks","4.00","4.00","8.00","8.00"],["Total (out of 100)","47.75","43.50","80.50","53.50"]],hl:[5],note:"19 tasks on one dual-arm platform; π0.5 was fine-tuned on 10 hours of demonstrations per task. An earlier version of the paper, as reported by AI Weekly, gave Qwen 49.50."},
+ short:"Robot-use agents treat a robot as a set of tools: a language model looks at camera images, calls functions such as locate, move and grasp, and checks the result. Until now competitive results needed closed frontier models. uni-robot-agent is a single harness with unified tools and feedback across robots and simulators, which overlaps model reasoning with physical execution and manages growing image histories.",
+ why:"It shows that open-weight models can now be studied and trained as robot controllers, at a fraction of the inference cost of closed models.",
+ caveat:"The real-world agents also received depth from RealSense cameras while π0.5 and Dream-1 used RGB only, and long-horizon tasks remain weaker than dedicated robot models.",
+ how:["Expose the robot through a common tool interface (capture_scene, locate, move, grasp, release, view_env_state) with consistent feedback formats.","Overlap model requests with physical execution, and replace old images with text placeholders to keep the context within budget.","Run the same harness with different open and closed models on 42 RoboDojo tasks and 19 real tasks, without simulator state or verifier feedback."],
+ math:"Cost per episode: $21.29 for GPT-6 Astra against $1.09 for Qwen, so 21.29 ÷ 1.09 ≈ <code>19.5×</code>. Score per dollar: 31.39 ÷ 1.09 ≈ <code>28.8</code> for Qwen versus 51.90 ÷ 21.29 ≈ <code>2.4</code> for Astra. Pipelining shortened the swap_T task from 34.7 to 12.5 minutes: 1 − 12.5 ÷ 34.7 ≈ <code>64%</code> less time.",
+ builds:["codeaspolicies","react"],
+ links:[["arXiv: Democratizing Robot-Use Agents","https://arxiv.org/abs/2611.01560"],["Hugging Face paper page","https://huggingface.co/papers/2611.01560"],["OpenRUA on PyPI (Apache-2.0, links the GitHub repo)","https://pypi.org/project/openrua/"]]},
+
+{id:"bitllm",
+ col:"device",
+ org:"University of Georgia, Western Digital Research, University of Arizona",
+ date:"31 Oct · catch-up",
+ title:"BitLLM: low-bit decoding on phone GPUs that finally runs faster than 16-bit",
+ tldr:"Phone GPUs often run 8-bit models slower than 16-bit ones. BitLLM keeps the maths in integers and reports 1.47× to 1.78× average speed-ups over four leading mobile engines.",
+ stat:["1.78×","average decoding speed-up over llama.cpp on mobile GPUs, across models and quantisation levels (reported by the authors)"],
+ badge:"paper (ASPLOS '27)",
+ chart:{title:"Average decoding speed-up of BitLLM over each engine (×)",fmt:v=>v.toFixed(2)+"×",rows:[["llama.cpp",1.78],["MNN-LLM",1.73],["LiteRT-LM",1.58],["MLC-LLM",1.47]],hl:[0],caption:"Source: BitLLM abstract; averages across Llama-3.2-1B, Qwen3-1.7B, Gemma-2-2B and Phi-2 at several precisions on a OnePlus 12 (Snapdragon 8 Gen 3, Adreno 750)."},
+ table:{cols:["Long generation, up to 10K tokens (Llama-3.2-1B)","vs llama.cpp","vs MNN-LLM","vs LiteRT-LM"],num:[1,2,3],rows:[["W4A8 average speed-up","3.25×","1.68×","1.50×"],["W8A8 average speed-up","3.96×","2.14×","1.81×"],["W8A8, against each engine's faster CPU backend","2.11×","1.65×","1.56×"]],hl:[1],note:"Baseline per-token latency shows periodic spikes as the KV cache grows; BitLLM's stays flat. MLC-LLM was excluded from this comparison because it degrades sharply at long contexts."},
+ short:"The authors found that on a OnePlus 12, INT8 decoding on the GPU was up to 2× slower than FP16, because mobile GPUs lack integer instructions and spend their time converting between number formats, while the growing KV cache is read with inefficient memory patterns. BitLLM adds a KV-cache layout that adapts as the cache grows and an execution pipeline that keeps matrix multiplications in integers, moving conversions off the critical path.",
+ why:"It turns quantisation on phone GPUs into real speed rather than only smaller files, which matters for every local assistant that decodes long answers.",
+ caveat:"Tests cover models of 1B to 3B on three Android phones, all numbers are the authors' own, and the paper does not say whether the engine will be released.",
+ how:["Profile FP16 and INT8 decoding on mobile CPUs and GPUs to locate the costs of type conversion and KV-cache access.","Pack and lay out the KV cache adaptively as its shape grows, matching the GPU's texture-cache structure.","Keep the main matrix multiplications in the integer domain with 8-bit dot-product instructions, deferring and overlapping conversion to floating point."],
+ math:"Against FP16, BitLLM reaches 1.66× at W8A8 and 2.36× at W4A8: 1.66 ÷ 2 = <code>83%</code> and 2.36 ÷ 4 = <code>59%</code> of the theoretical bounds. llama.cpp manages 0.75× at W8A8, slower than its own FP16. At a 10K-token output the W8A8 gain over llama.cpp grows from 2.0× to <code>8.35×</code>.",
+ builds:["quant"],
+ links:[["arXiv: BitLLM","https://arxiv.org/abs/2611.00547"],["alphaXiv page","https://www.alphaxiv.org/abs/2611.00547"],["ACM DOI (ASPLOS '27)","https://doi.org/10.1145/3845814.3850028"]]},
+
+{id:"mobilespec",
+ col:"device",
+ org:"University of California, Santa Barbara",
+ date:"3 Nov",
+ title:"MobileSpec: training 1–5 MB specialists on a phone with forward passes only",
+ tldr:"MobileSpec adapts a quantised on-device model into tiny task specialists without backpropagation. It lifted a 2B phone-use agent from 6–23% to 64–100% success on five tasks.",
+ stat:["10.4 h","to train a personalised specialist for an INT4 Llama-3.1-8B on an iPhone 16 Pro, peaking at 3.5 GB of memory (reported by the authors)"],
+ badge:"paper",
+ chart:{title:"Phone-use success rate (%) of MAI-UI-2B before and after training a specialist",fmt:v=>v.toFixed(1)+"%",rows:[["RequestCarpooling, base",6.2],["RequestCarpooling, specialist",98.4],["CheckEventTime, base",9.4],["CheckEventTime, specialist",100.0],["MastodonPostPoll, base",9.4],["MastodonPostPoll, specialist",68.8]],hl:[1,3,5],caption:"Source: MobileSpec paper, Table 3 (MobileWorld tasks, up to 15 ES iterations, step-wise fitness)."},
+ table:{cols:["MobileWorld task","Base (%)","Episode reward (%)","Step-wise fitness (%)"],num:[1,2,3],rows:[["MastodonReply","23.4","79.7","89.1"],["CheckEventTime","9.4","92.2","100.0"],["RequestCarpooling","6.2","14.1","98.4"],["MastodonFollow","23.4","64.1","64.1"],["MastodonPostPoll","9.4","20.3","68.8"]],hl:[2],note:"Each specialist changes 516,096 values, 0.024% of the model, and trains for 960 episodes. The paper's own step-wise credit assignment is what rescues RequestCarpooling."},
+ short:"Backpropagation needs several times the memory of inference, which a phone app does not have. MobileSpec instead uses evolution strategies: it tries small random perturbations, scores each with an automatic task check or the likelihood of the user's own records, and moves towards the better ones. Its FuRA-S method perturbs only the singular values of column blocks of each weight matrix, which mimics how reinforcement learning changes weights and works on top of INT4 models without altering them.",
+ why:"It points to a practical way for a phone to tune its shared local model to one user's apps and habits overnight, with each specialist stored as a 1–5 MB file.",
+ caveat:"The phone-use results come from emulated Android tasks rather than on-phone training, and the iPhone run covers one user, where the specialist answered 8 of 15 held-out queries against 5 for the base model.",
+ how:["Keep one INT4 generalist on the device and represent each specialist as relative changes to block singular values.","When the phone is idle, evaluate perturbed copies on the task using forward passes only, scoring them with a verifier or the user's record likelihood.","Move the specialist towards the better-scoring perturbations, streaming decoder layers from flash so that training fits within the app memory limit."],
+ math:"On the iPhone, 20 iterations took 10.4 h: 10.4 × 3,600 ÷ 20 = <code>1,872 s</code> per iteration, of which streaming weights from flash took 14 s, about <code>0.75%</code>. The INT4 model is 5.5 GB, above the 5.3 GB available to an app, yet training used 2.1 GB resident and peaked at <code>3.5 GB</code>.",
+ builds:["mezo","rlvr","lora"],
+ links:[["arXiv: Training Specialist LLMs on Your Phone","https://arxiv.org/abs/2611.04797"],["alphaXiv page","https://www.alphaxiv.org/abs/2611.04797"]]},
+
+{id:"umload",
+ col:"device",
+ org:"Shanghai Jiao Tong University",
+ date:"3 Nov",
+ title:"UMLoad: loading local models up to 72% faster on shared-memory laptops and Jetson boards",
+ tldr:"On machines where CPU and GPU share memory, frameworks still copy weights as if the GPU were separate. UMLoad removes that copy, cutting loading time by 36.6% to 71.9%.",
+ stat:["71.9%","average cut in model-loading time over vanilla loading on an Intel Core Ultra 9 185H laptop (reported by the authors)"],
+ badge:"paper",
+ chart:{title:"Average reduction in model-loading time (%)",fmt:v=>v.toFixed(1)+"%",rows:[["Intel Core Ultra 9 185H, vs vanilla",71.9],["AMD Ryzen AI 9 HX 370, vs vanilla",44.7],["NVIDIA Jetson AGX Orin, vs vanilla",36.6],["Intel, vs pipelined loader",62.7],["AMD, vs pipelined loader",19.9],["NVIDIA, vs pipelined loader",22.3]],hl:[0],caption:"Source: UMLoad paper, Section 7.1; averaged over PyTorch, llama.cpp and vLLM runs with Qwen3-1.7B, Qwen2.5-3B, Qwen2.5-7B and three vision models."},
+ table:{cols:["Measure","Result"],num:[],rows:[["Share of response latency spent loading models (four on-demand workloads)","29.0%–80.9%"],["Mean LLM-routing time to first token","51.3%–59.3% lower"],["Model-backed tool completion latency","10.2%–31.6% lower"],["Intel, PyTorch, Qwen2.5-7B: time saved over vanilla","5.38 s"]],hl:[1],note:"Vanilla Qwen2.5-7B could not be loaded on the AMD and NVIDIA boards because transient peak memory exceeded the budget; UMLoad could load it."},
+ short:"Laptop integrated GPUs, AMD's Ryzen AI chips and NVIDIA Jetson boards all use unified memory, where the CPU and GPU share one pool of DRAM. Yet llama.cpp, PyTorch and vLLM load weights by reading them into a host buffer and copying them again for the GPU, then zero fresh GPU allocations on the CPU. UMLoad separates a framework's logical allocations from the physical pages behind them, so the weights read from disk become the GPU's copy directly, and it zeroes new allocations on the GPU.",
+ why:"Local assistants increasingly switch between chat, vision, speech and tool models on demand, so cold-start loading often dominates the wait a user sees.",
+ caveat:"It requires modified kernel drivers and user-space runtimes (roughly 1,200 to 3,400 added lines per component for each vendor), so it is not something users can install today.",
+ how:["Intercept the framework's allocation and copy calls in the user-space driver.","Rebuild the GPU buffer from the pages already holding the file data instead of copying them, while preserving independent-copy semantics.","Zero runtime allocations such as the KV-cache reservation with GPU kernels in pipelined batches, rather than on the CPU."],
+ math:"For the 3.7 GB Qwen3-1.7B example on the Intel laptop, file I/O is only 61% of the 0.97 s pipelined transfer, so 0.39 × 0.97 ≈ <code>0.38 s</code> is memory preparation that UMLoad targets. Against pipelined loading on NVIDIA, the gain shrinks from 44.0% at 3B to <code>22.1%</code> at 7B as disk reads dominate.",
+ builds:["serverlessllm"],
+ links:[["arXiv: UMLoad","https://arxiv.org/abs/2611.04253"],["alphaXiv page","https://www.alphaxiv.org/abs/2611.04253"]]},
+
+{id:"kulak",
+ col:"slm",
+ org:"ufak AI",
+ date:"2 Nov",
+ title:"ufakzeka-kulak: a 31.6M Turkish speech recogniser that beats Whisper small",
+ tldr:"An open 31.6M-parameter Turkish speech-to-text model, trained from scratch on commercially licensed audio, scores lower word error than Whisper base and small and runs offline on laptops or in browsers.",
+ stat:["9.21%","word error rate on FLEURS Turkish test, against 24.61% for Whisper base (measured by the author)"],
+ badge:"paper · open weights (Apache-2.0)",
+ chart:{title:"FLEURS Turkish test, normalised word error rate (%, lower is better)",fmt:v=>v.toFixed(2)+"%",rows:[["Whisper base",24.61],["Whisper small",13.42],["ufakzeka-kulak (31.6M)",9.21],["Whisper large-v3 (greedy)",6.04]],hl:[2],caption:"All scored by the author with the same Turkish normaliser. The Whisper small value is computed from the reported paired difference (9.21 + 4.21). Source: arXiv 2611.03605, Table 3."},
+ table:{cols:["Test set","Utterances","kulak WER (%)","Whisper base WER (%)"],num:[1,2,3],rows:[["FLEURS test","743","9.21","24.61"],["Common Voice 27.0 test","11,874","9.16","32.87"],["Real-TurnTurk (conversational)","1,532","38.07","72.42"],["MediaSpeech","2,511","10.42","32.82"]],hl:[0],note:"Greedy TDT decoding in NeMo float32. Whisper large-v3 scores 7.67% on Common Voice test. Release was gated on beating Whisper base on FLEURS and Common Voice with paired intervals wholly below zero."},
+ short:"ufakzeka-kulak is a FastConformer encoder with a token-and-duration transducer (TDT) decoder and a CTC head, 31,564,935 parameters in total, trained from scratch with NVIDIA NeMo on 4,977 hours of Turkish audio. Only 281 hours are human-transcribed; for the other 4,696 hours, machine transcripts were kept only where a second, independent recogniser agreed. It writes cased, punctuated Turkish and ships as transformers, sherpa-onnx, GGUF (parakeet.cpp) and MLX exports, each checked against NeMo.",
+ why:"It shows that a carefully labelled, single-language model of 31.6M parameters can beat the small Whisper models for offline, commercially usable transcription.",
+ caveat:"Conversational speech remains hard (38.07% WER), the model is not streaming and needs voice activity detection for long audio, and it was trained with a single seed.",
+ how:["Transcribe YouTube audio with Whisper large-v3-turbo and keep a transcript only if Omnilingual ASR CTC 7B reads the same audio within 10% character error.","Train a 16-layer FastConformer with TDT and CTC heads from scratch, choosing recipe changes only through pilots read by rules fixed in advance.","Export to transformers, sherpa-onnx int8, GGUF q8_0 and MLX, and ship an export only if its WER stays within 0.005 of NeMo."],
+ math:"Float32 size: 31,564,935 × 32 ÷ 8 = <code>126.3 MB</code>, matching the 126,955,520-byte NeMo file. At 8 bits: 31,564,935 × 8 ÷ 8 ≈ <code>31.6 MB</code> of weights (the shipped q8_0 GGUF file is 58,147,232 bytes). On an Apple M1 at one thread the int8 TDT files run at a real-time factor of 0.0101, so audio is transcribed about 1 ÷ 0.0101 ≈ <code>99×</code> faster than real time.",
+ builds:["tdt","fastconformer"],
+ links:[["Paper (arXiv 2611.03605)","https://arxiv.org/abs/2611.03605"],["Model on Hugging Face","https://huggingface.co/ufakai/ufakzeka-kulak"],["Code","https://github.com/ufakai/ufakzeka-kulak"]]},
+
+{id:"sketchpad",
+ col:"slm",
+ org:"MIT Media Lab",
+ date:"3 Nov",
+ title:"Sketchpad: a 0.88B vision-language model that does certified exact arithmetic in a browser",
+ tldr:"Qwen3.5-0.8B with a 10.2M-parameter adapter reads three cells of a rendered sheet per step. A Lean proof makes checking 2,446 views a guarantee of exactness at any length.",
+ stat:["220 / 220","pre-registered long sums and products solved exactly; GPT-6.1 Sol solved 217 (reported by the author)"],
+ badge:"paper · code (Apache-2.0)",
+ chart:{title:"Exact answers on 220 pre-registered problems (%): sums up to 1,000 digits, products up to 20 digits",fmt:v=>v.toFixed(1)+"%",rows:[["Sketchpad (Qwen3.5-0.8B on the sheet)",100],["GPT-6.1 Sol, high reasoning",98.6],["Claude Opus 5.5, high reasoning",98.2],["Gemini 4 Argon, high reasoning",94.1],["DeepSeek-V4-Pro, high reasoning",90.5],["Qwen3.5-27B, thinking",55],["Qwen3.5-0.8B alone, no thinking",10.5]],hl:[0],caption:"Same prompt and 32,768-token output budget for all models. Source: arXiv 2611.04434, Fig. 1c."},
+ table:{cols:["Browser task (Apple M4, WebGPU, 16-bit)","Exact (of 50)","Median seconds","Max seconds"],num:[1,2,3],rows:[["Signed ±, up to 20 digits","50","2.0","4.7"],["a ÷ b to 10 places","50","7.0","13.3"],["gcd(a, b), a, b ≤ 999","50","7.0","13.4"],["√a to 6 places","50","9.8","16.5"]],hl:[0],note:"One problem at a time in the browser. The full 2,446-view certificate check takes 3.5 minutes on the M4; the smallest margin is 3.02 logits."},
+ short:"Sketchpad keeps all state on an external sheet of 32-pixel digit cells. At each step the model sees only a three-cell view as three image tokens and emits a digit, a carry and the next operation; a fixed runtime moves the view and writes nothing itself. Because every possible view is listed in nine finite tables, the author proves in Lean that passing all 2,446 views implies exactness on inputs of any length, and checks them on the deployment device.",
+ why:"It turns the reliability of a small model on one task from a sampled accuracy estimate into a checkable certificate, while keeping the computation inside the network.",
+ caveat:"The guarantee covers the model's steps relative to a hand-written runtime, and the dialogue adapter that calls the sheet loses 5.8 points on fresh grade-school word problems.",
+ how:["Render each step's three-cell view of the sheet as a 32 × 96-pixel strip that the vision encoder reads as three tokens.","Train a rank-16 LoRA adapter on 150 projection matrices so one forward pass outputs digit, carry and next operation.","Check every view in the finite tables on the target device, and recheck the weakest tenth on each new GPU."],
+ math:"Total parameters: 873,438,784 (base) + 10,223,616 (adapter) = <code>883,662,400</code>, under 1B. At 16 bits: 883,662,400 × 16 ÷ 8 ≈ <code>1.77 GB</code> (the ONNX export stores token embeddings at 4 bits, so the shipped file is smaller). The adapter is 10,223,616 ÷ 873,438,784 ≈ <code>1.2%</code> of the base. Theorem 3: a margin of 3.02 logits tolerates any logit change below 3.02 ÷ 2 = <code>1.51</code>.",
+ builds:["lora","gdn"],
+ links:[["Paper (arXiv 2611.04434)","https://arxiv.org/abs/2611.04434"],["Code and Lean proofs","https://github.com/NeoVand/sketchpad"]]},
+
+{id:"haloguard2",
+ col:"slm",
+ org:"Astroware AI",
+ date:"1 Nov",
+ title:"HaloGuard 2.0: a 0.8B guard that scores every token of a chatbot's reply as it streams",
+ tldr:"An open 0.8B streaming output guard gives each response token a safe/unsafe probability in one pass, matching 4B–8B full-response guards on six English benchmarks.",
+ stat:["83.6","mean F1 on six English response-safety benchmarks, against 81.0 for Qwen3Guard-Stream-4B (reported by the authors)"],
+ badge:"paper · open weights (Apache-2.0)",
+ chart:{title:"Response-harmfulness F1, mean of six English benchmarks",fmt:v=>v.toFixed(2),rows:[["HaloGuard 2.0-0.8B",83.63],["Qwen3Guard-Gen-4B",83.57],["Qwen3Guard-Gen-8B",83.57],["WildGuard-7B",81.37],["Qwen3Guard-Stream-4B",81.0],["Qwen3Guard-Stream-0.6B",78.8],["LlamaGuard3-8B",70.5]],hl:[0],caption:"Baselines as reported in the HaloGuard 1.0 and Qwen3Guard reports (Qwen3Guard in strict mode). Benchmarks: HarmBench, SafeRLHF, BeaverTails, XSTest-R, Aegis 2.0, WildGuardTest. Source: arXiv 2611.02134, Tables 9–10."},
+ table:{cols:["Benchmark","HaloGuard 2.0-0.8B F1"],num:[1],rows:[["HarmBench","96.4"],["XSTest-R","85.4"],["Aegis 2.0","83.5"],["BeaverTails","83.0"],["SafeRLHF","81.7"],["WildGuardTest","71.9"]],hl:[0],note:"Per-benchmark values from the model card. On WildGuardTest the guard misses close to a third of harmful responses (false-negative rate 30.1%), the authors' stated target for the next round."},
+ short:"HaloGuard 2.0 puts a token-level classification head on a Qwen3.5-0.8B backbone, so a serving system can stop a response the moment it turns harmful rather than buffering the whole answer. The authors found that a guard trained on ordinary data learns a shortcut, judging the prompt instead of the response, and handles only 13.9% of matched safe and unsafe pairs. A second phase on 106,043 counterfactual responses fixes this, and the release is the equal-weight average of the base and corrective models.",
+ why:"Output-side moderation that runs alongside generation catches harm that input filters cannot see, such as jailbreak payloads or drifting role-play, at a size one GPU can serve for many streams.",
+ caveat:"The exact parameter count is not published (the Hub lists 0.8B), the lead over Qwen3Guard-Gen-4B is only 0.06 F1, and WildGuardTest remains weak at 71.9.",
+ how:["Organise 478,532 responses with the HaloGuard 1.0 constitution and label each token from the point a response becomes harmful.","Train a second phase on 106,043 counterfactual responses aimed at the base guard's own failure modes, then average the two models' weights.","At serving time, read the prompt once and update the recurrent state per generated token, stopping the stream when the latched threshold is crossed."],
+ math:"Size at BF16 for the 0.8B label: 0.8 × 10⁹ × 16 ÷ 8 ≈ <code>1.6 GB</code>; the card asks for a GPU with at least 4 GB. On one H100, a step for 64 streams takes 23.7 ms, so 23.7 ÷ 64 ≈ <code>0.37 ms</code> per token per stream, or 64 ÷ 0.0237 s ≈ <code>2,700</code> tokens per second (2,705 reported). Going from batch 1 (22.2 ms) to batch 64 adds 1.5 ÷ 22.2 ≈ <code>6.8%</code> wall time (6.7% reported).",
+ builds:["gdn"],
+ links:[["Paper (arXiv 2611.02134)","https://arxiv.org/abs/2611.02134"],["HaloGuard2-Stream-0.8B on Hugging Face","https://huggingface.co/astroware/HaloGuard2-Stream-0.8B"],["Multilingual variant","https://huggingface.co/ash-astro/HaloGuard2.0-Poly-0.8B"]]},
+
+{id:"tkcc",
+ col:"infra",
+ org:"Together AI",
+ date:"4 Nov",
+ title:"Together Compiler: agents that keep rewriting the inference engine as traffic changes",
+ tldr:"Together AI's agent loop hot-reloads candidate forward passes into a running engine, testing 252 times more experiments than prior systems and beating the best InferenceX configurations by up to 2.6×.",
+ stat:["1,111","P90 tokens/s per user on MiniMax M3.1 Flash (B200), against 633 for the best InferenceX entry (Together AI)"],
+ badge:"technical report · production system",
+ chart:{title:"Low-concurrency speed-up over the best InferenceX configuration (P90 tokens/s per user, ×)",fmt:v=>v.toFixed(2)+"×",rows:[["MiniMax-M3.1-Flash, B200",1.76],["DeepSeek-V4.1-Flash, GB300",1.28],["GLM-5.3, B200",1.27],["DeepSeek-V4.1-Flash, B200",1.21],["Kimi K3, GB300",1.06],["GLM-5.3, MI355X",1.04]],hl:[0],caption:"Ratios computed from Figure 8 of the report (for example 1,111 ÷ 633), with the parallelism layout chosen by TKCC's cost model. The headline 2.6× comes from throughput-versus-interactivity curves in Figure 7. Source: Together AI technical report."},
+ table:{cols:["Model, chip","InferenceX best (tok/s/user)","Together Compiler (tok/s/user)"],num:[1,2],rows:[["MiniMax-M3.1-Flash, B200","633","1,111"],["DeepSeek-V4.1-Flash, B200","671","813"],["GLM-5.3, B200","329","417"],["Kimi K3, GB300","423","450"],["DeepSeek-V4.1-Flash, GB300","943","1,205"],["GLM-5.3, MI355X","463","480"]],hl:[0],note:"Baselines as of 27 October 2026. For MiniMax, the cost model picked TP8 instead of the leaderboard's TP4 because batch-1 decode is memory-bound."},
+ short:"Together Compiler (TKCC) starts the production engine once, then lets agents submit new forward-pass code that is hot-reloaded over RPC and measured in two tiers: a fast tier for iteration and a slower, higher-fidelity tier for data-dependent effects such as mixture-of-experts imbalance. A cost model picks which parallelism layouts to optimise first. The report says engine time-to-serving drops from 467 s to 9.0 s, results hold across vLLM, SGLang, B200, B300, MI355X and Trainium2, and the system already serves trillions of tokens.",
+ why:"It makes agent-driven kernel and engine tuning a continuous production process, tracking shifts in traffic shape rather than optimising once per model release.",
+ caveat:"All numbers are Together AI's own, most use at most 2 nodes and 24 hours per setting, and the compiler is not offered as open source or as a product with a release date.",
+ how:["Initialise the inference engine once and expose an endpoint that accepts an agent's forward pass and patches the model's forward pointer in place.","Screen candidates in a fast tier, then confirm promising ones in a slow tier with real traffic shapes and checks for KV-cache contamination and quality.","Use an analytical-plus-measured cost model to choose parallelism layouts, then apply optimisations selectively by active batch size."],
+ math:"MiniMax M3.1 Flash: 1,111 ÷ 633 ≈ <code>1.76×</code> (reported as 1.8×). DeepSeek-V4.1-Flash on GB300: 1,205 ÷ 943 ≈ <code>1.28×</code>. Engine startup: 467 ÷ 9.0 ≈ <code>52×</code> shorter, which is what lets the agents run 252 times more experiments. Megakernel comparison: up to 1.7× on Llama 1B at batch size 1 (about 2,100 tokens/s).",
+ builds:["thunderkittens","flashattn"],
+ links:[["Together AI blog","https://www.together.ai/blog/together-compiler-continual-compilation-for-ai-inference"]]},
+
+{id:"specpilot",
+ col:"infra",
+ org:"UC Berkeley, Princeton, Stanford, NVIDIA",
+ date:"2 Nov",
+ title:"SpecPilot: an agent loop that more than doubles the speed-up from speculative decoding",
+ tldr:"Parallel agents, a cost model and token-by-token output checks find lossless optimisations, including a 12-bit weight format, raising single-request speed-up over plain decoding from 4.46× to 10.87×.",
+ stat:["10.87×","speed-up over autoregressive decoding with one request, Qwen3.8-27B BF16 with DFlash2 on RTX PRO 6000 (authors)"],
+ badge:"paper · code",
+ chart:{title:"Speed-up over autoregressive decoding, one request (×)",fmt:v=>v.toFixed(2)+"×",rows:[["Qwen3.8-27B, DFlash2, H100: stock",3.95],["Qwen3.8-27B, DFlash2, H100: SpecPilot",8.86],["Qwen3.8-27B, DSpark, H100: stock",3.74],["Qwen3.8-27B, DSpark, H100: SpecPilot",9.41],["Muse-Glimmer-30B, DFlash2, RTX PRO 6000: stock",4.69],["Muse-Glimmer-30B, DFlash2, RTX PRO 6000: SpecPilot",10.63],["Qwen3.8-27B, DFlash2, RTX PRO 6000: stock",4.46],["Qwen3.8-27B, DFlash2, RTX PRO 6000: SpecPilot",10.87]],hl:[1,3,5,7],caption:"Averages over five benchmarks, BF16 targets, no retraining. Source: arXiv 2611.02501, Figure 1 and Table 1."},
+ table:{cols:["Batched setting (H100)","Stock speed-up","SpecPilot speed-up"],num:[1,2],rows:[["Qwen3.8-27B FP8, DFlash2","2.02×","3.90×"],["Qwen3.8-27B FP8, DSpark","1.94×","3.93×"],["Qwen3.5-4B BF16, DFlash2","1.51×","3.77×"],["Gemma-4-12B BF16, EAGLE-3","0.68×","2.09×"]],hl:[1],note:"Averaged over 16–48 concurrent requests depending on the model. Stock EAGLE-3 on Gemma-4-12B is slower than plain decoding under batching."},
+ short:"Released speculative-decoding systems leave much of their potential unused: with one request they verify only one drafted chain, and with batching their speed-up roughly halves. SpecPilot runs rounds in which a cost model locates the largest gap to an estimated ceiling, parallel agents try fixes on separate GPUs, and an isolated controller accepts a change only if the gain holds on unseen requests and every output token matches the stock system. Its discoveries include best-first tree verification that works on hybrid recurrent targets, two-level verification, three batching mechanisms and W12, a lossless 12-bit weight format.",
+ why:"It shows that much of the remaining speed in speculative decoding is deployment-specific engineering that agents can find, provided the evaluator blocks reward hacking through exact output checks.",
+ caveat:"The speed-ups are measured by the authors on BF16 and FP8 targets with up to 48 requests, and the loop cost 530 GPU-hours over thirteen rounds.",
+ how:["Model the speed-up over plain decoding as a function of step cost and accepted tokens, and compare measurements with an estimated ceiling.","Let parallel agents explore the largest gaps, accepting a patch only on a significant gain on unseen requests that passes token forcing against stock.","Store validated mechanisms as replayable code in a structured memory and reuse them for new targets, drafters and GPUs."],
+ math:"Single request: 10.87 ÷ 4.46 ≈ <code>2.44×</code> more speed-up than stock. Batching: 3.93 ÷ 1.94 ≈ <code>2.03×</code>. W12 stores each in-window weight as 1 sign + 4 exponent-offset + 7 mantissa bits = <code>12 bits</code>, and averages 12.01–12.02 bits per weight, so weight reads fall to about 12.02 ÷ 16 ≈ <code>75%</code> of BF16. Loop cost: 530 GPU-hours ÷ 13 rounds ≈ <code>41 GPU-hours</code> per round.",
+ builds:["specdec","dflash","dfloat11"],
+ links:[["Paper (arXiv 2611.02501)","https://arxiv.org/abs/2611.02501"],["Paper on alphaXiv","https://www.alphaxiv.org/abs/2611.02501"]]},
+
+{id:"rzero",
+ col:"infra",
+ org:"NVIDIA Research, Inferact, AMD",
+ date:"6 Nov",
+ title:"REINFORCE Zero: once trainer and vLLM agree bit for bit, asynchronous RL needs no rejection gates",
+ tldr:"Aligning rollout and training kernels removes the noisy part of the probability gap; plain REINFORCE with unclipped importance sampling then trains stably at policy lag 64, 2.40× faster than synchronous.",
+ stat:["2.40×","training-step throughput of asynchronous over synchronous RL with aligned kernels, 16 GPUs, 12K updates (authors)"],
+ badge:"blog · paper · code",
+ chart:{title:"Macro pass@1 after 6,000 updates, 1.5B reasoning model (%)",fmt:v=>v.toFixed(2)+"%",rows:[["Base model",40.29],["Synchronous, aligned kernels",48.91],["Async IS, standard kernels",45.32],["Async IS + sequence gate",46.79],["Async IS + token gate",44.59],["Score centering, no IS (aligned)",47.5],["REINFORCE Zero, lag 2",48.8],["REINFORCE Zero, lag 8",48.53]],hl:[6,7],caption:"DeepSeek-R1-Distill-Qwen-1.5B. Source: vLLM blog, 6 November 2026, ablation table from the REINFORCE Zero paper."},
+ table:{cols:["Setting","Result reported"],num:[],rows:[["Qwen3-30B-A3B, tools","Macro pass@1 31.29% → 71.55% in 3,000 updates"],["Nemotron-3-Nano-Omni-30B, OSWorld","Pass@1 50.97% → 56.16% after 428 updates"],["Qwen3-4B, Python tools, lag 64","Reward 0.287 → about 0.78 over 5,000 updates"],["DeepSeek-V4-Flash on 4 × 8 MI355X","Logprob difference 0 for 36 GRPO steps"],["Without alignment (standard kernels)","Online AIME24 pass@1 falls 34.27% → 13.96%"]],hl:[0],note:"On AMD, bisection found ten sources of batch variance, including shape-dependent kernel choice and an expert-parallel combine that summed ranks in arrival order."},
+ short:"In asynchronous RL the learner trains on samples from older weights, and the gap between rollout and learner log-probabilities has two parts: weight lag, which changes smoothly, and kernel mismatch, which fluctuates. The recipe aligns the kernels first, with the trainer calling vLLM's own modules in the same order, so the two compute identical log-probabilities; plain REINFORCE with exact, unclipped token-level importance weights then corrects the lag. The post reports bit-exact runs on DeepSeek-V4.1-Flash, Kimi K3.1 and AMD MI355X clusters.",
+ why:"It removes the sample-rejection heuristics that asynchronous RL usually needs, so faster asynchronous training no longer trades away stability.",
+ caveat:"Alignment costs time, for example a 6.8% longer mean step on OSWorld, and the cost on Kimi K3.1 for AMD is still being measured.",
+ how:["Make rollout and trainer compute the same log-probability for the same weights and tokens, including prefix-cache hits and speculative decoding paths.","Divide the learner's probability by the logprob the rollout recorded, with no clipping, truncation or filtering.","Use plain REINFORCE with group-mean reward baselines, averaging tokens within each response."],
+ math:"Throughput: 164.77 ÷ 68.55 hours ≈ <code>2.40×</code>. Alignment overhead on OSWorld: 944.25 ÷ 884.17 s ≈ <code>1.068</code>, so <code>6.8%</code> slower per step. Without alignment, the largest pre-clip gradient norm is 38.27 against 0.0555 with aligned kernels, about 38.27 ÷ 0.0555 ≈ <code>690×</code> larger; the sequence gate that tames this rejects 24.48% of sequences by the last 1,000 updates, against none for REINFORCE Zero.",
+ builds:["rlvr"],
+ links:[["vLLM blog: Zero Mismatch, Simple Async RL","https://vllm.ai/blog/2026-11-06-zero-mismatch-async-rl"],["REINFORCE Zero paper and code","https://github.com/hijkzzz/REINFORCE-Zero"],["Zero-mismatch agent skill and recipes","https://github.com/Inferact/zero-mismatch-rl"]]}
+];
+
+const LINEAGE=[
+ {"id":"moe","title":"Mixture of Experts","src":"Shazeer et al., 2017 · arXiv 1701.06538","kind":"background","url":"https://arxiv.org/abs/1701.06538","idea":"Replace one big layer with many smaller \"expert\" layers plus a router that sends each token to only a few of them. Total knowledge grows while compute per token stays small.","used":[["inkling2","Inkling 2 Small routes each token through experts totalling 17B of its 594B parameters."],["hy4","Hy4 keeps the 770B mixture-of-experts design of its preview, which activated 49B parameters per token."]],"group":"arch"},
+ {"id":"rlvr","title":"RL with verifiable rewards (GRPO)","src":"Shao et al., DeepSeekMath, 2024 · arXiv 2402.03300","kind":"background","url":"https://arxiv.org/abs/2402.03300","idea":"Let the model attempt a task many times, reward attempts a program can check (tests pass, answer matches), and push the model toward the better-than-average attempts in each group. No human labels and no separate value model are needed.","used":[["inkling2","Inkling 2 Small is post-trained with reinforcement learning at 256K context, with compaction for longer agent trajectories."],["northcua","NorthCUA's final stage is reinforcement learning with outcome rewards from task verifiers, using group-relative policy optimisation."],["mobilespec","MobileSpec learns from automatically checked task outcomes, as in RLVR, and designs its perturbations to resemble RLVR weight changes."],["rzero","REINFORCE Zero is a simpler policy-gradient recipe for verifiable-reward RL, with group-mean baselines and no value model."]],"group":"training"},
+ {"id":"osworld","title":"OSWorld: benchmarking agents on real computers","src":"Xie et al., 2024 · arXiv 2404.07972","kind":"background","url":"https://arxiv.org/abs/2404.07972","idea":"Put agents in a real operating system and ask them to finish open-ended tasks with mouse, keyboard and terminal. A script checks the final state of the machine, so success is not judged from the agent's own text.","used":[["hy4","Tencent's headline computer-use score is on OSWorld 2.1, where Hy4 reports 78.9 against 81.8 for Claude Opus 5.5."],["northcua","NorthCUA's headline result is 88.6% on OSWorld-Verified, and it also reports OSWorld 2.0 and OSWorld-G."]],"group":"eval"},
+ {"id":"lora","title":"LoRA: low-rank adaptation","src":"Hu et al., 2021 · arXiv 2106.09685","kind":"background","url":"https://arxiv.org/abs/2106.09685","idea":"Freeze the model and train small low-rank matrices added to each weight, removing almost all gradient and optimiser memory.","used":[["loco","LoCo trains only a rank-256 LoRA adapter on the attention projections, leaving the 7B base model frozen."],["mobilespec","MobileSpec compares its 1–5 MB specialists with per-user LoRA trained by backpropagation and with evolution strategies over LoRA adapters."],["sketchpad","The only trained component is a rank-16 LoRA adapter of 10.2M parameters on 150 projection matrices of Qwen3.5-0.8B."]],"group":"training"},
+ {"id":"diffusion","title":"Diffusion and flow-matching generators","src":"Ho, Jain & Abbeel, 2020 · arXiv 2006.11239; Lipman et al., 2022 · arXiv 2210.02747","kind":"background","url":"https://arxiv.org/abs/2006.11239","idea":"Learn to turn noise into data step by step, by learning to undo small amounts of noise (diffusion) or to follow a velocity field from noise to data (flow matching).","used":[["gptimage26","GPT Image 2.6 is compared against diffusion-based rivals such as Nano Banana and FLUX; OpenAI has not disclosed its own architecture."],["klingunderstand","Every component in the report exists to condition, steer or score Kling's diffusion transformer video generator."]],"group":"gen"},
+ {"id":"causvid","title":"CausVid: from bidirectional to fast autoregressive video diffusion","src":"Yin et al., 2024 · arXiv 2412.07772","kind":"cited","url":"https://arxiv.org/abs/2412.07772","idea":"Distil a bidirectional video diffusion model into a causal student that generates frame chunks in a few steps while attending to past frames through a cache. This makes streaming, interactive video generation possible.","used":[["waveforcing","Wave Forcing belongs to the CausVid line of chunk-wise causal video diffusion with a key-value cache of past frames."]],"group":"gen"},
+ {"id":"react","title":"ReAct: reasoning plus acting","src":"Yao et al., 2022 · arXiv 2210.03629","kind":"background","url":"https://arxiv.org/abs/2210.03629","idea":"Interleave thinking steps with tool calls and observations in one loop. This is the basic shape of nearly every agent harness today.","used":[["robouse","uni-robot-agent runs a reason-act-observe loop in which the model calls robot tools and inspects the resulting scene before the next step."]],"group":"agents"},
+ {"id":"quant","title":"Post-training quantisation (GPTQ and the llama.cpp k-quants)","src":"Frantar et al., 2022 · arXiv 2210.17323; ggml/llama.cpp","kind":"background","url":"https://arxiv.org/abs/2210.17323","idea":"Round trained weights to fewer bits while correcting the rounding error, so the model keeps most of its quality. Mixed schemes keep sensitive tensors at more bits.","used":[["bitllm","BitLLM targets W8A8 and W4A8 quantised models and makes their integer arithmetic run efficiently on mobile GPUs."]],"group":"compress"},
+ {"id":"gdn","title":"Gated DeltaNet: linear attention with a gated delta rule","src":"Yang, Kautz & Hatamizadeh, 2024 · arXiv 2412.06464","kind":"cited","url":"https://arxiv.org/abs/2412.06464","idea":"Replaces the ever-growing attention cache with a fixed-size memory matrix that is updated at every token. A gate decides how much old memory to fade, and a delta rule overwrites the entry for the current key instead of piling information on top.","used":[["sketchpad","Qwen3.5-0.8B mixes six full-attention layers with eighteen Gated DeltaNet layers, which the adapter targets alongside attention."],["haloguard2","The guard's per-token cost stays constant with response length because 18 of its 24 layers are Gated DeltaNet layers with a fixed-size state."]],"group":"arch"},
+ {"id":"flashattn","title":"FlashAttention: fast, memory-efficient exact attention","src":"Dao et al., 2022 · arXiv 2205.14135","kind":"cited","url":"https://arxiv.org/abs/2205.14135","idea":"Compute attention in tiles that stay in fast on-chip memory, with an online softmax, so the full attention matrix is never written out. The result is exact but much lighter on memory traffic.","used":[["tkcc","TKCC's agents generate fused attention and MoE forward passes that compete with hand-tuned kernels in vLLM and SGLang."]],"group":"arch"},
+ {"id":"specdec","title":"Speculative decoding","src":"Leviathan, Kalman & Matias, 2022 · arXiv 2211.17192","kind":"cited","url":"https://arxiv.org/abs/2211.17192","idea":"A cheap draft proposes several future tokens and the large model checks them all in one pass, keeping those that match. The output is unchanged, but fewer slow steps are needed.","used":[["specpilot","SpecPilot keeps decoding lossless by checking every token against the stock speculative system rather than against task accuracy."]],"group":"serving"},
+ {"id":"dfloat11","title":"DFloat11: lossless Huffman-coded BF16 weights","src":"Zhang et al., 2025 · arXiv 2504.11651","kind":"cited","url":"https://arxiv.org/abs/2504.11651","idea":"BF16 weights carry only about 11 bits of information, so Huffman-coding the exponent shrinks models by about 30% with bit-exact outputs. Its variable-length code makes GPU decoding slow.","used":[["specpilot","W12 is another lossless re-encoding of BF16 weights, storing a 4-bit exponent offset per channel window to cut weight reads to about 12 bits."]],"group":"compress"},
+ {"id":"dpo","title":"DPO: direct preference optimisation","src":"Rafailov et al., 2023 · arXiv 2305.18290","kind":"cited","url":"https://arxiv.org/abs/2305.18290","idea":"Train a model directly on pairs of preferred and rejected answers with a simple classification-style loss, instead of fitting a reward model and running reinforcement learning. A frozen reference model keeps the policy from drifting too far.","used":[["loco","LoCo trains on DPO pairs that share the same reasoning prefix, preferring the shorter verified continuation, with β = 0.1 and the base model as reference."]],"group":"training"},
+ {"id":"rollingforcing","title":"Rolling Forcing: real-time autoregressive long-video diffusion","src":"Liu et al., 2026 · ICLR 2026","kind":"cited","url":"https://iclr.cc/virtual/2026/poster/10010326","idea":"Denoise several frames together in a rolling window with rising noise levels, so long videos stream in real time with less error build-up than one-chunk-at-a-time generation.","used":[["waveforcing","Wave Forcing starts from Rolling Forcing's mixed-noise joint denoising and uses it as the main quality baseline (VBench 81.15 against 81.64)."]],"group":"gen"},
+ {"id":"wan","title":"Wan: open large-scale video generation models","src":"Team Wan (Alibaba), 2025 · arXiv 2503.20314","kind":"cited","url":"https://arxiv.org/abs/2503.20314","idea":"A family of open-weights video diffusion transformers trained on large video–text corpora. It became a standard open baseline and starting point for video research.","used":[["waveforcing","All Wave Forcing quality results are on Wan2.1-T2V-1.3B, adapted to streaming generation."]],"group":"gen"},
+ {"id":"recaption","title":"DALL·E 3: improving image generation with better captions","src":"Betker et al. (OpenAI), 2023 · technical report","kind":"background","url":"https://cdn.openai.com/papers/dall-e-3.pdf","idea":"Re-caption the training images with a model that writes dense, accurate descriptions, and rewrite user prompts into the same style at inference. Prompt following improves markedly.","used":[["klingunderstand","Kling treats dense captions as the generator's semantic contract and trains prompt enhancers to map user prompts into that caption distribution."]],"group":"gen"},
+ {"id":"webarena","title":"WebArena: A Realistic Web Environment for Building Autonomous Agents","src":"Zhou, Xu, Zhu, Zhou et al., 2023 · arXiv 2307.13854","kind":"cited","url":"https://arxiv.org/abs/2307.13854","idea":"Self-hosted copies of real websites (shopping, forums, code hosting, content management) with programmatic checks of whether an agent completed a task. Its verified variant is now a standard web-agent benchmark.","used":[["northcua","NorthCUA reports 73.9% for its Pro model on WebArena-Verified and uses it to time the Ultrafast variant."],["scamworld","ScamWorld follows the same idea of locally hosted, repeatable websites, but rebuilds real scam sites instead of benign ones."]],"group":"eval"},
+ {"id":"browsergym","title":"The BrowserGym Ecosystem for Web Agent Research","src":"Le Sellier De Chezelles et al., 2024 · arXiv 2412.05467","kind":"cited","url":"https://arxiv.org/abs/2412.05467","idea":"A common gym-style interface and agent framework (AgentLab) for running and comparing web agents across benchmarks. Agents receive screenshots and accessibility trees and act through a shared action set.","used":[["scamworld","ScamWorld implements its web agent with AgentLab and follows BrowserGym's observation and action design."]],"group":"agents"},
+ {"id":"codeaspolicies","title":"Code as Policies: Language Model Programs for Embodied Control","src":"Liang et al., 2022 · arXiv 2209.07753","kind":"background","url":"https://arxiv.org/abs/2209.07753","idea":"A language model writes programs that call perception and control functions to operate a robot, instead of outputting motor commands directly. It established robots-as-APIs for language models.","used":[["robouse","uni-robot-agent extends the same robots-as-tools idea into a general agent harness with feedback, pipelining and context management."]],"group":"agents"},
+ {"id":"mezo","title":"Fine-Tuning Language Models with Just Forward Passes (MeZO)","src":"Malladi et al., 2023 · arXiv 2305.17333","kind":"cited","url":"https://arxiv.org/abs/2305.17333","idea":"Zeroth-order optimisation estimates gradients from pairs of forward passes with random perturbations, so fine-tuning needs only inference memory. It made forward-only LLM fine-tuning practical.","used":[["mobilespec","MobileSpec builds on forward-only optimisation, using MeZO-style random directions but restricting them to block singular values."]],"group":"training"},
+ {"id":"serverlessllm","title":"ServerlessLLM: Low-Latency Serverless Inference for Large Language Models","src":"Fu et al., 2024 · arXiv 2401.14351","kind":"cited","url":"https://arxiv.org/abs/2401.14351","idea":"Speeds up cold starts in serverless LLM serving with a loading-optimised checkpoint format and multi-tier loading. It treats model loading as a first-class latency problem.","used":[["umload","UMLoad addresses the same cold-start loading cost, but on single unified-memory edge devices rather than GPU clusters."]],"group":"serving"},
+ {"id":"tdt","title":"Efficient Sequence Transduction by Jointly Predicting Tokens and Durations","src":"Xu et al., 2023 · arXiv 2304.06795","kind":"cited","url":"https://arxiv.org/abs/2304.06795","idea":"The token-and-duration transducer predicts each output token together with how many audio frames to skip. Skipping frames makes decoding faster than a standard transducer at similar accuracy.","used":[["kulak","ufakzeka-kulak uses a TDT decoder with durations of 0 to 4 frames alongside a CTC head on the same encoder."]],"group":"arch"},
+ {"id":"fastconformer","title":"Fast Conformer with Linearly Scalable Attention for Efficient Speech Recognition","src":"Rekesh et al., 2023 · arXiv 2305.05084","kind":"cited","url":"https://arxiv.org/abs/2305.05084","idea":"FastConformer downsamples audio eight times with depthwise-separable convolutions before the Conformer layers. This cuts compute while keeping recognition accuracy.","used":[["kulak","The 31.6M model is a 16-layer FastConformer of width 256 with eightfold time reduction, trained from scratch."]],"group":"arch"},
+ {"id":"thunderkittens","title":"ThunderKittens: Simple, Fast, and Adorable AI Kernels","src":"Spector et al., 2024 · arXiv 2410.20399","kind":"background","url":"https://arxiv.org/abs/2410.20399","idea":"ThunderKittens is a small embedded library of tile-based primitives for writing fast GPU kernels. Later megakernel work fused whole forward passes into one persistent kernel.","used":[["tkcc","Together Compiler grew out of the same group's ThunderKittens and Megakernels work and beats those megakernels on Llama 1B by up to 1.7×."]],"group":"serving"},
+ {"id":"dflash","title":"DFlash: Block Diffusion for Flash Speculative Decoding","src":"Chen, Liang and Liu, 2026 · arXiv 2602.06036","kind":"cited","url":"https://arxiv.org/abs/2602.06036","idea":"A parallel drafter that proposes a whole block of tokens in one forward pass, conditioned on the target model's hidden features. It avoids the sequential drafting cost of EAGLE-style drafters.","used":[["specpilot","SpecPilot starts from released DFlash2 and DSpark parallel drafters and adds tree verification and batching mechanisms on top."]],"group":"serving"}
+];
+
+const byId=Object.fromEntries(CARDS.map(c=>[c.id,c]));
+const colById=Object.fromEntries(COLS.map(c=>[c.id,c]));
+const linById=Object.fromEntries(LINEAGE.map(l=>[l.id,l]));
+const esc=s=>String(s).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
+
+/* ---- renderers ---- */
+function figHTML(f){
+  if(!f) return "";
+  return `<figure class="fig"><img src="${f.src}" alt="${esc(f.alt)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('figure').classList.add('broken')">
+   <div class="missing">This figure could not be loaded here. <a href="${f.url}" target="_blank" rel="noopener">View it in the source ↗</a></div>
+   <figcaption>${esc(f.caption)} Source: <a href="${f.url}" target="_blank" rel="noopener">${esc(f.credit)} ↗</a></figcaption></figure>`;
+}
+function tableHTML(t){
+  if(!t) return "";
+  const num=t.num||[], hl=t.hl||[];
+  return `${t.title?`<p class="tnote" style="margin:14px 0 0;font-weight:600;color:var(--ink)">${esc(t.title)}</p>`:""}
+  <div class="tbl"><table><thead><tr>${t.cols.map((c,i)=>`<th class="${num.includes(i)?"n":""}">${esc(c)}</th>`).join("")}</tr></thead>
+  <tbody>${t.rows.map((r,ri)=>`<tr class="${hl.includes(ri)?"hl":""}">${r.map((v,i)=>`<td class="${num.includes(i)?"n":""}">${esc(v)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>
+  ${t.note?`<p class="tnote">${esc(t.note)}</p>`:""}`;
+}
+function chartHTML(ch){
+  if(!ch) return "";
+  return `<figure class="chart"><p class="ct">${esc(ch.title)}</p>
+   ${ch.pair?`<div class="legend"><span><i style="background:var(--muted);opacity:.45"></i>${esc(ch.pair[0])}</span><span><i style="background:var(--c)"></i>${esc(ch.pair[1])}</span></div>`:""}
+   ${chartSVG(ch)}
+   ${ch.caption?`<figcaption>${esc(ch.caption)}</figcaption>`:""}</figure>`;
+}
+function chartSVG(ch,mini){
+  const W=mini?400:640, labelW=mini?165:190, valW=mini?58:70, rowH=ch.pair?40:28, top=4;
+  const max=Math.max(...ch.rows.flatMap(r=>r.slice(1)));
+  const plotW=W-labelW-valW, H=top+ch.rows.length*rowH+4;
+  const x=v=>Math.max(2,plotW*v/max);
+  let g="";
+  ch.rows.forEach((r,i)=>{
+    const y=top+i*rowH;
+    g+=`<text x="${labelW-10}" y="${y+(ch.pair?20:15)}" text-anchor="end" font-size="13" fill="var(--ink)">${esc(r[0])}</text>`;
+    if(ch.pair){
+      g+=`<rect x="${labelW}" y="${y+3}" width="${x(r[1])}" height="14" rx="2" fill="var(--muted)" opacity=".45"/>`;
+      g+=`<text x="${labelW+x(r[1])+6}" y="${y+14}" font-size="12" fill="var(--muted)">${esc(ch.fmt(r[1]))}</text>`;
+      g+=`<rect x="${labelW}" y="${y+19}" width="${x(r[2])}" height="14" rx="2" fill="var(--c)"/>`;
+      g+=`<text x="${labelW+x(r[2])+6}" y="${y+30}" font-size="12" font-weight="600" fill="var(--ink)">${esc(ch.fmt(r[2]))}</text>`;
+    }else{
+      const on=!ch.hl||ch.hl.includes(i);
+      g+=`<rect x="${labelW}" y="${y+4}" width="${x(r[1])}" height="16" rx="2" fill="var(--c)" opacity="${on?1:.4}"/>`;
+      g+=`<text x="${labelW+x(r[1])+6}" y="${y+16}" font-size="12" font-weight="${on?600:400}" fill="var(--ink)">${esc(ch.fmt(r[1]))}</text>`;
+    }
+  });
+  if(mini) g=g.replace(/font-size="1[23]"/g,'font-size="14"');
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(ch.title)}">${g}</svg>`;
+}
+
+/* ---- glance ---- */
+document.getElementById("glance").innerHTML=COLS.map(c=>`<li><a href="#col-${c.id}" style="--c:var(${c.c})"><span class="g-col"><i></i>${esc(c.name)}</span><span class="g-line">${esc(c.glance)}</span></a></li>`).join("");
+
+/* ---- filters ---- */
+const filters=document.getElementById("filters");
+let active="all";
+try{ active=localStorage.getItem("sw-filter")||"all"; }catch(e){}
+function renderFilters(){
+  filters.innerHTML=[{id:"all",name:"All columns",c:"--ink"},...COLS].map(c=>
+    `<button class="chip" style="--c:var(${c.c})" data-f="${c.id}" aria-pressed="${active===c.id}"><span class="dot"></span>${esc(c.name)}</button>`).join("");
+}
+filters.addEventListener("click",e=>{
+  const b=e.target.closest("[data-f]"); if(!b) return;
+  active=b.dataset.f; try{localStorage.setItem("sw-filter",active)}catch(e){}
+  renderFilters(); applyFilter();
+});
+function applyFilter(){ document.querySelectorAll("section.col").forEach(s=>{ s.hidden = active!=="all" && s.dataset.col!==active; }); }
+document.getElementById("glance").addEventListener("click",()=>{ if(active!=="all"){active="all";renderFilters();applyFilter();} });
+
+/* ---- cards (level 1) ---- */
+function thumbHTML(c){
+  const statPanel=`<div class="thumb stat-only"><b>${esc(c.stat[0])}</b><span>${esc(c.stat[1])}</span></div>`;
+  if(!c.fig && c.chart) return `<div class="thumb chart-thumb">${chartSVG(c.chart,true)}</div>`;
+  if(!c.fig) return statPanel;
+  return `<div class="thumb"><img src="${c.fig.src}" alt="${esc(c.fig.alt)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentNode.outerHTML=this.parentNode.dataset.fb" ></div>`.replace('<div class="thumb">',`<div class="thumb" data-fb="${esc(statPanel)}">`);
+}
+document.getElementById("columns").innerHTML=COLS.map(col=>`
+ <section class="col" data-col="${col.id}" id="col-${col.id}" style="--c:var(${col.c})">
+  <div class="col-head"><h2>${esc(col.name)}</h2><span class="tag">${CARDS.filter(c=>c.col===col.id).length} picks</span><p>${esc(col.blurb)}</p></div>
+  <div class="grid">${CARDS.filter(c=>c.col===col.id).map(c=>`
+   <button class="card" data-card="${c.id}" aria-haspopup="dialog">
+    ${thumbHTML(c)}
+    <div class="c-body">
+     <div class="meta"><span>${esc(c.org)}</span><span>${esc(c.date)}</span></div>
+     <h3>${esc(c.title)}</h3>
+     <p class="tldr"><b>TL;DR</b>${esc(c.tldr)}</p>
+     <div class="c-foot">${c.fig?`<span class="s"><b>${esc(c.stat[0])}</b><span>${esc(c.stat[1])}</span></span>`:`<span class="s"><span>${esc(c.badge)}</span></span>`}<span class="more">Open →</span></div>
+    </div>
+   </button>`).join("")}
+  </div>
+ </section>`).join("");
+renderFilters(); applyFilter();
+
+/* ---- lineage (shared component: ../assets/lineage.js) ---- */
+SignalLineage.render({lineage:LINEAGE,cards:CARDS,cols:COLS});
+
+/* ---- dialog (levels 2 and 3) ---- */
+const dlg=document.getElementById("dlg"), inner=document.getElementById("d-inner");
+function openCard(id){
+  const c=byId[id]; if(!c) return;
+  const col=colById[c.col];
+  dlg.style.setProperty("--c",`var(${col.c})`);
+  const visual = c.fig ? figHTML(c.fig) : chartHTML(c.chart);
+  inner.innerHTML=`
+   <div class="d-top"><div><div class="d-meta">${esc(col.name)} · ${esc(c.org)} · ${esc(c.date)} · ${esc(c.badge)}</div><h2 id="d-title">${esc(c.title)}</h2></div><button class="close" id="d-close">Close</button></div>
+   <p class="d-tldr">${esc(c.tldr)}</p>
+   <div class="d-body">
+    ${visual}
+    ${c.fig && c.chart ? chartHTML(c.chart) : ""}
+    <h4>${c.table && c.table.title ? esc(c.table.title) : "Key results"}</h4>
+    ${tableHTML(Object.assign({},c.table,{title:null}))}
+    <h4>In short</h4><p>${esc(c.short)}</p>
+    <h4>Why it matters</h4><p>${esc(c.why)}</p>
+    <h4>Read with care</h4><p class="caveat">${esc(c.caveat)}</p>
+    <details class="deep"><summary>Technical deep dive <span>Method, worked maths, prior work and sources</span></summary>
+     <div class="deep-body">
+      <h4>How it works</h4><ol>${c.how.map(h=>`<li>${esc(h)}</li>`).join("")}</ol>
+      <h4>The maths, simply</h4><div class="mathbox">${c.math}</div>
+      ${c.deepFig?figHTML(c.deepFig):""}
+      ${c.deepTable?`<h4>${esc(c.deepTable.title)}</h4>${tableHTML(Object.assign({},c.deepTable,{title:null}))}`:""}
+      <h4>Builds on</h4><div class="builds">${c.builds.map(b=>`<a href="#lin-${b}" data-lin="${b}">${esc(linById[b].title)}</a>`).join("")}</div>
+      <h4>Sources</h4><div class="links">${c.links.map(([t,u])=>`<a href="${u}" target="_blank" rel="noopener">${esc(t)} ↗</a>`).join("")}</div>
+     </div>
+    </details>
+   </div>`;
+  if(!dlg.open) dlg.showModal();
+  inner.scrollTop=0;
+  document.getElementById("d-close").onclick=()=>dlg.close();
+}
+document.addEventListener("click",e=>{
+  const card=e.target.closest("[data-card]"); if(card){openCard(card.dataset.card);return;}
+  const op=e.target.closest("[data-open]"); if(op){e.preventDefault();openCard(op.dataset.open);return;}
+  const lin=e.target.closest("[data-lin]"); if(lin){dlg.close(); if(active!=="all"){active="all";renderFilters();applyFilter();} }
+});
+dlg.addEventListener("click",e=>{ if(e.target===dlg) dlg.close(); });
+if(location.hash && byId[location.hash.slice(1)]) openCard(location.hash.slice(1));
+</script>
+</body>
+</html>
