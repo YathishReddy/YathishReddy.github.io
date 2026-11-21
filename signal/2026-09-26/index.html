@@ -19,6 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="../assets/lineage.css">
+<link rel="stylesheet" href="../assets/math.css">
 <style>
 :root{
   --bg:#F2F4F6; --surface:#FFFFFF; --surface-2:#E8ECF0; --ink:#15202B; --muted:#586674; --line:#D5DCE3;
@@ -248,6 +249,7 @@ details.deep .deep-body{padding:0 16px 18px;border-top:1px solid var(--line)}
 
 <dialog id="dlg" aria-labelledby="d-title"><div class="d-inner" id="d-inner"></div></dialog>
 
+<script src="../assets/math.js"></script>
 <script src="../assets/lineage.js"></script>
 <script>
 const COLS=[
@@ -271,7 +273,7 @@ const CARDS=[
  why:"A frontier lab's small model now costs about the same as the cheapest open models, which changes the build-versus-buy calculation for high-volume tasks such as classification and extraction.",
  caveat:"All benchmark results are OpenAI's own; competitor scores were taken from public reports rather than re-run.",
  how:["Sol is priced at $2 input and $10 output per million tokens; Luna at $0.10 and $0.50.","Prompts longer than 272,000 tokens are billed at roughly double the rate, and batch requests at half.","Both are available in ChatGPT work products, Codex and the API as gpt-6-sol and gpt-6-luna."],
- math:"A million tokens is roughly 750,000 English words. Sending Luna a 3,000-word document (about 4,000 tokens) costs 4,000 × $0.10 ÷ 1,000,000 = <code>$0.0004</code>, so the same document could be sent 2,500 times for one dollar.",
+ math:["A million tokens is roughly 750,000 English words.",{"t":"Cost of a 3,000-word document on Luna","m":"\\frac{4,000 \\times \\$0.10}{1,000,000} = \\res{\\$0.0004}","n":"The document is about 4,000 tokens, so it could be sent 2,500 times for one dollar."}],
  deepTable:{title:"AutomationBench, as reported by OpenAI",cols:["Model (effort)","Score","Cost per task"],num:[1,2],rows:[["GPT-6 Sol (xhigh)","33.2%","$0.27"],["Claude Fable 5.1, Opus 5 fallback (max)","31.4%",">8.9× Sol"],["GPT-6 Astra (low)","30.3%","3.9× Sol"],["Claude Opus 5 (max)","26.9%","11.1× Sol"]],hl:[0]},
  builds:["distill"],
  links:[["OpenAI announcement","https://openai.com/index/introducing-gpt-6-sol-and-luna"],["Release ledger","https://www.digitalapplied.com/blog/ai-model-releases-september-2026-tracker"]]},
@@ -285,7 +287,7 @@ const CARDS=[
  why:"For agents, the cost per completed task matters more than the price per token, and Ember-1 reduces it by changing only one thing: how much the model writes.",
  caveat:"All figures are from Fireworks. Ember-1 scores lower on two of the five benchmarks, and serverless access is guaranteed for only two weeks.",
  how:["Start from Kimi K3's open weights.","Post-train on Fireworks' training service; the company cites more than 50 training experiments and 200 evaluations.","Compare against K3 at maximum effort on five agent benchmarks and on two customers' live coding traffic."],
- math:"In the A/B test, output fell from 49.3K to 29.9K tokens per task. At $15 per million output tokens, that is 49,300 × 15 ÷ 1,000,000 = <code>$0.74</code> versus <code>$0.45</code> per task, or about $290 saved per day at 1,000 tasks.",
+ math:["In the A/B test, output fell from 49.3K to 29.9K tokens per task.",{"t":"Output cost per task before Ember-1","m":"\\frac{49,300 \\times 15}{1,000,000} = \\res{\\$0.74}","n":"At $15 per million output tokens, versus \\(\\res{\\$0.45}\\) per task at 29.9K tokens: about $290 saved per day at 1,000 tasks."}],
  deepTable:{title:"Production A/B test",cols:["Metric","Kimi K3","Ember-1"],num:[1,2],rows:[["Score","0.751","0.753"],["Steps per task","23.8","21.4"],["Output tokens per task","49.3K","29.9K"],["Reasoning-token reduction","—","71.3%"]]},
  builds:["rlvr","distill"],
  links:[["Fireworks blog","https://fireworks.ai/blog/ember-1"],["Independent write-up","https://www.digitalapplied.com/blog/fireworks-ember-1-kimi-k3-fewer-reasoning-tokens"]]},
@@ -299,7 +301,7 @@ const CARDS=[
  why:"Model pricing now depends on effort level and caching as much as on the headline rate, so comparisons should be made on cost per task.",
  caveat:"All benchmarks are Anthropic's own, and the 40% figure compares two different default effort levels.",
  how:["Adaptive thinking is always on and cannot be switched off.","The context window is one million tokens at standard rates, with up to 128K tokens of output.","A fast mode, offered as a research preview, costs twice as much for up to 2.5 times the output speed."],
- math:"Cache reads cost $0.20 per million tokens, 5% of the $4 input price. If an agent re-reads the same 200K-token codebase 50 times, cached reads cost 50 × 200,000 × 0.20 ÷ 1,000,000 = <code>$2</code>, compared with <code>$40</code> uncached.",
+ math:["Cache reads cost $0.20 per million tokens, 5% of the $4 input price.",{"t":"Cost of 50 cached reads of a 200K-token codebase","m":"\\frac{50 \\times 200,000 \\times 0.20}{1,000,000} = \\res{\\$2}","n":"Compared with \\(\\res{\\$40}\\) uncached."}],
  deepTable:{title:"Selected benchmarks, as reported by Anthropic",cols:["Benchmark","Opus 5.5","Fable 5.1","Opus 5"],num:[1,2,3],rows:[["FrontierCode v1.1","54.4%","50.3%","48.0%"],["CursorBench 4.0","57.8%","51.8%","46.6%"],["OSWorld 2.0","81.8%","80.7%","74.0%"],["Humanity's Last Exam","67.7%","65.6%","63.6%"]]},
  builds:["spec"],
  links:[["Anthropic page","https://www.anthropic.com/claude-opus-5-5"],["Release ledger","https://www.digitalapplied.com/blog/ai-model-releases-september-2026-tracker"]]},
@@ -314,7 +316,7 @@ const CARDS=[
  why:"Consistent world models are the foundation for generated game environments, robot simulators and VR scenes.",
  caveat:"Results are from the authors. The fast variant is more consistent but less accurate in camera control.",
  how:["A memory encoder compresses past frames into a fixed number of tokens, so memory does not grow with video length.","A readout module takes the requested camera pose and builds view-specific tokens from that memory.","Few-step distillation makes generation fast enough to stream minute-long exploration."],
- math:"The generator can attend to a limited number of tokens, say N. Supplying every past frame would need N × frames. WorldCrafter always supplies N tokens but chooses <em>which</em> N according to where the camera points, much like a librarian who brings the ten most relevant books rather than the whole shelf.",
+ math:["The generator can attend to a limited number of tokens, say \\(N\\).",{"t":"Tokens needed to supply every past frame","m":"N \\times \\text{frames}"},"WorldCrafter always supplies \\(N\\) tokens but chooses <em>which</em> \\(N\\) according to where the camera points, much like a librarian who brings the ten most relevant books rather than the whole shelf."],
  deepFig:{src:"https://arxiv.org/html/2609.24984v1/pipeline.png",alt:"WorldCrafter pipeline diagram",caption:"Overview of the WorldCrafter pipeline.",credit:"arXiv 2609.24984",url:"https://arxiv.org/abs/2609.24984"},
  deepTable:{title:"Ablation: what each component contributes",cols:["Variant","MEt3R ↓","Rotation error ↓"],num:[1,2],rows:[["Full model","0.166","13.54"],["Similarity-based retrieval","0.213","14.66"],["Frozen encoder","0.227","15.43"],["Pose-free readout","0.251","18.31"],["Context memory only","0.382","26.52"]],hl:[0]},
  builds:["distill","diffusion"],
@@ -329,7 +331,7 @@ const CARDS=[
  why:"It suggests that 3D consistency depends on the representation, not only on model size, and offers one shared interface for perception and generation.",
  caveat:"Gains are measured against the authors' own baseline. The comparison is controlled but not yet head-to-head with other systems.",
  how:["Take multi-level features from a frozen geometry foundation model, a network trained to recover 3D structure from images.","Compress them into a compact latent that decodes into appearance, depth, camera and point maps.","Train a standard flow-based generator in this latent space, keeping everything else fixed."],
- math:"FVD (Fréchet Video Distance) measures how far the statistics of generated videos are from real ones; lower is better. A 23.1% reduction on DL3DV means the generated videos are statistically much closer to real footage, with no change to the generator itself.",
+ math:["FVD (Fréchet Video Distance) measures how far the statistics of generated videos are from real ones; lower is better.",{"t":"FVD change on DL3DV","m":"\\Delta \\text{FVD} = -23.1\\%","n":"The generated videos are statistically much closer to real footage, with no change to the generator itself."}],
  deepFig:{src:"https://arxiv.org/html/2609.24981v1/ngd_pipeline_overview.png",alt:"GAE two-stage pipeline",caption:"Stage 1 compresses frozen geometry features into a compact latent; stage 2 trains a generator in that latent.",credit:"arXiv 2609.24981",url:"https://arxiv.org/abs/2609.24981"},
  builds:["diffusion","vae"],
  links:[["arXiv 2609.24981","https://arxiv.org/abs/2609.24981"],["Code","https://github.com/TencentARC/GAE-GeometricAutoEncoder"]]},
@@ -343,7 +345,7 @@ const CARDS=[
  why:"Robots and AR assistants need a mental map that updates as things move, which static-image training does not provide.",
  caveat:"The authors report consistent gains across several VLMs; the per-benchmark numbers were not verified for this issue.",
  how:["Level 1: the world changes (an object moves). Level 2: the viewer changes (the camera moves). Level 3: long chains of both.","Fine-tune on levels 1 and 2 first, so the model learns single steps.","Then apply on-policy distillation: a teacher with text descriptions of each step grades the student's own reasoning on long sequences."],
- math:"The model first learns a function f(state, action) → next state, and only then learns to compose it: f(f(f(s, a₁), a₂), a₃). Because errors compound across steps, single steps are trained before long chains.",
+ math:[{"t":"First, learn a single step","m":"f(\\text{state}, \\text{action}) \\to \\text{next state}"},{"t":"Then learn to compose it","m":"f(f(f(s, a_{1}), a_{2}), a_{3})","n":"Because errors compound across steps, single steps are trained before long chains."}],
  deepFig:{src:"https://raw.githubusercontent.com/ZJU-OmniAI/Spatial-Interactor/main/assets/readme/opd.webp",alt:"On-policy distillation pipeline",caption:"The on-policy distillation stage.",credit:"project repository",url:"https://github.com/ZJU-OmniAI/Spatial-Interactor"},
  builds:["distill"],
  links:[["arXiv 2609.23038","https://arxiv.org/abs/2609.23038"],["Code","https://github.com/ZJU-OmniAI/Spatial-Interactor"]]},
@@ -358,7 +360,7 @@ const CARDS=[
  why:"Self-improving agents are now practical, and this work shows that their generalisation can be measured and improved.",
  caveat:"RRSI gains less than unregularised search on the tasks it evolved on; its advantage appears on unseen tasks.",
  how:["Proposer: each candidate may bundle only a small number of edits, and that budget shrinks over time.","Critic: screens out edits that appear tailored to one benchmark.","Pruner: removes changes that are too small, too costly or no longer useful."],
- math:"This is the bias–variance trade-off applied to harnesses. Unregularised evolution reaches 92.8 on the evolve split but only 40.3 out of distribution. RRSI reaches 90.5 and <code>43.6</code>, while using 2.42M rather than 3.80M tokens per trial.",
+ math:["This is the bias–variance trade-off applied to harnesses.",{"t":"Unregularised evolution: evolve split, then out of distribution","m":"92.8 \\to 40.3"},{"t":"RRSI: evolve split, then out of distribution","m":"90.5 \\to \\res{43.6}"},{"t":"Tokens per trial, unregularised then RRSI","m":"3.80\\text{M} \\to 2.42\\text{M}"}],
  deepTable:{title:"Ablation",cols:["Variant","Evolve split","Unseen avg.","Tokens per trial"],num:[1,2,3],rows:[["No evolution","89.4","39.7","1.56M"],["Unregularised evolution","92.8","40.3","3.80M"],["Without proposal regularisers","90.7","41.9","2.69M"],["Without acceptance regularisers","91.5","41.0","3.59M"],["RRSI","90.5","43.6","2.42M"]],hl:[4]},
  builds:["react","reg"],
  links:[["arXiv 2609.24972","https://arxiv.org/abs/2609.24972"],["Code","https://github.com/google-research/rrsi"]]},
@@ -372,7 +374,7 @@ const CARDS=[
  why:"Memory is where long-running agents become slow and expensive, and removing the LLM from routine lookups is a reusable design pattern.",
  caveat:"These are early results from a small team on one main benchmark.",
  how:["Control plane (System One): assigns memory types, routes queries, sets a retrieval budget and decides when to stop.","Memory plane: a graph that links memories by several kinds of relation.","Reasoning plane (System Two): the LLM, used only for difficult reasoning and the final answer."],
- math:"The judge score rises from 0.700 (MAGMA) to 0.777, an 11% relative gain. Build time falls from 1,044 s for Nemori, the fastest baseline, to 158 s: 1,044 ÷ 158 ≈ <code>6.6×</code>.",
+ math:[{"t":"Judge score, MAGMA to Jev-Mem","m":"0.700 \\to 0.777","n":"An 11% relative gain."},{"t":"Build-time speed-up over Nemori, the fastest baseline","m":"\\frac{1,044\\text{ s}}{158\\text{ s}} \\approx \\res{6.6\\times}"}],
  deepFig:{src:"https://arxiv.org/html/2609.23986v1/agentic_mem.png",alt:"Workflow of agentic memory",caption:"The general workflow of agentic memory that Jev-Mem accelerates.",credit:"arXiv 2609.23986",url:"https://arxiv.org/abs/2609.23986"},
  builds:["rag"],
  links:[["arXiv 2609.23986","https://arxiv.org/abs/2609.23986"],["Code","https://github.com/libingzheren/Jev-Mem"]]},
@@ -386,7 +388,7 @@ const CARDS=[
  why:"Specialise-then-consolidate is a recipe any multi-skill agent can use, and it needs no external teacher model.",
  caveat:"Gains are moderate, and all numbers come from the authors' own setup.",
  how:["Label every task by category with an evidence-based labelling system.","Train category experts in rounds: reinforcement learning, fine-tuning on verified successes, then fresh task selection.","Merge with multi-teacher on-policy distillation, where the student learns from the expert matching each task's label."],
- math:"Averages can hide regressions. Pooled RL raises Pro-618 by 2.9 points but lowers Multilingual by 0.7. The method tracks the <em>minimum</em> per-category gain so that no category is allowed to regress.",
+ math:["Averages can hide regressions.",{"t":"Pooled RL, change in points by category","m":"\\text{Pro-618 } +2.9, \\quad \\text{Multilingual } -0.7"},"The method tracks the <em>minimum</em> per-category gain so that no category is allowed to regress."],
  deepFig:{src:"https://raw.githubusercontent.com/alibaba/AgenticBigBang/main/assets/swe_labeler_taxonomy.png",alt:"SWE labeller taxonomy",caption:"The task-type and repository-domain taxonomy used to route tasks to experts.",credit:"project repository",url:"https://github.com/alibaba/AgenticBigBang"},
  builds:["rlvr","distill","moe"],
  links:[["arXiv 2609.23377","https://arxiv.org/abs/2609.23377"],["Code","https://github.com/alibaba/AgenticBigBang"]]},
@@ -401,7 +403,7 @@ const CARDS=[
  why:"The drafter is small, which makes it one of the cheapest speed-ups available on device, and it already runs in llama.cpp, MLX-VLM and SGLang.",
  caveat:"End-to-end gains are well below decode gains because image encoding is slow on edge chips.",
  how:["The drafter reads hidden states from a fixed set of layers in the large model.","It proposes a block of candidate tokens.","The large model verifies them in one pass; accepted tokens are kept, so greedy output matches the large model exactly."],
- math:"End-to-end gains follow Amdahl's law: speed-up = 1 ÷ ((1 − p) + p ÷ s). If decoding is 60% of the time (p = 0.6) and becomes 3× faster (s = 3), the result is 1 ÷ (0.4 + 0.2) ≈ <code>1.67×</code>.",
+ math:[{"t":"Amdahl's law for end-to-end speed-up","m":"\\text{speed-up} = \\frac{1}{(1 - p) + \\frac{p}{s}}"},{"t":"Decoding is 60% of the time, made 3× faster","m":"p = 0.6, \\quad s = 3"},{"t":"Resulting end-to-end speed-up","m":"\\frac{1}{0.4 + 0.2} \\approx \\res{1.67\\times}"}],
  deepTable:{title:"Drafter size",cols:["Component","Parameters"],num:[1],rows:[["Decoder stack (4 layers)","193.0M"],["Hidden-state projection","21.0M"],["Markov head","65.5M"],["Norms and confidence head","6.4K"],["Total","279.5M"]],hl:[4]},
  deepFig:{src:"https://cdn-uploads.huggingface.co/production/uploads/644249b08443bce4c9890a0f/n638hOT2C6Yoflniz2ffs.png",alt:"On-device results with MLX and llama.cpp",caption:"On-device results with MLX and llama.cpp.",credit:"Liquid AI",url:"https://huggingface.co/blog/LiquidAI/lfm2-5-vl-dspark"},
  builds:["spec","eagle"],
@@ -416,7 +418,7 @@ const CARDS=[
  why:"Teams shipping quantised models get one Python path to compare a GGUF conversion with the original checkpoint and to test decoding ideas on the exact weights they deploy.",
  caveat:"Apple GPUs (MPS) only for now; Hugging Face still recommends llama.cpp for production local inference.",
  how:["from_pretrained(model_id, gguf_file=...) loads the packed weights onto the Mac GPU.","Kernels for quantised matrix multiplication, normalisation, attention and expert routing come from ggml.","Changes to the generation loop keep the CPU from stalling the GPU, which benefits every model, not only GGUF."],
- math:"Q4_K_M stores most weights in about 4 bits instead of 16, so the theoretical reduction is 16 ÷ 4 = 4×. The actual file shrinks from 8.42 GB to 2.74 GB, about <code>3.1×</code>, because some sensitive tensors are kept at higher precision.",
+ math:[{"t":"Theoretical reduction from 16 to 4 bits","m":"\\frac{16}{4} = 4\\times","n":"Q4_K_M stores most weights in about 4 bits instead of 16."},{"t":"Actual file size reduction","m":"\\frac{8.42\\text{ GB}}{2.74\\text{ GB}} \\approx \\res{3.1\\times}","n":"Smaller than in theory, because some sensitive tensors are kept at higher precision."}],
  deepTable:{title:"Kernels now available in Transformers",cols:["Kernel","Role"],rows:[["ggml-quantization","Matrix operations on packed quantised weights"],["ggml-norm","Fused normalisation"],["ggml-attn","Metal flash attention"],["ggml-gated-delta-net","Gated delta network layers"],["topk","Expert selection for mixture-of-experts routing"]]},
  deepFig:{src:"https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/transformers-llama-cpp-quants/generation-loop-benchmark.svg",alt:"Throughput improvement from generation loop changes",caption:"Throughput improvement from the generation-loop changes.",credit:"Hugging Face",url:"https://huggingface.co/blog/transformers-llama-cpp-quants"},
  builds:["quant"],
@@ -431,7 +433,7 @@ const CARDS=[
  why:"This is the most direct route to a 27B-class model on a phone or edge device, and it merits benchmarking on real workloads.",
  caveat:"Released on 17 September, just before this issue's window. The largest gaps are on knowledge and vision tasks.",
  how:["Start from the full-precision Qwen3.8 27B model.","Replace each weight with −1, 0 or +1, with a 16-bit scale for each group of weights.","Ship custom kernels for NVIDIA (CUDA) and Apple (MLX), including iPhone and iPad."],
- math:"Three possible values need log₂3 ≈ <code>1.58</code> bits; the per-group scale brings this to 1.76 bits. 27 billion × 1.76 bits ÷ 8 ≈ 5.9 GB, matching the file size. At 16 bits, the same weights would take 54 GB.",
+ math:[{"t":"Bits needed for three possible values","m":"\\log_{2} 3 \\approx \\res{1.58}\\text{ bits}","n":"The per-group scale brings this to 1.76 bits."},{"t":"Size of 27 billion weights","m":"\\frac{27\\text{ billion} \\times 1.76\\text{ bits}}{8} \\approx 5.9\\text{ GB}","n":"Matching the file size. At 16 bits, the same weights would take 54 GB."}],
  deepTable:{title:"Speed and context",cols:["Item","Value"],num:[1],rows:[["NVIDIA RTX 5090","143 tokens/s"],["Apple M5 Max","46.8 tokens/s"],["Context window","262K tokens"],["Energy, RTX 4090","0.714 mWh per token"]]},
  builds:["bitnet","quant"],
  links:[["PrismML announcement","https://prismml.com/news/bonsai-2-27b"],["Comparison with SSD streaming","https://www.digitalapplied.com/blog/run-35b-model-24gb-mac-ssd-streaming-vs-ternary"]]},
@@ -445,7 +447,7 @@ const CARDS=[
  why:"It illustrates the best use of a sub-1B model: one narrow, frequent task inside an on-device pipeline, such as voice input on Android.",
  caveat:"English only; the accuracy figure comes from the vendor's own test set.",
  how:["Start from Qwen3-0.6B, a general-purpose model with 596M parameters.","Fine-tune on pairs of raw and cleaned transcripts, each tagged with style, structure and context settings.","At run time, place the control line first, followed by the raw transcript."],
- math:"At 4 bits per weight, 596M parameters take 596,000,000 × 4 ÷ 8 ≈ <code>0.3 GB</code>, small enough to stay loaded on a phone next to a speech model.",
+ math:[{"t":"Size of 596M parameters at 4 bits per weight","m":"\\frac{596,000,000 \\times 4}{8} \\approx \\res{0.3}\\text{ GB}","n":"Small enough to stay loaded on a phone next to a speech model."}],
  deepTable:{title:"Model specification",cols:["Attribute","Value"],rows:[["Parameters","596M (0.44B non-embedding)"],["Layers","28"],["Attention","16 query heads, 8 key-value heads (GQA)"],["Licence","Apache 2.0 with naming clause"]]},
  builds:["mobilellm","distill"],
  links:[["Model card","https://huggingface.co/superwhisper/s1-mini"],["Qwen3 technical report","https://arxiv.org/abs/2505.09388"]]},
@@ -459,7 +461,7 @@ const CARDS=[
  why:"A tool router that fits almost anywhere means a larger model is called only when a request needs real reasoning.",
  caveat:"Released in August and included as a reference. Comparisons are Cactus's own, and the model handles single calls rather than multi-step plans.",
  how:["Architecture: a Simple Attention Network, mostly attention with a very light MLP and a key-value memory.","Tool definitions are pinned at the start of a 256-token sliding window, so they always remain visible.","Weights are compressed to 2 bits, producing a single 14 MB file."],
- math:"45,000,000 weights × 2 bits ÷ 8 = 11.25 MB, which becomes 14 MB with overheads. FunctionGemma 270M at 16 bits takes 270,000,000 × 16 ÷ 8 = 540 MB, roughly <code>40×</code> larger.",
+ math:[{"t":"Needle 2 at 2 bits per weight","m":"\\frac{45,000,000 \\times 2}{8} = 11.25\\text{ MB}","n":"This becomes 14 MB with overheads."},{"t":"FunctionGemma 270M at 16 bits","m":"\\frac{270,000,000 \\times 16}{8} = 540\\text{ MB}","n":"Roughly \\(\\res{40\\times}\\) larger."}],
  deepFig:{src:"https://huggingface.co/Cactus-Compute/needle2/resolve/main/assets/architecture.png",alt:"Simple Attention Network architecture",caption:"The Simple Attention Network architecture.",credit:"Cactus Compute",url:"https://huggingface.co/Cactus-Compute/needle2"},
  builds:["attnonly","distill","quant"],
  links:[["Model card","https://huggingface.co/Cactus-Compute/needle2"],["Attention-only study","https://arxiv.org/abs/2607.18363"]]},
@@ -473,7 +475,7 @@ const CARDS=[
  why:"It is a cheap, repeatable way to make a sub-1B model reliable at the exact output format a tool expects.",
  caveat:"A community guide evaluated on one benchmark; absolute scores remain low, and larger models still perform better.",
  how:["Attach LoRA adapters, about 6M trainable parameters, and keep the rest of the model frozen.","For each prompt, sample several answers and score each with three reward functions.","Apply GRPO: increase the probability of answers scoring above their group's average and decrease those below it."],
- math:"GRPO scores each answer relative to its group. If four answers score 1, 3, 3 and 5, the mean is 3, so their advantages are −2, 0, 0 and +2 (then divided by the spread). No separate critic network is needed, which is why it fits on a free GPU.",
+ math:["GRPO scores each answer relative to its group.",{"t":"Mean of four answer scores","m":"\\text{mean}(1, 3, 3, 5) = 3"},{"t":"Advantages before dividing by the spread","m":"(1, 3, 3, 5) - 3 = (-2, 0, 0, +2)"},"No separate critic network is needed, which is why it fits on a free GPU."],
  builds:["rlvr","lora"],
  links:[["Hugging Face guide","https://huggingface.co/blog/grpo-with-trl-ifstruct"],["LFM2.5 background","https://www.liquid.ai/blog/lfm2-5-230m"]]},
 
@@ -486,7 +488,7 @@ const CARDS=[
  why:"A faster tokenizer with unchanged output is a free improvement for serving, long-context ingestion and dataset preparation.",
  caveat:"The largest gains apply only to tokenizers whose split pattern the new splitter recognises, such as GPT-2, cl100k and o200k.",
  how:["Splitting uses SIMD instructions to test 64 bytes in one operation instead of a general regex engine.","A word cache returns token IDs for previously seen words without repeating the merge step.","The merge loop avoids memory allocation and compares packed 64-bit integers."],
- math:"BPE repeatedly joins the highest-ranked adjacent pair. Packing (rank, position) into one 64-bit number with the rank in the high bits means the best pair is simply the smallest number. Across 8 threads, scaling reached 76% of linear: 8 × 0.76 ≈ <code>6.1×</code> one thread.",
+ math:["BPE repeatedly joins the highest-ranked adjacent pair. Packing (rank, position) into one 64-bit number with the rank in the high bits means the best pair is simply the smallest number.",{"t":"Scaling across 8 threads at 76% of linear","m":"8 \\times 0.76 \\approx \\res{6.1\\times}","n":"Relative to one thread."}],
  builds:["bpe","simd"],
  links:[["Hugging Face blog","https://huggingface.co/blog/tokenizers-v1"],["Interactive benchmark","https://lysandre-tokenizers-v1-results.static.hf.space"],["tokbench","https://github.com/huggingface/tokbench"]]},
 
@@ -499,7 +501,7 @@ const CARDS=[
  why:"Latency is now a priced product: interactive traffic can go to fast tiers and background work to batch tiers, which cost half.",
  caveat:"Measure time-to-first-token and throughput independently before paying the premium.",
  how:["Identify which requests have a user waiting on screen.","Route those to a fast tier and everything else to standard or batch pricing.","Measure the actual speed-up for your own prompts before committing."],
- math:"A task producing 5,000 output tokens at 50 tokens/s takes 100 s; at 2.5× it takes 40 s. At $20 per million output tokens, standard costs $0.10 and fast (2×) costs $0.20, so the extra <code>$0.10</code> buys 60 seconds.",
+ math:[{"t":"Time for 5,000 output tokens at 50 tokens/s","m":"\\frac{5,000}{50\\text{ tokens/s}} = 100\\text{ s}"},{"t":"Time at 2.5× speed","m":"\\frac{100\\text{ s}}{2.5} = 40\\text{ s}"},{"t":"Cost at $20 per million output tokens","m":"\\$0.10\\text{ standard}, \\quad \\$0.20\\text{ fast } (2\\times)"},{"t":"Extra cost of the fast tier","m":"\\$0.20 - \\$0.10 = \\res{\\$0.10}","n":"It buys 60 seconds."}],
  builds:["spec"],
  links:[["Release ledger","https://www.digitalapplied.com/blog/ai-model-releases-september-2026-tracker"]]},
 
@@ -512,7 +514,7 @@ const CARDS=[
  why:"It is a rare real data point for budgeting post-training, and it shows that generating attempts costs as much as updating the model.",
  caveat:"Excludes pre-training, staff, failed runs and earlier research; no hardware type or hourly rate is given, and nothing is audited.",
  how:["Run 30 RL steps per model, about 750,000 practice attempts in total.","Each step processes 3.5–3.7 billion tokens across generation, training and grading.","Release the environments and the framework, built on verl, uni-agent and mini-swe-agent."],
- math:"$2.62M ÷ 30 steps ≈ <code>$87K per step</code>. At about 3.5 billion tokens per step, that is roughly $25 per million tokens processed. Almost half the budget is spent on the model <em>trying</em> rather than <em>learning</em>.",
+ math:[{"t":"Cost per RL step","m":"\\frac{\\$2.62\\text{M}}{30\\text{ steps}} \\approx \\res{\\$87\\text{K}}\\text{ per step}"},{"t":"Cost per million tokens processed","m":"\\frac{\\$87\\text{K}}{3.5\\text{ billion tokens}} \\approx \\frac{\\$25}{1\\text{M tokens}}","n":"At about 3.5 billion tokens per step."},"Almost half the budget is spent on the model <em>trying</em> rather than <em>learning</em>."],
  builds:["rlvr","moe","verl"],
  links:[["Xiaomi release note","https://mimo.mi.com/docs/news/latest/v2-6"],["Analysis","https://www.digitalapplied.com/blog/mimo-v2-6-open-rl-stack-training-cost-published"]]}
 ];
@@ -692,7 +694,7 @@ function openCard(id){
     <details class="deep"><summary>Technical deep dive <span>Method, worked maths, prior work and sources</span></summary>
      <div class="deep-body">
       <h4>How it works</h4><ol>${c.how.map(h=>`<li>${esc(h)}</li>`).join("")}</ol>
-      <h4>The maths, simply</h4><div class="mathbox">${c.math}</div>
+      <h4>The maths, simply</h4><div class="mathbox">${SignalMath.html(c.math)}</div>
       ${c.deepFig?figHTML(c.deepFig):""}
       ${c.deepTable?`<h4>${esc(c.deepTable.title)}</h4>${tableHTML(Object.assign({},c.deepTable,{title:null}))}`:""}
       <h4>Builds on</h4><div class="builds">${c.builds.map(b=>`<a href="#lin-${b}" data-lin="${b}">${esc(linById[b].title)}</a>`).join("")}</div>

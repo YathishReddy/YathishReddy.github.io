@@ -19,6 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="../assets/lineage.css">
+<link rel="stylesheet" href="../assets/math.css">
 <style>
 :root{
   --bg:#F2F4F6; --surface:#FFFFFF; --surface-2:#E8ECF0; --ink:#15202B; --muted:#586674; --line:#D5DCE3;
@@ -246,6 +247,7 @@ details.deep .deep-body{padding:0 16px 18px;border-top:1px solid var(--line)}
 
 <dialog id="dlg" aria-labelledby="d-title"><div class="d-inner" id="d-inner"></div></dialog>
 
+<script src="../assets/math.js"></script>
 <script src="../assets/lineage.js"></script>
 <script>
 const COLS=[
@@ -275,7 +277,7 @@ const CARDS=[
  why:"It is the first frontier model released defenders-first because of its offensive-security strength, and independent tests already place it at or near the top of general rankings.",
  caveat:"General developer access has no date, most security scores are Google's own, and Artificial Analysis measured a 103-second median time to first token and 200M output tokens on its index, far above the class median.",
  how:["Post-train a Gemini 4 model for sustained agentic workflows, vulnerability finding, exploitation and patching.","Evaluate misalignment and reward-hacking behaviour, such as cheating attempts on Terminal-Bench 4.0, alongside capability tests.","Release first to vetted cyber defenders and Fairwind partners, while taking part in US government pre-release testing, before wider availability."],
- math:"Vals Index lead over GPT-6.1 Terra: 70.36 − 60.47 = <code>9.9 points</code>, at 10.51 ÷ 2.925 ≈ <code>3.6×</code> the cost per test. After the introductory period, prices double from $2/$10 to $4/$20 per million tokens; cached input at 95% off costs 4 × 0.05 = <code>$0.20</code> per million. WebDev Arena: 1768 − 89 = <code>1679</code> Elo for the previous model.",
+ math:[{"t":"Vals Index lead over GPT-6.1 Terra","m":"70.36 - 60.47 = \\res{9.9}\\text{ points}"},{"t":"Cost per test against GPT-6.1 Terra","m":"\\frac{10.51}{2.925} \\approx \\res{3.6\\times}"},"After the introductory period, prices double from $2/$10 to $4/$20 per million tokens.",{"t":"Cached input at 95% off","m":"4 \\times 0.05 = \\res{\\$0.20}\\text{ per million}"},{"t":"WebDev Arena score of the previous model","m":"1768 - 89 = \\res{1679}\\text{ Elo}"}],
  builds:["cybench"],
  links:[["Google blog: Introducing Gemini 4 Carbon","https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/"],["Vals AI results","https://www.vals.ai/models/google_gemini-4-carbon"],["Artificial Analysis model page","https://artificialanalysis.ai/models/gemini-4-carbon"]]},
 
@@ -294,7 +296,7 @@ const CARDS=[
  why:"It turns the choice between training stages into a choice of data mix and timing, and in these tests mixing midtraining data into RL preserved general knowledge that staged RL eroded.",
  caveat:"The models are small (124M and 0.76B), math accuracy barely changes, coding pass@1 drops as more midtraining data is mixed in, and no setting wins on every metric.",
  how:["Write pretraining, midtraining, fine-tuning and suitable RL objectives as weighted maximum-likelihood losses over prompt–completion pairs.","Keep one buffer that mixes static corpora with RL generations weighted by reward, sampled by target token share.","Let generators and the trainer run asynchronously, publishing new weights every four updates, and vary the mix over time instead of switching stages."],
- math:"At 2% mixing, SciQ rises 67.00 − 53.00 = <code>14.0 points</code> over staged training while MATH-500 pass@1 moves 16.68 − 16.98 = <code>−0.3</code>. Held-out loss changes by −0.1269 against +0.0472 for staged, a <code>0.17 nats/token</code> gap. In later coding RL, MBPP+ pass@16 reaches 58.47 against 52.12, <code>+6.35 points</code> for the 5% model.",
+ math:[{"t":"SciQ gain over staged training at 2% mixing","m":"67.00 - 53.00 = \\res{14.0}\\text{ points}"},{"t":"MATH-500 pass@1 change","m":"16.68 - 16.98 = \\res{-0.3}"},{"t":"Held-out loss gap, unified against staged (nats/token)","m":"0.0472 - (-0.1269) \\approx \\res{0.17}","n":"Held-out loss changes by −0.1269 against +0.0472 for staged."},{"t":"MBPP+ pass@16 in later coding RL","m":"58.47 - 52.12 = \\res{+6.35}\\text{ points}","n":"For the 5% model."}],
  builds:["rlvr"],
  links:[["Paper (arXiv 2610.40564)","https://arxiv.org/abs/2610.40564"]]},
 
@@ -312,7 +314,7 @@ const CARDS=[
  why:"It gives training teams a well-controlled reason to spend scarce compute on more passes over real text rather than on synthetic warm-up phases.",
  caveat:"The models are small (up to 881M parameters), downstream scores differ only within noise in most settings, and the authors note interleaving synthetic data may still be useful.",
  how:["Reproduce a published NCA pre-pretraining result, then vary only the embedding initialisation.","Compare PPT against natural-language training at matched FLOPs in data-constrained, data-unconstrained and over-Chinchilla regimes, searching model size per method.","Measure FineWeb bits per byte, BLiMP and DCLM CORE, and track how much PPT knowledge survives natural-language training."],
- math:"The over-Chinchilla run trains 881M parameters on 50B tokens: 50 ÷ 0.881 ≈ <code>57 tokens per parameter</code>, with 0.5B ÷ 50B = <code>1%</code> spent on PPT. At 9×10¹⁸ FLOPs, NCA 5% is (0.8765 − 0.8733) ÷ 0.8733 ≈ <code>0.37%</code> worse than the baseline. DCLM CORE in that run: 0.263 baseline vs 0.264 NCA, a <code>0.001</code> difference inside the ±0.009 spread.",
+ math:[{"t":"Over-Chinchilla run: 881M parameters on 50B tokens","m":"\\frac{50}{0.881} \\approx \\res{57}\\text{ tokens per parameter}"},{"t":"Share spent on PPT","m":"\\frac{0.5\\text{B}}{50\\text{B}} = \\res{1\\%}"},{"t":"NCA 5% against the baseline at \\(9 \\times 10^{18}\\) FLOPs","m":"\\frac{0.8765 - 0.8733}{0.8733} \\approx \\res{0.37\\%}\\text{ worse}"},{"t":"DCLM CORE in that run, NCA against baseline","m":"0.264 - 0.263 = \\res{0.001}","n":"Inside the ±0.009 spread."}],
  builds:["chinchilla","datacon"],
  links:[["Paper (arXiv 2610.40051)","https://arxiv.org/abs/2610.40051"]]},
 
@@ -332,7 +334,7 @@ const CARDS=[
  why:"Whole reports, contracts and books can be parsed in one pass on modest GPU memory, while keeping tables and text that continue across page breaks intact.",
  caveat:"The headline long-document benchmark was built by the authors, training labels came from other parsers, and the authors note the sparse attention loses some global structure such as heading hierarchies.",
  how:["Start from Unlimited OCR (DeepEncoder plus a 3B mixture-of-experts decoder with about 0.5B active parameters) and post-train for one epoch on 2M multi-page and 10M single-page documents.","In each decoder layer, gate attention to the current page's visual blocks, add the top-k remote blocks chosen by a learned router, and keep a local text window.","Decode long documents in overlapping page chunks, reusing the shared page's KV cache and releasing the others."],
- math:"Chunked decoding cuts peak KV memory from 47.00 to 1.77 GB: 47.00 ÷ 1.77 ≈ <code>27× less</code>, and raises throughput from 360 to 1,315 tokens per second at batch 16, ≈ <code>3.7×</code>. The MarathonDocBench lead is 77.06 − 33.74 = <code>43.3 points</code>. Active share: 0.5B ÷ 3B ≈ <code>17%</code> of weights per token.",
+ math:[{"t":"Peak KV memory with chunked decoding","m":"\\frac{47.00\\text{ GB}}{1.77\\text{ GB}} \\approx \\res{27\\times}\\text{ less}"},{"t":"Throughput at batch 16","m":"\\frac{1,315}{360} \\approx \\res{3.7\\times}","n":"From 360 to 1,315 tokens per second."},{"t":"MarathonDocBench lead","m":"77.06 - 33.74 = \\res{43.3}\\text{ points}"},{"t":"Active share of weights per token","m":"\\frac{0.5\\text{B}}{3\\text{B}} \\approx \\res{17\\%}"}],
  builds:["deepseekocr","moe","streamingllm"],
  links:[["Paper (arXiv 2610.39308)","https://arxiv.org/abs/2610.39308"],["Weights (Hugging Face)","https://huggingface.co/baidu/unlimited-ocr-2"],["Code (GitHub)","https://github.com/baidu/Unlimited-OCR"]]},
 
@@ -350,7 +352,7 @@ const CARDS=[
  why:"It is an open, locally runnable counterpart to closed world models such as Google's Genie line, which released Genie 4 in preview the same week.",
  caveat:"All comparisons are Tencent's own human ratings on its own benchmark, and the model clearly trails Genie 3 on remembering places it has already shown.",
  how:["Convert a pretrained bidirectional video model into a segment-causal one, with descriptive text kept across segments and action text confined to its time window.","Train in stages: causal generation, text interaction, camera control, high-quality annealing, then training on its own generated histories (segment forcing) and diffusion distillation.","At inference, a VLM Prompt Enhancer plans each turn; INT8 weights and cache, sliding-window attention and CPU offloading fit it on one RTX 4090."],
- math:"A 100-second video at 24 FPS is 100 × 24 = <code>2,400 frames</code>, generated in seven segments at 1280 × 704 with 20.53 GiB peak memory. Net win on prompt following against LingBot-World v2: 75.0 − 8.3 = <code>66.7 points</code>; against Genie 3 on spatial memory: 13.3 − 30.0 = <code>−16.7 points</code>. The INT8 checkpoint is 9.0 ÷ 17.1 ≈ <code>53%</code> of the BF16 size.",
+ math:[{"t":"A 100-second video at 24 FPS","m":"100 \\times 24 = \\res{2,400}\\text{ frames}","n":"Generated in seven segments at 1280 × 704 with 20.53 GiB peak memory."},{"t":"Net win on prompt following against LingBot-World v2","m":"75.0 - 8.3 = \\res{66.7}\\text{ points}"},{"t":"Net win on spatial memory against Genie 3","m":"13.3 - 30.0 = \\res{-16.7}\\text{ points}"},{"t":"INT8 checkpoint size against BF16","m":"\\frac{9.0}{17.1} \\approx \\res{53\\%}"}],
  builds:["causvid","distill","lora"],
  links:[["Technical report (arXiv 2610.36729)","https://arxiv.org/abs/2610.36729"],["Code (GitHub)","https://github.com/Tencent-Hunyuan/Hy-Nomas"],["Weights (Hugging Face)","https://huggingface.co/tencent/Hy-Nomas"],["ComfyUI Wiki release summary","https://comfyui-wiki.com/en/news/2026-10-21-hy-nomas"]]},
 
@@ -369,7 +371,7 @@ const CARDS=[
  why:"It shows a route to competitive text-to-image quality on an academic-scale budget, and finds that tokenizers should carry meaning rather than reconstruct pixels.",
  caveat:"Comparisons with other systems are approximate because data, text encoders and evaluation settings differ, the final scores use prompt rewriting and seed selection, and no weights were listed.",
  how:["Tokenize images with a frozen semantic tokenizer and train a text-conditioned autoregressive model to predict the tokens in random orders.","Freeze that backbone and add trainable pixel-diffusion modules that share its attention projections, trained on tokens from real images.","At inference, generate tokens autoregressively from the prompt and let the diffusion renderer produce the pixels, splitting compute about 3:2 between the stages."],
- math:"The 3:2 split of 6,600 GPU-hours gives 6,600 × 0.6 = <code>3,960</code> for autoregressive pretraining and <code>2,640</code> for rendering. The authors put Z-Image-Base at about 48 times the compute: 6,600 × 48 ≈ <code>317,000 GPU-hours</code>. In matched tests, autoregressive pretraining adds 65.51 − 61.16 = <code>4.35</code> GenEval points over pixel diffusion from scratch.",
+ math:[{"t":"Autoregressive share of the 3:2 split","m":"6,600 \\times 0.6 = \\res{3,960}\\text{ GPU-hours}","n":"Leaving \\(\\res{2,640}\\) GPU-hours for rendering."},{"t":"Z-Image-Base at about 48 times the compute","m":"6,600 \\times 48 \\approx \\res{317,000}\\text{ GPU-hours}","n":"The authors' estimate."},{"t":"Gain from autoregressive pretraining","m":"65.51 - 61.16 = \\res{4.35}\\text{ GenEval points}","n":"Over pixel diffusion from scratch, in matched tests."}],
  builds:["randar","diffusion"],
  links:[["Paper (arXiv 2610.37626)","https://arxiv.org/abs/2610.37626"]]},
 
@@ -388,7 +390,7 @@ const CARDS=[
  why:"Computer-use agents run long loops of screenshots and actions, so a model that is half the price and several times faster changes which desktop tasks are worth automating.",
  caveat:"All scores are vendor-reported, several are given only as relative gains, and the safety tests ran in simulated environments that OpenAI says may differ from production.",
  how:["Send screenshots and the task to gpt-6.1-terra through the API, or use it inside ChatGPT Work or Codex.","The model returns clicks, keystrokes or tool calls, which the harness executes before capturing the next screen.","Pick the reasoning effort per task: OpenAI reports the factuality error rate falling from 16.7% at low effort to 4.3% at maximum."],
- math:"Coding: 50.3 ÷ 21.5 ≈ <code>2.3×</code> the Terminal-Bench 4.0 score of GPT-5.6 Terra. Price: a step with 200K input and 20K output tokens costs 0.2 × $1 + 0.02 × $5 = <code>$0.30</code> on Terra against 0.2 × $2 + 0.02 × $10 = <code>$0.60</code> on GPT-6.1 Sol. Safety: 11 ÷ 80 = <code>13.75%</code> unauthorised actions, 13.75 ÷ 1.25 = <code>11×</code> Sol's rate; 22 ÷ 48,690 ≈ <code>0.045%</code> of tasks with severe flags.",
+ math:[{"t":"Terminal-Bench 4.0 against GPT-5.6 Terra","m":"\\frac{50.3}{21.5} \\approx \\res{2.3\\times}"},{"t":"A 200K-input, 20K-output step on Terra","m":"0.2 \\times \\$1 + 0.02 \\times \\$5 = \\res{\\$0.30}"},{"t":"The same step on GPT-6.1 Sol","m":"0.2 \\times \\$2 + 0.02 \\times \\$10 = \\res{\\$0.60}"},{"t":"Unauthorised actions","m":"\\frac{11}{80} = \\res{13.75\\%}","n":"That is \\(\\frac{13.75}{1.25} = \\res{11\\times}\\) Sol's rate."},{"t":"Tasks with severe flags","m":"\\frac{22}{48,690} \\approx \\res{0.045\\%}"}],
  builds:["osworld","react"],
  links:[["OpenAI launch post","https://openai.com/index/introducing-gpt-6-1-terra/"],["System card (OpenAI)","https://deploymentsafety.openai.com/gpt-6-1-terra/kernelgen-1p"],["Launch coverage (BleepingComputer)","https://bleepingcomputer.com/news/artificial-intelligence/openai-launches-gpt-61-terra-with-3x-faster-ai-agents-50-percent-lower-pricing"],["System card coverage (BleepingComputer)","https://bleepingcomputer.com/news/artificial-intelligence/openais-gpt-61-terra-is-safer-overall-but-shows-more-destructive-action-flags-in-tests"]]},
 
@@ -406,7 +408,7 @@ const CARDS=[
  why:"Teams generating synthetic environments for agent training get a concrete recipe for spending a fixed data budget.",
  caveat:"Training is supervised distillation from one teacher (GLM-5.2), the comparisons with prior methods mix different SFT and RL regimes, and no code or data release is stated.",
  how:["A builder LLM writes 64 apps across eight categories, giving 10,472 Python APIs over typed databases.","For each task it writes an instruction, a starting database, a verifier and an oracle solver, then varies the database and distractor data.","A teacher model solves tasks (up to four tries), verified successes are distilled into Qwen3.5 students, and a fitted law chooses the data mix."],
- math:"Same budget, different mix: 32 × 1,024 × 1 = <code>32,768</code> tasks and 64 × 128 × 4 = <code>32,768</code> tasks. The app-diverse mix lifts 4B AppWorld Test-C from 38.4% to 45.0%, <code>+6.6 points</code>. Prediction error: 0.1706 ÷ 0.0285 ≈ <code>6×</code> lower than a task-count-only law.",
+ math:[{"t":"Same budget, first mix","m":"32 \\times 1,024 \\times 1 = \\res{32,768}\\text{ tasks}"},{"t":"Same budget, second mix","m":"64 \\times 128 \\times 4 = \\res{32,768}\\text{ tasks}"},{"t":"4B AppWorld Test-C with the app-diverse mix","m":"45.0\\% - 38.4\\% = \\res{+6.6}\\text{ points}"},{"t":"Prediction error against a task-count-only law","m":"\\frac{0.1706}{0.0285} \\approx \\res{6\\times}\\text{ lower}"}],
  builds:["appworld","scalinglaws","distill"],
  links:[["Paper (arXiv 2610.37648)","https://arxiv.org/abs/2610.37648"]]},
 
@@ -424,7 +426,7 @@ const CARDS=[
  why:"Tool owners can improve every agent that calls their API or MCP server at once, using logs they already collect.",
  caveat:"Gains are small on several settings (Retail fell slightly, and only Telecom passed significance tests), and the production study covers 26 held-out tasks.",
  how:["Collect agent transcripts and pass/fail results for tasks that use the shared toolset.","A Pi coding agent searches the traces for recurring failures, reads the tool code and edits descriptions or return values, with up to five validation attempts.","Re-run the same fixed agent on held-out tasks, 30 trials each, and keep edits that beat the original under a paired permutation test."],
- math:"Telecom: 36.75 − 29.50 = <code>7.25 points</code> for a one-time optimiser cost of <code>$10.69</code>. Collaboration Toolbox errors: 1 − 37 ÷ 73 ≈ <code>49%</code> fewer. Engineering Context: 1 − 76 ÷ 114 ≈ <code>33%</code> fewer tool calls, and 72.7 − 54.5 = <code>+18.2 points</code> pass rate.",
+ math:[{"t":"Telecom gain","m":"36.75 - 29.50 = \\res{7.25}\\text{ points}","n":"For a one-time optimiser cost of \\(\\res{\\$10.69}\\)."},{"t":"Collaboration Toolbox errors","m":"1 - \\frac{37}{73} \\approx \\res{49\\%}\\text{ fewer}"},{"t":"Engineering Context tool calls","m":"1 - \\frac{76}{114} \\approx \\res{33\\%}\\text{ fewer}"},{"t":"Engineering Context pass rate","m":"72.7 - 54.5 = \\res{+18.2}\\text{ points}"}],
  builds:["taubench","gepa"],
  links:[["Paper (arXiv 2610.34679)","https://arxiv.org/abs/2610.34679"],["Code (GitHub, Apache-2.0)","https://github.com/Netflix-Skunkworks/agent-tool-opt-core"]]},
 
@@ -443,7 +445,7 @@ const CARDS=[
  why:"A model that runs browser and tool agents on a phone in about 1 GB makes local agents practical without a server.",
  caveat:"Every number is vendor-reported, llama.cpp needs a recent LFM3-capable build, and early users reported MLX builds not loading in some runners on day one.",
  how:["Download LFM3-1.7B-GGUF (Q4_0 is 1.05 GB) or the MLX 4-bit build.","Run it with an up-to-date llama.cpp or MLX runner; Liquid suggests temperature 0.1 for tool use and agents.","For images, speech or classification-style decisions, swap in LFM3-VL-2B, LFM3-Audio-2B, LFM3-Omni-2B or d1-2B."],
- math:"Phone speed: 43.6 ÷ 15.5 ≈ <code>2.8×</code> Qwen3.5-4B's decode rate. Cache: 4.3 ÷ 1.6 ≈ <code>2.7×</code> less KV memory at 128K, about 1.6 GB ÷ 131,072 tokens ≈ <code>12 KB per token</code>. Agent gap: 41.29 − 15.10 = <code>+26.2 points</code> on AutomationBench over Qwen3.5-9B.",
+ math:[{"t":"Phone decode speed against Qwen3.5-4B","m":"\\frac{43.6}{15.5} \\approx \\res{2.8\\times}"},{"t":"KV memory at 128K","m":"\\frac{4.3}{1.6} \\approx \\res{2.7\\times}\\text{ less}"},{"t":"KV memory per token","m":"\\frac{1.6\\text{ GB}}{131,072\\text{ tokens}} \\approx \\res{12}\\text{ KB per token}"},{"t":"AutomationBench gap over Qwen3.5-9B","m":"41.29 - 15.10 = \\res{+26.2}\\text{ points}"}],
  builds:["quant","distill"],
  links:[["Launch post (Liquid AI)","https://www.liquid.ai/blog/lfm3"],["Model card (Hugging Face)","https://huggingface.co/LiquidAI/LFM3-1.7B"],["Collection (Hugging Face)","https://huggingface.co/collections/LiquidAI/lfm3"],["Benchmark compilation (eesel AI)","https://www.eesel.ai/blog/lfm3"]]},
 
@@ -461,7 +463,7 @@ const CARDS=[
  why:"Private, offline assistants inside ordinary web pages become several times more responsive without any native install.",
  caveat:"Only Chrome on NVIDIA and AMD GPUs was tested (no Safari, Firefox, Apple or mobile GPUs), decoding is greedy only, and calibration adds several seconds on first load.",
  how:["Replace one-token kernels with small-batch integer kernels whose fixed reduction order makes N verified tokens bit-identical to N single steps.","Encode several draft-verify-accept steps into one command buffer that reads its control state from GPU memory, so the CPU reads back only a few bytes per window.","Draft continuations from page content, chat history and earlier session outputs, and let a controller pick the tree width with the most tokens per millisecond."],
- math:"Laptop: 20.15 ÷ 3.75 ≈ <code>5.4×</code>, or 1,000 ÷ 3.75 ≈ <code>267 tokens/s</code> against about 50. A Qwen2.5-0.5B answer about a news article takes <code>0.9 s</code> against 3.2 s for WebLLM. Session memory on the workstation: 1 − 1.40 ÷ 1.60 = <code>12.5%</code> lower latency for Llama-3.2-1B with no extra download.",
+ math:[{"t":"Laptop speed-up","m":"\\frac{20.15}{3.75} \\approx \\res{5.4\\times}"},{"t":"The same in tokens per second","m":"\\frac{1,000}{3.75} \\approx \\res{267}\\text{ tokens/s}","n":"Against about 50."},"A Qwen2.5-0.5B answer about a news article takes \\(\\res{0.9}\\text{ s}\\) against 3.2 s for WebLLM.",{"t":"Session memory on the workstation","m":"1 - \\frac{1.40}{1.60} = \\res{12.5\\%}\\text{ lower latency}","n":"For Llama-3.2-1B, with no extra download."}],
  builds:["specdec","quant"],
  links:[["Paper (arXiv 2610.39761)","https://arxiv.org/abs/2610.39761"]]},
 
@@ -479,7 +481,7 @@ const CARDS=[
  why:"Anyone shipping an on-device visual agent gets measured numbers on where time and heat go, and which assumptions about NPUs fail.",
  caveat:"Results depend on specific runtimes and versions (GenieX, MNN, RKLLM) and three devices, so newer kernels could shift the CPU–NPU balance.",
  how:["Deploy each VLM to the phone and two boards over ADB or SSH, with all operators on the target NPU and no CPU fallback.","Measure vision-encoding, prefill and decode throughput separately, sampling memory and temperature every 100 ms.","Profile kernels to locate stalls, then sweep input resolution across ten benchmarks (47,374 questions) to find task-specific sweet spots."],
- math:"GUI task: 146.4 ÷ 5 ≈ <code>29 s</code> per turn on average. Decode: 24.3 ÷ 10.4 ≈ <code>2.3×</code> NPU advantage for Gemma4-E2B, but 60.5 ÷ 39.9 ≈ <code>1.5×</code> CPU advantage for SmolVLM2. KV at 16K tokens: 160 KiB × 16,384 ≈ <code>2.5 GiB</code> for NEO1.5 against 6 KiB × 16,384 ≈ <code>0.1 GiB</code> for Gemma4-E2B. Sweet resolution: InternVL3.5-1B on MME-RealWorld gains 32.5 − 30.7 = <code>+1.8 points</code> at 784 pixels for the same visual-token count as 672.",
+ math:[{"t":"GUI task time per turn","m":"\\frac{146.4\\text{ s}}{5} \\approx \\res{29}\\text{ s}","n":"On average."},{"t":"NPU decode advantage for Gemma4-E2B","m":"\\frac{24.3}{10.4} \\approx \\res{2.3\\times}"},{"t":"CPU decode advantage for SmolVLM2","m":"\\frac{60.5}{39.9} \\approx \\res{1.5\\times}"},{"t":"KV at 16K tokens for NEO1.5","m":"160\\text{ KiB} \\times 16,384 \\approx \\res{2.5}\\text{ GiB}","n":"Against \\(6\\text{ KiB} \\times 16,384 \\approx \\res{0.1}\\text{ GiB}\\) for Gemma4-E2B."},{"t":"InternVL3.5-1B on MME-RealWorld at 784 pixels","m":"32.5 - 30.7 = \\res{+1.8}\\text{ points}","n":"For the same visual-token count as 672."}],
  builds:["gdn","flashattn"],
  links:[["Paper (arXiv 2610.40039)","https://arxiv.org/abs/2610.40039"]]},
 
@@ -498,7 +500,7 @@ const CARDS=[
  why:"A 0.6B retriever that nearly matches a commercial contextual API on real queries, and can search an index built by its 9B sibling, makes long-document RAG cheaper to run locally.",
  caveat:"Q2D-Chunk and context-bench are the authors' own benchmarks (context-bench was scored blind by turbopuffer), and the paper gives the size only as 0.6B, not an exact parameter count.",
  how:["Encode the whole document (up to 32,768 tokens) in one pass, with a learned separator token between chunks, and average each chunk's token vectors.","Train the 9B model on graded chunk relevance distilled from a query-aware context-compression model, instead of a single gold chunk per query.","Distil the 0.6B model to reproduce the 9B model's query and chunk vectors (1,024-dimension prefix), so both share one embedding space."],
- math:"Weight memory at 0.6B parameters: BF16 0.6B × 16 ÷ 8 = <code>1.2 GB</code>; 4-bit 0.6B × 4 ÷ 8 = <code>0.3 GB</code>. Index size: one int8 vector of 1,024 dimensions is 1,024 bytes, so 1 million chunks take 1,000,000 × 1,024 ≈ <code>1.0 GB</code>. Reading cost: 3,549 − 2,264 = <code>1,285</code> fewer median tokens to full coverage than the v1 0.6B model, about 36% less.",
+ math:[{"t":"Weights at 0.6B parameters in BF16","m":"\\frac{0.6\\text{B} \\times 16}{8} = \\res{1.2}\\text{ GB}"},{"t":"At 4 bits","m":"\\frac{0.6\\text{B} \\times 4}{8} = \\res{0.3}\\text{ GB}"},{"t":"Index for 1 million chunks","m":"1,000,000 \\times 1,024\\text{ bytes} \\approx \\res{1.0}\\text{ GB}","n":"One int8 vector of 1,024 dimensions is 1,024 bytes."},{"t":"Median tokens to full coverage, against the v1 0.6B model","m":"3,549 - 2,264 = \\res{1,285}\\text{ fewer}","n":"About 36% less."}],
  builds:["distill","latechunk"],
  links:[["Paper (arXiv 2610.38854)","https://arxiv.org/abs/2610.38854"],["pplx-embed-v2-context-0.6b (Hugging Face)","https://huggingface.co/perplexity-ai/pplx-embed-v2-context-0.6b"],["Q2D-Chunk leaderboard (Hugging Face)","https://huggingface.co/spaces/perplexity-ai/q2d-chunk-leaderboard"]]},
 
@@ -516,7 +518,7 @@ const CARDS=[
  why:"It is a fully documented recipe, from optimiser to CPU engine, for a sub-1B tool-calling model that a small team can train for a few hundred dollars.",
  caveat:"It scores below SmolLM2 and Qwen3-0.6B on general benchmarks, which saw 50–900 times more tokens, and at 500M parameters the authors find calling tools reliably and declining irrelevant requests trade off against each other.",
  how:["Train a decoder with fine-grained experts, sigmoid routing with loss-free load balancing and grouped-query attention with QK-norm on 40B FineWeb tokens.","Fine-tune on about 816K function-calling examples (Nemotron, BitAgent and a multi-call set), with grammar-constrained decoding that only allows valid tool names and keys.","Export to GGUF and run on a laptop CPU with llama.cpp or the hobby-rs Rust engine, forcing a call whenever tools are supplied."],
- math:"Weight memory at 501M parameters: BF16 501M × 16 ÷ 8 = <code>1.0 GB</code>; 8-bit 501M × 8 ÷ 8 = <code>501 MB</code>; 4-bit 501M × 4 ÷ 8 = <code>251 MB</code> (the released Q4_K_M file is 362 MB). Only 169 ÷ 501 ≈ <code>34%</code> of weights are used per token. At 52 tokens/s, a 200-token tool call takes 200 ÷ 52 ≈ <code>3.8 s</code> on the laptop.",
+ math:[{"t":"Weights at 501M parameters in BF16","m":"\\frac{501\\text{M} \\times 16}{8} = \\res{1.0}\\text{ GB}"},{"t":"At 8 bits","m":"\\frac{501\\text{M} \\times 8}{8} = \\res{501}\\text{ MB}"},{"t":"At 4 bits","m":"\\frac{501\\text{M} \\times 4}{8} = \\res{251}\\text{ MB}","n":"The released Q4_K_M file is 362 MB."},{"t":"Share of weights used per token","m":"\\frac{169}{501} \\approx \\res{34\\%}"},{"t":"A 200-token tool call at 52 tokens/s","m":"\\frac{200}{52} \\approx \\res{3.8}\\text{ s}","n":"On the laptop."}],
  builds:["moe","quant"],
  links:[["Paper (arXiv 2610.34582)","https://arxiv.org/abs/2610.34582"],["Code (GitHub)","https://github.com/harishsg993010/HobbyLM"],["Models (Hugging Face)","https://huggingface.co/rootxhacker"]]},
 
@@ -534,7 +536,7 @@ const CARDS=[
  why:"It shows a sub-1B model can do a privacy-critical structured-extraction job locally, on a CPU, without any real patient data in training.",
  caveat:"Performance drops sharply on real ICU nursing notes (F1 0.478), whose terse style and sparse identifiers the synthetic notes lack, and every configuration was trained once with a single seed.",
  how:["Generate synthetic clinical notes with three LLM teachers and re-label all of them with one labeller so that identifier spans follow a single convention.","Fine-tune Qwen3-0.6B-Base to output a typed XML schema of identifiers (names, ages, dates with normalised forms, record numbers, places).","Run it locally, optionally adding a LoRA verifier that estimates whether an annotation is incomplete and routes those notes to human review."],
- math:"Weight memory at 596M parameters: BF16 596M × 16 ÷ 8 = <code>1.19 GB</code>; 4-bit 596M × 4 ÷ 8 = <code>298 MB</code> (the measured llama.cpp process peaks at 615 MB). CPU speed against OPF: 12,413 ÷ 3,931 ≈ <code>3.2×</code> faster. On a GPU with vLLM at 31 notes/s, 10,000 notes take 10,000 ÷ 31 ≈ <code>5.4 minutes</code>.",
+ math:[{"t":"Weights at 596M parameters in BF16","m":"\\frac{596\\text{M} \\times 16}{8} = \\res{1.19}\\text{ GB}"},{"t":"At 4 bits","m":"\\frac{596\\text{M} \\times 4}{8} = \\res{298}\\text{ MB}","n":"The measured llama.cpp process peaks at 615 MB."},{"t":"CPU speed against OPF","m":"\\frac{12,413}{3,931} \\approx \\res{3.2\\times}\\text{ faster}"},{"t":"10,000 notes on a GPU with vLLM","m":"\\frac{10,000\\text{ notes}}{31\\text{ notes/s}} \\approx \\res{5.4}\\text{ minutes}"}],
  builds:["distill","lora","rlvr"],
  links:[["Paper (arXiv 2610.33839)","https://arxiv.org/abs/2610.33839"],["Code and evaluation harness (GitHub)","https://github.com/BardiaKh/EdgeDeID"],["Weights and synthetic corpus (Hugging Face)","https://huggingface.co/EdgeDeID"]]},
 
@@ -553,7 +555,7 @@ const CARDS=[
  why:"It is a lossless way to cut weight memory by a quarter on existing GPUs, which helps most where exact BF16 outputs matter, such as reinforcement-learning rollouts.",
  caveat:"The figures are the authors' own; at a matched KV budget NF12 is slower than BF16 (0.41×), time to first token rises by 0.04–0.24 s, and an earlier, shorter version appeared at an ICLR 2026 workshop.",
  how:["Scale each matrix by a power of two so that its exponents sit in the window where the top four bits are 0111, then drop those four bits.","Pack two weights' remaining high bits into one shared byte, and send rare out-of-range groups of eight weights to a per-matrix escape buffer.","Decode in registers inside the GEMV for single-user decoding, or into a per-layer HBM buffer for batched serving, freeing memory for KV cache."],
- math:"Size: 12.02 ÷ 16 ≈ <code>75%</code> of BF16. For Qwen3-32B, 62.4 − 46.9 = <code>15.5 GB</code> freed on an 80 GB GPU, which raises the KV budget from 16,759 to 74,903 tokens, 74,903 ÷ 16,759 ≈ <code>4.5×</code>. GPQA-Diamond: 50.5 ÷ 26.2 ≈ <code>1.93×</code> faster with matching scores.",
+ math:[{"t":"Size against BF16","m":"\\frac{12.02}{16} \\approx \\res{75\\%}"},{"t":"Memory freed for Qwen3-32B on an 80 GB GPU","m":"62.4 - 46.9 = \\res{15.5}\\text{ GB}"},{"t":"Growth of the KV budget","m":"\\frac{74,903}{16,759} \\approx \\res{4.5\\times}","n":"From 16,759 to 74,903 tokens."},{"t":"GPQA-Diamond speed-up","m":"\\frac{50.5}{26.2} \\approx \\res{1.93\\times}","n":"With matching scores."}],
  builds:["dfloat11","quant","pagedattn"],
  links:[["Paper (alphaXiv)","https://www.alphaxiv.org/abs/2610.nyoomfloat12"],["Earlier workshop version (ICLR 2026 SPOT)","https://iclr.cc/virtual/2026/10013421"]]},
 
@@ -571,7 +573,7 @@ const CARDS=[
  why:"Long agent sessions are now the workload that fills KV caches, and this shows that the classic memory hierarchy is the wrong shape for them.",
  caveat:"The results are the authors' own on one 8×B200 server, and the Claude Code trace is a replayed public trace rather than a live deployment.",
  how:["Expose host DRAM and NVMe SSD as peer media behind one address space and a lock-free block index, instead of a DRAM-then-SSD hierarchy.","Write each immutable KV block once, directly to its target medium, in session-contiguous and layer-major order, and never migrate it.","Restore a prefix with a few large GPUDirect Storage reads into a bounded GPU window, with separate DRAM and SSD queues so one cannot block the other."],
- math:"Latency: 12.24 ÷ 7.57 ≈ <code>1.6×</code> lower mean TTFT than Mooncake. Throughput: 98.3 ÷ 61.6 ≈ <code>1.6×</code>. Recomputed prefill falls with the miss rate: 100 − 64.3 = 35.7% of prompt blocks missed with Mooncake against 100 − 94.2 = 5.8% with FlatCake, about <code>6×</code> less recomputation.",
+ math:[{"t":"Mean TTFT against Mooncake","m":"\\frac{12.24}{7.57} \\approx \\res{1.6\\times}\\text{ lower}"},{"t":"Throughput against Mooncake","m":"\\frac{98.3}{61.6} \\approx \\res{1.6\\times}"},{"t":"Prompt blocks missed with Mooncake","m":"100 - 64.3 = 35.7\\%"},{"t":"Prompt blocks missed with FlatCake","m":"100 - 94.2 = 5.8\\%"},{"t":"Recomputed prefill, which falls with the miss rate","m":"\\frac{35.7}{5.8} \\approx \\res{6\\times}\\text{ less}"}],
  builds:["mooncake","pagedattn","radixattn"],
  links:[["Paper (arXiv 2610.38355)","https://arxiv.org/abs/2610.38355"]]},
 
@@ -589,7 +591,7 @@ const CARDS=[
  why:"KV pages are not zeroed between requests, so in disaggregated serving page ownership is a security boundary, not just a performance detail.",
  caveat:"Cloudflare does not say how many customers were affected or name the GPUs, and SGLang's proposal to zero pages on release is still a draft.",
  how:["Size the prefill KV pool from remaining GPU memory at start-up, independently of the configured context length, which allowed the mismatch.","Reserve decode pages for the full prompt, while prefill handles a rejected request as a one-token placeholder and transfers only one page.","Fix by rejecting over-length requests at the admission queue, checksumming transferred KV, cancelling both halves on failure and checking pool size before deployment."],
- math:"The prefill pool covered 681,280 ÷ 1,048,576 ≈ <code>65%</code> of the advertised context. In the post's example, decode reserved 8 pages and received 1, so 7 ÷ 8 = <code>87.5%</code> of the pages it attended to held stale data. The fixed pool of about 2.04M tokens is 2.04M ÷ 1,048,576 ≈ <code>1.95×</code> the context.",
+ math:[{"t":"Prefill pool share of the advertised context","m":"\\frac{681,280}{1,048,576} \\approx \\res{65\\%}"},{"t":"Stale pages in the post's example","m":"\\frac{7}{8} = \\res{87.5\\%}","n":"Decode reserved 8 pages and received 1, so this share of the pages it attended to held stale data."},{"t":"Fixed pool against the context","m":"\\frac{2.04\\text{M}}{1,048,576} \\approx \\res{1.95\\times}","n":"The fixed pool holds about 2.04M tokens."}],
  builds:["distserve","pagedattn"],
  links:[["Cloudflare blog: KV cache exposure and remediation","https://blog.cloudflare.com/kv-cache-exposure-remediation/"]]}
 ];
@@ -743,7 +745,7 @@ function openCard(id){
     <details class="deep"><summary>Technical deep dive <span>Method, worked maths, prior work and sources</span></summary>
      <div class="deep-body">
       <h4>How it works</h4><ol>${c.how.map(h=>`<li>${esc(h)}</li>`).join("")}</ol>
-      <h4>The maths, simply</h4><div class="mathbox">${c.math}</div>
+      <h4>The maths, simply</h4><div class="mathbox">${SignalMath.html(c.math)}</div>
       ${c.deepFig?figHTML(c.deepFig):""}
       ${c.deepTable?`<h4>${esc(c.deepTable.title)}</h4>${tableHTML(Object.assign({},c.deepTable,{title:null}))}`:""}
       <h4>Builds on</h4><div class="builds">${c.builds.map(b=>`<a href="#lin-${b}" data-lin="${b}">${esc(linById[b].title)}</a>`).join("")}</div>

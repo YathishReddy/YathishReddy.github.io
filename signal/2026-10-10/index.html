@@ -19,6 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="../assets/lineage.css">
+<link rel="stylesheet" href="../assets/math.css">
 <style>
 :root{
   --bg:#F2F4F6; --surface:#FFFFFF; --surface-2:#E8ECF0; --ink:#15202B; --muted:#586674; --line:#D5DCE3;
@@ -246,6 +247,7 @@ details.deep .deep-body{padding:0 16px 18px;border-top:1px solid var(--line)}
 
 <dialog id="dlg" aria-labelledby="d-title"><div class="d-inner" id="d-inner"></div></dialog>
 
+<script src="../assets/math.js"></script>
 <script src="../assets/lineage.js"></script>
 <script>
 const COLS=[
@@ -269,7 +271,7 @@ const CARDS=[
  why:"It is a large open-weight model from a US lab, trained end to end from scratch, that targets the coding-agent tasks where Chinese open models have led.",
  caveat:"All scores are Reflection AI's own, and the weights were not yet downloadable on 10 October because the model was still in final safety testing.",
  how:["Pretrain a 501B mixture-of-experts model (23B active) on 23.8T curated tokens, with load balancing that needs no auxiliary loss.","Run asynchronous reinforcement learning on about 10,500 GB300 GPUs: over 100M rollouts and about 1.3 billion sandboxes, tolerating policies up to 107 weight versions out of date.","Train safety behaviour in a separate model and merge it in by multi-teacher on-policy distillation; a reasoning-effort setting trades answer length against score."],
- math:"Share of weights used per token: 23B ÷ 501B = <code>4.6%</code>. With the usual estimate of 2 operations per active parameter, each generated token costs about 2 × 23B = <code>46 GFLOPs</code>, against about 2 × 501B = <code>1,002 GFLOPs</code> if every weight were used.",
+ math:[{"t":"Share of weights used per token","m":"\\frac{23\\text{B}}{501\\text{B}} = \\res{4.6\\%}"},{"t":"Compute per generated token","m":"2 \\times 23\\text{B} = \\res{46}\\text{ GFLOPs}","n":"Using the usual estimate of 2 operations per active parameter."},{"t":"If every weight were used","m":"2 \\times 501\\text{B} = \\res{1,002}\\text{ GFLOPs}"}],
  builds:["moe","rlvr","distill"],
  links:[["Reflection AI: Introducing Beam","https://reflection.ai/blog/introducing-beam"],["MarkTechPost coverage","https://www.marktechpost.com/2026/10/05/reflection-ai-introduces-beam-a-501b-open-weight-moe-model-with-23b-active-parameters-for-coding-and-agentic-workloads/"]]},
 
@@ -282,7 +284,7 @@ const CARDS=[
  why:"It is the largest open-weight model announced by a European lab, which matters to organisations that need a frontier-scale model they can host themselves.",
  caveat:"All numbers are Mistral AI's own, many claims give no rival scores, and neither a licence nor the weights had been published at announcement.",
  how:["Pretrain a 1.05T mixture-of-experts model with 52B active parameters and a 1.6B vision encoder for image input.","Supervised fine-tuning, then reinforcement learning in many environments graded by reward models, unit tests, LLM judges and static checks.","Serve as a preview on Mistral Studio with a 1M-token context; open weights are promised by the end of October."],
- math:"Active share: 52B ÷ 1,050B ≈ <code>5.0%</code> of weights per token. At list price, 1M input plus 1M output tokens cost $1.36 + $4.18 = <code>$5.54</code>; at the launch price ($0.68 + $2.09) the same work costs <code>$2.77</code>.",
+ math:[{"t":"Active share of weights per token","m":"\\frac{52\\text{B}}{1,050\\text{B}} \\approx \\res{5.0\\%}"},{"t":"1M input plus 1M output, list price","m":"\\$1.36 + \\$4.18 = \\res{\\$5.54}"},{"t":"The same work at the launch price","m":"\\$0.68 + \\$2.09 = \\res{\\$2.77}"}],
  builds:["moe","rlvr"],
  links:[["Mistral AI announcement","https://mistral.ai/news/mistral-large-4/"],["Model card (docs)","https://docs.mistral.ai/models/mistral-large-4-0"]]},
 
@@ -295,7 +297,7 @@ const CARDS=[
  why:"Cheap, fast models do most sub-agent and high-volume work, so a tenfold price cut with large benchmark gains changes the cost of running agents.",
  caveat:"Scores and customer results are reported by Anthropic, the page gives no architecture details, and the 90% saving applies only to prompts up to 100k tokens.",
  how:["Short prompts (up to 100k tokens) are billed at $0.10 input and $0.50 output per million tokens; longer prompts at $0.50 and $2.50.","Cache reads cost $0.01 and cache writes $0.125 per million tokens for short prompts, a tenth of Haiku 4.5's rates.","Intended as the fast sub-agent under a larger planning model, with stricter cyber safeguards than Haiku 4.5."],
- math:"A 10,000-token prompt with a 1,000-token reply costs 10,000 × $0.10 ÷ 1M + 1,000 × $0.50 ÷ 1M = <code>$0.0015</code> on Haiku 5.5, against 10,000 × $1.00 ÷ 1M + 1,000 × $5.00 ÷ 1M = <code>$0.0150</code> on Haiku 4.5: <code>10×</code> cheaper.",
+ math:["Take a 10,000-token prompt with a 1,000-token reply.",{"t":"Cost on Haiku 5.5","m":"\\frac{10,000 \\times \\$0.10 + 1,000 \\times \\$0.50}{1\\text{M}} = \\res{\\$0.0015}"},{"t":"Cost on Haiku 4.5","m":"\\frac{10,000 \\times \\$1.00 + 1,000 \\times \\$5.00}{1\\text{M}} = \\res{\\$0.0150}"},{"t":"How much cheaper Haiku 5.5 is","m":"\\frac{\\$0.0150}{\\$0.0015} = \\res{10\\times}"}],
  builds:["osworld"],
  links:[["Anthropic: Claude Haiku 5.5","https://www.anthropic.com/claude-haiku-5-5"],["SiliconANGLE coverage","https://siliconangle.com/2026/10/07/anthropic-releases-claude-haiku-5-5-small-model-and-halves-sonnet-5-5-cache-read-prices/"]]},
 
@@ -309,7 +311,7 @@ const CARDS=[
  why:"Fully open text-to-video-with-sound models, with weights, code and diffusers support, are still rare, and these run on 16–32 GB consumer cards.",
  caveat:"Clips are limited to 5 seconds, and in the authors' own side-by-side tests Kling 2.6 was preferred on visual quality and MiniMax H3 on most criteria.",
  how:["Two streams: video (19B in Pro) and audio (5B), joined by 5B of cross-attention in which each stream attends to the other.","Train audio alone first, then train jointly on synchronised clips filtered by lip-sync and desync scores.","Fine-tune per domain and merge the results, apply reinforcement learning, then distil to 10 steps; a latent upscaler brings output to Full HD."],
- math:"Parameter budget, Pro: 19B video + 5B audio + 5B cross-attention = <code>29B</code>; Lite: 2B + 0.6B + 0.4B = <code>3B</code>. Lip-sync gain over LTX 2.5: (2.072 − 1.567) ÷ 1.567 ≈ <code>+32%</code>; desync falls from 0.521 to 0.396, about <code>24%</code> lower.",
+ math:[{"t":"Parameter budget, Pro","m":"19\\text{B} + 5\\text{B} + 5\\text{B} = \\res{29\\text{B}}","n":"Video, audio and cross-attention."},{"t":"Parameter budget, Lite","m":"2\\text{B} + 0.6\\text{B} + 0.4\\text{B} = \\res{3\\text{B}}"},{"t":"Lip-sync gain over LTX 2.5","m":"\\frac{2.072 - 1.567}{1.567} \\approx \\res{+32\\%}"},{"t":"Desync","m":"0.521 \\to 0.396","n":"About \\(\\res{24\\%}\\) lower."}],
  builds:["ltx2","wan","diffusion"],
  links:[["Paper (arXiv 2610.05608)","https://arxiv.org/abs/2610.05608"],["Code","https://github.com/kandinskylab/kandinsky-6"],["Weights (Hugging Face)","https://huggingface.co/collections/kandinskylab/kandinsky-60-diffusers"]]},
 
@@ -322,7 +324,7 @@ const CARDS=[
  why:"Video LLMs spend most of their time to first token reading visual input, and this shows compression works better before temporal mixing than after it.",
  caveat:"Results are the authors' own, on three related Qwen backbones with 32 sampled frames; the method trails a compression baseline on MVBench and fails some long-range identity questions.",
  how:["A frozen image encoder turns each sampled frame into its own candidate tokens.","A greedy selector fills a fixed budget of about 1,500 tokens using similarity to the question, a diversity term and pairs of matching tokens in adjacent frames.","A light refiner gives each kept token 8 features from neighbouring frames, including unselected ones, and adds a gated update; the token count stays fixed."],
- math:"Token share: 1,535 ÷ 4,424 = <code>34.7%</code>, so <code>65.3%</code> fewer tokens. Latency on Qwen3-VL-32B: 911.2 ms ÷ 421.8 ms = <code>2.16×</code> faster, with time to first token falling from 849.1 ms to 365.8 ms (<code>−56.9%</code>) while the average score rises by 0.19 points.",
+ math:[{"t":"Share of tokens kept","m":"\\frac{1,535}{4,424} = \\res{34.7\\%}","n":"So \\(\\res{65.3\\%}\\) fewer tokens."},{"t":"Latency on Qwen3-VL-32B","m":"\\frac{911.2\\text{ ms}}{421.8\\text{ ms}} = \\res{2.16\\times}\\text{ faster}"},{"t":"Time to first token","m":"849.1\\text{ ms} \\to 365.8\\text{ ms} \\quad (\\res{-56.9\\%})","n":"Meanwhile the average score rises by 0.19 points."}],
  builds:["visionzip"],
  links:[["Paper (arXiv 2610.06616)","https://arxiv.org/abs/2610.06616"]]},
 
@@ -335,7 +337,7 @@ const CARDS=[
  why:"It offers a scalable way around the visual gap between simulation and reality, without building a digital twin of every scene or hand-tuning random textures.",
  caveat:"Results come from the authors' own 8-task, 10-rollout tests, and the policy still depends on the simulator's physics being close enough to reality.",
  how:["Train a video model from Wan2.1 conditioned on depth, arm masks and text, using real robot data with estimated depth and segmented arms.","Render simulator trajectories into several realistic videos each, with varied prompts and inserted distractor objects; DMD2 distillation cuts sampling from 50 steps to 6 (4.29 s per 3-view clip).","Pair the generated video with the simulator's states and actions, fine-tune a π0.5 policy, and deploy it on real robots without further training."],
- math:"Per-task successes of 80, 80, 60, 50, 70, 90, 70 and 70% sum to 570, and 570 ÷ 8 ≈ <code>71%</code>. Against raw simulation (10%): 71 ÷ 10 = <code>7.1×</code>; against domain randomisation (20%): 71 ÷ 20 ≈ <code>3.6×</code>.",
+ math:[{"t":"Per-task success rates: 80, 80, 60, 50, 70, 90, 70 and 70%","m":"\\text{sum} = 570"},{"t":"Average over the 8 tasks","m":"\\frac{570}{8} \\approx \\res{71\\%}"},{"t":"Against raw simulation (10%)","m":"\\frac{71}{10} = \\res{7.1\\times}"},{"t":"Against domain randomisation (20%)","m":"\\frac{71}{20} \\approx \\res{3.6\\times}"}],
  builds:["wan","dmd2"],
  links:[["Paper (arXiv 2610.09254)","https://arxiv.org/abs/2610.09254"],["Project page","https://robo-render.github.io/"]]},
 
@@ -349,7 +351,7 @@ const CARDS=[
  why:"It is a free, installable answer to a common complaint about coding agents: they report that a task is done when it is not.",
  caveat:"The authors describe their evidence as observational: no run compares the same builder with and without the reviewer, and the application results are team-reported.",
  how:["A human approves a plan with goals, acceptance criteria, tests and scope; no code is written during planning.","Claude builds in rounds and submits commits plus a summary of its claims; a hook checks the required files before a fresh Codex reviewer starts.","Codex accepts the work or sends it back; after acceptance a separate Codex code review must come back clean, and stalled loops are stopped."],
- math:"Of the 541 rounds in reports that split rounds by phase, 364 came after the implementation was accepted: 364 ÷ 541 = <code>67.3%</code> of the work was code review. In the kernel ablation, adding the knowledge base and profiling raises the speed-up from 3.71× to 8.58×, a further 8.58 ÷ 3.71 = <code>2.31×</code>.",
+ math:[{"t":"Share of rounds after the implementation was accepted","m":"\\frac{364}{541} = \\res{67.3\\%}","n":"Of the 541 rounds in reports that split rounds by phase, 364 came after acceptance: that much of the work was code review."},{"t":"Further kernel speed-up from knowledge base and profiling","m":"\\frac{8.58}{3.71} = \\res{2.31\\times}","n":"In the kernel ablation they raise the speed-up from 3.71× to 8.58×."}],
  builds:["ralph","swebench"],
  links:[["Paper (arXiv 2610.08900)","https://arxiv.org/abs/2610.08900"],["Code","https://github.com/PolyArch/humanize"]]},
 
@@ -362,7 +364,7 @@ const CARDS=[
  why:"Choosing the right base checkpoint before an expensive agent post-training run saves real compute, and these probes need only a forward pass or a few samples.",
  caveat:"The correlations come from only ten checkpoint families, post-trained by different labs with different recipes, and the authors give no confidence intervals.",
  how:["Replay each code-changing step of a successful agent run and run the tests after each; the first step whose cumulative patch passes is the decisive step, found by binary search.","Score the base model on that step: bits per byte of the correct action, a four-way choice against test-failing alternatives, or pass@K when the model takes over from that point.","Rank checkpoints by probe score and compare with their post-trained SWE-bench Verified, Multilingual and Terminal-Bench 2.1 results."],
- math:"Scoring only the decisive action instead of averaging over every step raises rank agreement from 0.915 to 0.964, a gain of 0.964 − 0.915 = <code>0.049</code>. Plain end-to-end evaluation fails here: five of six base checkpoints score <code>0%</code> pass@1, so they cannot be ranked at all.",
+ math:[{"t":"Rank agreement gain from scoring only the decisive action","m":"0.964 - 0.915 = \\res{0.049}","n":"Instead of averaging over every step, rank agreement rises from 0.915 to 0.964."},"Plain end-to-end evaluation fails here: five of six base checkpoints score \\(\\res{0\\%}\\) pass@1, so they cannot be ranked at all."],
  builds:["swebench","rlvr"],
  links:[["Paper (arXiv 2610.10478)","https://arxiv.org/abs/2610.10478"]]},
 
@@ -375,7 +377,7 @@ const CARDS=[
  why:"Agent research is short of hard research tasks that can be graded automatically, and this is a repeatable way to build many of them from existing papers.",
  caveat:"Experts rated resistance to shortcuts and saturation lower than the agent judges did, and beating a reproduced baseline on a compute-limited task is not a research advance.",
  how:["Screen papers for a measurable objective, a reported baseline, a deterministic metric, a feasible compute budget and a permissive licence.","An author agent builds the task and grader, a reproducer agent implements the paper's method without seeing it and must beat the starting solution, and a reviewer agent sends defects back.","Solver agents work in fresh sessions that inherit code, logs and notes, and are graded on held-out data."],
- math:"Of 10,800 preprints screened, 2,117 were eligible: 2,117 ÷ 10,800 = <code>19.6%</code>. The main run turned 213 papers into 180 accepted environments, 180 ÷ 213 = <code>84.5%</code>, though 79% needed at least one repair. The median cost was <code>170 million tokens</code> per accepted environment.",
+ math:[{"t":"Eligible share of preprints screened","m":"\\frac{2,117}{10,800} = \\res{19.6\\%}"},{"t":"Papers turned into accepted environments","m":"\\frac{180}{213} = \\res{84.5\\%}","n":"In the main run, though 79% needed at least one repair."},{"t":"Median cost per accepted environment","m":"\\res{170}\\text{ million tokens}"}],
  deepTable:{title:"Accepted gains smaller than the reported measurement error",cols:["Model","Share of accepted gains"],num:[1],rows:[["Claude Haiku 4.5","73%"],["Claude Opus 5","44%"]],hl:[1]},
  builds:["paperbench"],
  links:[["Paper (arXiv 2610.09426)","https://arxiv.org/abs/2610.09426"]]},
@@ -390,7 +392,7 @@ const CARDS=[
  why:"Network tools such as web search dominate voice-assistant delay on phones, and this hides much of that delay inside the time the user is still speaking, without a bigger model.",
  caveat:"Results are the authors' own, on 146 utterances they wrote and synthesised to speech, on one device; speculation is limited to read-only tools.",
  how:["After 6 words, then every 5 words or after a 300 ms pause, split the partial transcript into clauses and map each to a likely search tool and topic (12 categories).","Run the predicted searches in parallel while speech recognition continues, and cache the results.","When speech ends, insert the cached results into the LLM prompt; if the LLM still asks for a tool, check the cache first and fall back to a normal call."],
- math:"Median delay falls by 5.79 − 4.60 = <code>1.19 s</code>, which is 1.19 ÷ 5.79 = <code>20.6%</code>. The p99 time to the first tool result falls from 22.44 s to 11.71 s, nearly <code>halved</code>. In the authors' example of a 15-second question that needs about 10 s of search, the reply starts after 8 s instead of 17 s.",
+ math:[{"t":"Median delay reduction","m":"5.79 - 4.60 = \\res{1.19}\\text{ s}"},{"t":"The same reduction as a share","m":"\\frac{1.19}{5.79} = \\res{20.6\\%}"},{"t":"p99 time to the first tool result","m":"22.44\\text{ s} \\to 11.71\\text{ s}","n":"Nearly \\(\\res{\\text{halved}}\\)."},"In the authors' example of a 15-second question that needs about 10 s of search, the reply starts after 8 s instead of 17 s."],
  builds:["toolformer","specdec"],
  links:[["Paper (arXiv 2610.07641)","https://arxiv.org/abs/2610.07641"]]},
 
@@ -403,7 +405,7 @@ const CARDS=[
  why:"Personal fine-tuning that never sends user data off the phone is now measurably feasible, and the MLX fix speeds up this kind of training for every MLX user.",
  caveat:"Measured by the authors on one phone and one benchmark family; per-user gains are large only on movie tagging (+12.7 points) and under one point on most other tasks.",
  how:["Train a task adapter once on a server, merge it into SmolLM3-3B, and quantise the model to 4 bits with groups of 64 weights.","On the phone, train a rank-8 LoRA adapter on the query and value projections over the user's own history (3 passes, batch size 1) with MLX through mlx-swift.","Use the repaired transposed quantised matrix-multiply kernel (MLX pull request 4051, the default since MLX 0.32.3) for the backward pass."],
- math:"At 0.04 J per training token, the 405-record run's 26.2 kJ trained about 26,200 ÷ 0.04 ≈ <code>655,000 tokens</code>, and it used 26.2 ÷ 55.6 = <code>47.1%</code> of the 55.6 kJ battery. Sustained throughput is 83–89 ÷ 166 ≈ <code>half</code> the cold-start rate.",
+ math:[{"t":"Tokens trained by the 405-record run","m":"\\frac{26,200\\text{ J}}{0.04\\text{ J/token}} \\approx \\res{655,000}\\text{ tokens}","n":"The run used 26.2 kJ at 0.04 J per training token."},{"t":"Share of the 55.6 kJ battery used","m":"\\frac{26.2}{55.6} = \\res{47.1\\%}"},{"t":"Sustained throughput relative to cold start","m":"\\frac{83\\text{ to }89}{166} \\approx \\res{\\text{half}}"}],
  builds:["lora","quant"],
  links:[["Paper (arXiv 2610.06325)","https://arxiv.org/abs/2610.06325"],["Code and data","https://github.com/gordofreemo/mobile_LoRA_ft"],["MLX fix (pull request 4051)","https://github.com/ml-explore/mlx/pull/4051"]]},
 
@@ -416,7 +418,7 @@ const CARDS=[
  why:"It shows that a near-trillion-parameter open model can be served from consumer-class machines with shared CPU–GPU memory, without datacentre GPUs.",
  caveat:"All numbers are the authors' own on one fleet; 60 tokens per second is shared across 88 streams, under one token per second each, and the default context is short.",
  how:["Each machine owns six consecutive decoder layers; the last machine sends sampled token IDs straight back to the first, closing the loop.","Group-32 INT4 expert weights run through OpenVINO's fused expert kernel on the Arc B390 integrated GPU while routing stays on the CPU; the two dense layers are recast as eight always-active expert slices.","Proposed tokens from phrase history or the CPU drafter enter the pipeline behind the confirmed token; a mismatch discards them and every machine rewinds its state."],
- math:"At 4 bits, 975B parameters take about 975 × 10⁹ × 4 ÷ 8 ≈ <code>488 GB</code>, more than seven 64 GB machines before caches and the operating system; the fleet has 11 × 64 = <code>704 GB</code>. Layers: 66 ÷ 11 = <code>6</code> per machine. Per stream at peak: 60.29 ÷ 88 ≈ <code>0.69 tokens/s</code>.",
+ math:[{"t":"Weights of 975B parameters at 4 bits","m":"\\frac{975 \\times 10^{9} \\times 4}{8} \\approx \\res{488}\\text{ GB}","n":"More than seven 64 GB machines, before caches and the operating system."},{"t":"Memory across the fleet","m":"11 \\times 64 = \\res{704}\\text{ GB}"},{"t":"Layers per machine","m":"\\frac{66}{11} = \\res{6}"},{"t":"Throughput per stream at peak","m":"\\frac{60.29}{88} \\approx \\res{0.69}\\text{ tokens/s}"}],
  deepTable:{title:"Dense layers: three matrix calls against eight fused slices (one row)",cols:["Layer","Three matrix calls","Fused slices","Time saved"],num:[1,2,3],rows:[["Layer 0","8.15 ms","4.51 ms","44.7%"],["Layer 1","8.11 ms","4.45 ms","45.1%"]],hl:[0,1]},
  builds:["moe","quant","specdec"],
  links:[["Paper (arXiv 2610.07219)","https://arxiv.org/abs/2610.07219"]]},
@@ -431,7 +433,7 @@ const CARDS=[
  why:"It gives on-device retrieval and local search one small, Apache-licensed embedder for every media type, with no cloud embedding service.",
  caveat:"All scores are Google's own, measured on the full-precision checkpoint, and Google does not publish scores for quantised versions.",
  how:["Load google/embeddinggemma-2 with sentence-transformers; builds also exist for Ollama, llama.cpp, MLX and LiteRT.","Load only the encoders needed: 270M for text, 440M with images, 570M with audio, 740M for everything; all share one vector space.","Cut vectors to 512, 256 or 128 dimensions to shrink the index by up to 6×, then pass retrieved items to a local generator."],
- math:"Quantised size = parameters × bits ÷ 8. Full model at 4 bits: 740M × 4 ÷ 8 = <code>370 MB</code>; text-only at 4 bits: 270M × 4 ÷ 8 = <code>135 MB</code>. For 1 million items in float32, 768 dimensions × 4 bytes ≈ <code>3.07 GB</code> of vectors and 256 dimensions ≈ <code>1.02 GB</code>, a 3× saving for 78.68 − 76.18 = 2.5 points of code score.",
+ math:[{"t":"Quantised size","m":"\\text{size} = \\frac{\\text{parameters} \\times \\text{bits}}{8}"},{"t":"Full model at 4 bits","m":"\\frac{740\\text{M} \\times 4}{8} = \\res{370}\\text{ MB}"},{"t":"Text-only model at 4 bits","m":"\\frac{270\\text{M} \\times 4}{8} = \\res{135}\\text{ MB}"},{"t":"Vectors for 1 million items in float32","m":"768\\text{ dimensions} \\times 4\\text{ bytes} \\approx \\res{3.07}\\text{ GB}"},{"t":"The same at 256 dimensions","m":"256\\text{ dimensions} \\approx \\res{1.02}\\text{ GB}","n":"A 3× saving for \\(78.68 - 76.18 = 2.5\\) points of code score."}],
  deepTable:{title:"Cutting vectors short, across input types (Google-reported)",cols:["Dims","MTEB multilingual v2","MTEB code v1","MIEB lite","MMEB v2 overall","MAEB"],num:[1,2,3,4,5],rows:[["768","61.36","78.68","64.64","59.01","49.39"],["512","61.17","77.24","64.32","58.38","49.21"],["256","60.41","76.18","63.13","56.24","48.91"],["128","57.89","71.41","59.06","45.65","46.92"]],hl:[2]},
  builds:["mrl","rag"],
  links:[["Google announcement","https://blog.google/innovation-and-ai/technology/developers-tools/embeddinggemma-2/"],["Model card","https://ai.google.dev/gemma/docs/embeddinggemma/model_card_2"],["Developer guide","https://developers.googleblog.com/embeddinggemma-2-the-developer-guide/"]]},
@@ -445,7 +447,7 @@ const CARDS=[
  why:"Routing, moderation, intent detection and agent guardrails need a calibrated choice rather than prose, and a sub-1B encoder can make that choice on a CPU or a small edge board.",
  caveat:"Liquid AI calls it an early research checkpoint, publishes no latency figures or image and audio decision benchmarks for it, and ran all comparisons itself.",
  how:["Load LiquidAI/d1-omni-600M with transformers 5.15 or later and trust_remote_code=True; llama.cpp supports it from day one.","Call model.system_one(state, questions) with each question typed as yes/no, choice or score.","Read the returned probabilities, for example P(yes) for 'Is the customer asking for a refund?', and route or block on a threshold; use float16 rather than bfloat16 on GPUs."],
- math:"Parameters: 381M + 94M + 112M = <code>587M</code>. Quantised size at 4 bits: 587M × 4 ÷ 8 ≈ <code>294 MB</code>; at float16, 587M × 16 ÷ 8 ≈ <code>1.17 GB</code>. On PAWS-X it scores 79.5 − 59.5 = <code>+20.0 points</code> above Decider 2B at under a third of the size.",
+ math:[{"t":"Parameters","m":"381\\text{M} + 94\\text{M} + 112\\text{M} = \\res{587\\text{M}}"},{"t":"Quantised size at 4 bits","m":"\\frac{587\\text{M} \\times 4}{8} \\approx \\res{294}\\text{ MB}"},{"t":"Size at float16","m":"\\frac{587\\text{M} \\times 16}{8} \\approx \\res{1.17}\\text{ GB}"},{"t":"PAWS-X lead over Decider 2B","m":"79.5 - 59.5 = \\res{+20.0}\\text{ points}","n":"At under a third of the size."}],
  builds:["bert"],
  links:[["Liquid AI blog","https://www.liquid.ai/blog/d1-open"],["Model card","https://huggingface.co/LiquidAI/d1-omni-600M"],["Decision-model docs","https://docs.liquid.ai/lfm/models/decision-models"]]},
 
@@ -458,7 +460,7 @@ const CARDS=[
  why:"It brings search over images and PDF pages, without a separate text-extraction step, down to laptop scale, and lets one large offline index serve many small clients.",
  caveat:"All scores are Perplexity's own, and storing one vector per token means the index grows with document length.",
  how:["Install sentence-transformers 6.0 or later and load perplexity-ai/pplx-embed-v2-late-0.6b with MultiVectorEncoder.","Encode documents into one 128-dimension vector per token, optionally building the index with the 9B model instead.","Encode the query with the 0.6B model and rank documents by MaxSim: for each query token take the best-matching document token, then sum."],
- math:"Quantised size at 4 bits: 594M × 4 ÷ 8 = <code>297 MB</code>; at bfloat16, 594M × 16 ÷ 8 ≈ <code>1.19 GB</code>. Pruning halves the text tower: 498M → 240M non-embedding parameters is 240 ÷ 498 ≈ <code>48%</code>. Querying the 9B index adds 63.5 − 62.3 = <code>+1.2 points</code> on ViDoRe v3.",
+ math:[{"t":"Quantised size at 4 bits","m":"\\frac{594\\text{M} \\times 4}{8} = \\res{297}\\text{ MB}"},{"t":"Size at bfloat16","m":"\\frac{594\\text{M} \\times 16}{8} \\approx \\res{1.19}\\text{ GB}"},{"t":"Pruning the text tower","m":"\\frac{240\\text{M}}{498\\text{M}} \\approx \\res{48\\%}","n":"Non-embedding parameters fall from 498M to 240M, halving the tower."},{"t":"Gain from querying the 9B index on ViDoRe v3","m":"63.5 - 62.3 = \\res{+1.2}\\text{ points}"}],
  builds:["colbert","distill","rag"],
  links:[["Perplexity blog","https://www.perplexity.ai/hub/blog/multimodal-embeddings-beyond-a-single-vector"],["Model card (0.6B)","https://huggingface.co/perplexity-ai/pplx-embed-v2-late-0.6b"],["Model card (9B)","https://huggingface.co/perplexity-ai/pplx-embed-v2-late-9b"]]},
 
@@ -472,7 +474,7 @@ const CARDS=[
  why:"It replaces ad-hoc glue between separate LLM and diffusion servers with one open system and an OpenAI-compatible API for omni, text-to-speech, image, video and robot models.",
  caveat:"All numbers come from the team's own nightly tests; the MRv2 profile needed a one-line startup fix and crashed on one text-only run.",
  how:["A pipeline registry splits a model into stages (for example thinker, talker and waveform decoder), each bound to one engine and a resource budget.","The orchestrator admits each request, collects stage outputs and either streams them to the client or passes them on; async chunks let audio decoding start on partial talker output.","Replica pools add capacity to slow stages, and session control keeps state across turns for full-duplex voice, world-model and robot loops."],
- math:"At 32 users the MRv2 profile cuts mean end-to-end latency from 75.06 s to 39.53 s: 75.06 ÷ 39.53 = <code>1.90×</code> faster. Time to the first audio packet falls from 1064.6 ms to 500.4 ms, (1064.6 − 500.4) ÷ 1064.6 = <code>53% lower</code>. Without async chunks at 32 users, first-token time rises from 507.8 ms to 3420.1 ms, <code>6.7×</code> slower.",
+ math:[{"t":"Mean end-to-end latency at 32 users","m":"\\frac{75.06\\text{ s}}{39.53\\text{ s}} = \\res{1.90\\times}\\text{ faster}","n":"With the MRv2 profile."},{"t":"Time to the first audio packet","m":"\\frac{1064.6 - 500.4}{1064.6} = \\res{53\\%}\\text{ lower}","n":"It falls from 1064.6 ms to 500.4 ms."},{"t":"First-token time without async chunks","m":"507.8\\text{ ms} \\to 3420.1\\text{ ms}","n":"At 32 users, \\(\\res{6.7\\times}\\) slower."}],
  builds:["distserve","pagedattn"],
  links:[["Paper (arXiv 2610.09307)","https://arxiv.org/abs/2610.09307"],["Code","https://github.com/vllm-project/vllm-omni"]]},
 
@@ -485,7 +487,7 @@ const CARDS=[
  why:"It turns the paper-level savings of small–large model collaboration into real serving throughput, which matters for anyone pairing a sub-1B model with a large one.",
  caveat:"The speed-ups are the authors' own, measured against research code (official R2R, CITER and Co-LLM) on A100s rather than against tuned production servers.",
  how:["Developers describe one request's path with three calls: route (switch model?), send (what state to pass) and receive (which tokens to accept).","Each model runs as a sub-server with separate client, decoding and inter-model loops, so the 0.6B model never waits on the 32B model's step.","A delayed-batching scheduler briefly holds incoming handoffs to form fuller batches, with the wait derived from a throughput model."],
- math:"At 8 users, CUDA graphs take throughput from 132.78 to 230.79 tokens/s, asynchronous execution to 296.86 and delayed batching to 372.48. Against official R2R: 372.48 ÷ 134.9 = <code>2.76×</code>; for the 0.6B and 8B pair, 336.98 ÷ 105.1 = <code>3.21×</code>. The 0.6B model at 4 bits needs only 0.6B × 4 ÷ 8 = <code>0.3 GB</code>.",
+ math:[{"t":"Throughput at 8 users, tokens/s","m":"132.78 \\to 230.79 \\to 296.86 \\to 372.48","n":"CUDA graphs, then asynchronous execution, then delayed batching."},{"t":"Against official R2R","m":"\\frac{372.48}{134.9} = \\res{2.76\\times}"},{"t":"For the 0.6B and 8B pair","m":"\\frac{336.98}{105.1} = \\res{3.21\\times}"},{"t":"The 0.6B model at 4 bits","m":"\\frac{0.6\\text{B} \\times 4}{8} = \\res{0.3}\\text{ GB}"}],
  deepTable:{title:"Original settings of each method, 4 users (Table 2)",cols:["Method","System","Throughput (tokens/s)","Latency (s)"],num:[2,3],rows:[["R2R","Official code","89.62","751.15"],["R2R","TokenRouter","244.56","270.19"],["CITER","Official code","17.16","7.64"],["CITER","TokenRouter","149.31","0.48"],["Co-LLM","Official code","3.46","247.61"],["Co-LLM","TokenRouter","76.02","11.46"]],hl:[1,3,5]},
  builds:["r2r","pagedattn"],
  links:[["Paper (arXiv 2610.12242)","https://arxiv.org/abs/2610.12242"],["Code","https://github.com/thu-nics/TokenRouter"]]},
@@ -499,7 +501,7 @@ const CARDS=[
  why:"Agent workloads resend long, mostly cached contexts, and this post is a concrete recipe for serving a sparse-attention, shared-cache model cheaply on that pattern.",
  caveat:"All numbers are measured by the vLLM team and Inferact against their own launch-day implementation, not against other serving engines.",
  how:["On a prefix hit, rebuild the sliding-window cache by replaying only the last 128 tokens in the upper layers, captured in separate CUDA graphs.","Store the global cache in NVFP4 and fuse attention, gating and output-projection kernels for Blackwell GPUs.","Compute sparse attention-selection scores with DeepGEMM so very long prefills of 512K to 1M tokens scale."],
- math:"At about 890 bytes per token, a 100,000-token agent context needs 890 × 100,000 = <code>89 MB</code> of global cache. NVFP4 is 45% smaller than FP8, so FP8 would need about 89 ÷ 0.55 ≈ <code>162 MB</code> for the same context. Replaying 128 tokens instead of a full 100,000-token prefill is 128 ÷ 100,000 = <code>0.13%</code> of the work in those layers.",
+ math:[{"t":"Global cache for a 100,000-token agent context","m":"890\\text{ bytes} \\times 100,000 = \\res{89}\\text{ MB}","n":"At about 890 bytes per token."},{"t":"The same context in FP8","m":"\\frac{89}{0.55} \\approx \\res{162}\\text{ MB}","n":"NVFP4 is 45% smaller than FP8."},{"t":"Replaying 128 tokens instead of a full prefill","m":"\\frac{128}{100,000} = \\res{0.13\\%}","n":"Of the work in those layers."}],
  builds:["pagedattn","tilelang"],
  links:[["vLLM blog","https://vllm-project.github.io/2026/10/07/deepseek-v41-flash.html"],["vLLM code","https://github.com/vllm-project/vllm"]]}
 ];
@@ -649,7 +651,7 @@ function openCard(id){
     <details class="deep"><summary>Technical deep dive <span>Method, worked maths, prior work and sources</span></summary>
      <div class="deep-body">
       <h4>How it works</h4><ol>${c.how.map(h=>`<li>${esc(h)}</li>`).join("")}</ol>
-      <h4>The maths, simply</h4><div class="mathbox">${c.math}</div>
+      <h4>The maths, simply</h4><div class="mathbox">${SignalMath.html(c.math)}</div>
       ${c.deepFig?figHTML(c.deepFig):""}
       ${c.deepTable?`<h4>${esc(c.deepTable.title)}</h4>${tableHTML(Object.assign({},c.deepTable,{title:null}))}`:""}
       <h4>Builds on</h4><div class="builds">${c.builds.map(b=>`<a href="#lin-${b}" data-lin="${b}">${esc(linById[b].title)}</a>`).join("")}</div>

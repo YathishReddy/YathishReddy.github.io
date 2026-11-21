@@ -1,0 +1,14 @@
+/* Signal Weekly: typeset maths in "The maths, simply" (see math.js) */
+.mathbox math{font-family:"STIX Two Math","Cambria Math","Latin Modern Math","Noto Sans Math",math;font-size:1.12em;color:var(--ink)}
+.mathbox math[display="block"]{display:block math;text-align:left;width:fit-content;margin:2px 0 0;padding:4px 0 6px;max-width:100%;overflow-x:auto;overflow-y:hidden}
+.mathbox .mx-res{color:var(--accent);font-weight:700}
+.mathbox .mx-step{padding:10px 0}
+.mathbox .mx-step + .mx-step,.mathbox .mx-p + .mx-step,.mathbox .mx-step + .mx-p{border-top:1px dashed var(--line)}
+.mathbox .mx-step:first-child{padding-top:2px}
+.mathbox .mx-step:last-child{padding-bottom:2px}
+.mathbox .mx-t{font:600 12.5px/1.35 var(--sans);color:var(--muted);letter-spacing:.01em}
+.mathbox .mx-n{font-size:13.5px;color:var(--muted);line-height:1.5}
+.mathbox .mx-p{margin:0;padding:8px 0;line-height:1.6}
+.mathbox .mx-p:first-child{padding-top:2px}
+.mathbox .mx-p:last-child{padding-bottom:2px}
+.mathbox .mx-err{color:#B42318;white-space:pre-wrap}

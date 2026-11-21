@@ -19,6 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="../assets/lineage.css">
+<link rel="stylesheet" href="../assets/math.css">
 <style>
 :root{
   --bg:#F2F4F6; --surface:#FFFFFF; --surface-2:#E8ECF0; --ink:#15202B; --muted:#586674; --line:#D5DCE3;
@@ -247,6 +248,7 @@ details.deep .deep-body{padding:0 16px 18px;border-top:1px solid var(--line)}
 
 <dialog id="dlg" aria-labelledby="d-title"><div class="d-inner" id="d-inner"></div></dialog>
 
+<script src="../assets/math.js"></script>
 <script src="../assets/lineage.js"></script>
 <script>
 const COLS=[
@@ -271,7 +273,7 @@ const CARDS=[
  why:"If the weights arrive as promised, an openly downloadable model will sit within a point of Claude Opus 5.5 on terminal coding, and Artificial Analysis already ranks it second only to Opus 5.5.",
  caveat:"Most scores are Moonshot's own, the weights and licence were not yet public at launch, and the full comparison table is published only as an image.",
  how:["Start from Kimi K3, Moonshot's 3T-class open-weight base model with a 1-million-token context window.","Scale post-training compute with joint reinforcement learning across hundreds of downstream domains, after optimising the training stack for it.","Remove cyber-related data from both training stages for the open-weight release, then serve standard and Highspeed endpoints."],
- math:"Terminal-Bench 4.0 gap to Opus 5.5: 66.4 − 65.7 = <code>0.7 points</code>; lead over GPT-6 Astra: 65.7 − 58.2 = <code>7.5 points</code>. On Moonshot's hallucination stress test the claim-level rate fell from 23.4% (K3) to 8.3%: (23.4 − 8.3) ÷ 23.4 = <code>65%</code> lower. Removing cyber data cost 90.5 − 81.0 = <code>9.5 points</code> on xdev-bench-hard.",
+ math:[{"t":"Terminal-Bench 4.0 gap to Opus 5.5","m":"66.4 - 65.7 = \\res{0.7}\\text{ points}"},{"t":"Lead over GPT-6 Astra","m":"65.7 - 58.2 = \\res{7.5}\\text{ points}"},{"t":"Drop in claim-level hallucination rate","m":"\\frac{23.4 - 8.3}{23.4} = \\res{65\\%}\\text{ lower}","n":"On Moonshot's stress test, from 23.4% (K3) to 8.3%."},{"t":"Cost of removing cyber data","m":"90.5 - 81.0 = \\res{9.5}\\text{ points}","n":"On xdev-bench-hard."}],
  deepFig:{src:"https://statics.kimi.ai/kimi-blogs/kimi-k3-1/20261023/hallu-bench-results-v2.webp",alt:"Moonshot's chart of claim-level hallucination rates with and without tools for several models",caption:"Claim-level hallucination rates (lower is better) on Moonshot's internal stress test. Chart reproduced from the source; Moonshot notes these rates do not represent everyday error rates, and they have not been independently verified.",credit:"Moonshot AI, Kimi K3.1 Pro blog",url:"https://www.kimi.ai/blog/kimi-k3-1-pro"},
  builds:["rlvr"],
  links:[["Kimi blog: Introducing Kimi K3.1 Pro","https://www.kimi.ai/blog/kimi-k3-1-pro"],["Simon Willison's notes (pricing, Artificial Analysis score)","https://simonwillison.net/2026/Oct/23/kimi-k31-pro/"]]},
@@ -285,7 +287,7 @@ const CARDS=[
  why:"It shows that continuous flow models can be built cheaply from existing chat models and can run faster than ordinary decoding without losing quality.",
  caveat:"The speed and quality figures are the authors' own, and the arXiv HTML version of the paper did not show its results tables, so this card reports only the headline numbers.",
  how:["Adapt a pretrained model with per-token noise-level conditioning, bidirectional attention inside each block and causal attention over the prefix.","Train jointly to denoise blocks of noised token embeddings and to predict the next token, on fewer than 30B tokens.","Decode with a one-step flow draft verified by the model's own next-token predictions, or distil the flow into a flow map for one- or few-step generation."],
- math:"At 2.54× the throughput, an answer that takes 25 s autoregressively takes about 25 ÷ 2.54 ≈ <code>9.8 s</code>. Training data: 30B ÷ 500B = <code>6%</code> of the tokens used by the largest comparable diffusion adaptations. The 0.5B model at 4 bits needs 0.5B × 4 ÷ 8 = <code>0.25 GB</code> for its weights.",
+ math:[{"t":"A 25 s autoregressive answer at 2.54× throughput","m":"\\frac{25\\text{ s}}{2.54} \\approx \\res{9.8}\\text{ s}"},{"t":"Training data against comparable diffusion adaptations","m":"\\frac{30\\text{B}}{500\\text{B}} = \\res{6\\%}","n":"Of the tokens used by the largest comparable diffusion adaptations."},{"t":"Weights of the 0.5B model at 4 bits","m":"\\frac{0.5\\text{B} \\times 4}{8} = \\res{0.25}\\text{ GB}"}],
  deepFig:{src:"https://raw.githubusercontent.com/lafa-gh/large-flow-lms/main/docs/assets/main_results.png",alt:"Accuracy against throughput for Lafa 7B and autoregressive, multi-token-prediction and diffusion baselines",caption:"Accuracy against throughput of Lafa 7B and baselines, averaged over IFEval, GSM8K and HumanEval. Chart reproduced from the source; the measurements are the authors' own and have not been independently verified.",credit:"Chavan et al., Lafa repository",url:"https://github.com/lafa-gh/large-flow-lms"},
  builds:["diffusion","specdec","mtp"],
  links:[["Paper (arXiv 2610.28559)","https://arxiv.org/abs/2610.28559"],["Code (GitHub)","https://github.com/lafa-gh/large-flow-lms"],["Models (Hugging Face)","https://huggingface.co/lafa-hf/models"]]},
@@ -300,7 +302,7 @@ const CARDS=[
  why:"It is an Apache-licensed coding model with strong reported scores that fits on a single consumer machine with 24 GB of memory.",
  caveat:"All scores are Recursive's own with no independent evaluation yet, and comparison numbers for other models appear only in an image.",
  how:["Build a sparse expert model with mostly sliding-window attention (RoPE only on those layers), 14 full-attention layers without position encoding, and per-head attention sinks.","Route each token to 6 of 256 experts plus a shared expert, so about 2.5B of 39.8B parameters are active.","Release BF16 weights under Apache 2.0, with NVFP4 and Apple Silicon quantisations for local use."],
- math:"Active share: 2.5B ÷ 39.8B = <code>6.3%</code> of weights per token. BF16 stores 39.8B × 2 bytes = <code>79.6 GB</code>, the \"about 80 GB\" download. The 24.2 GB GGUF averages 24.2 × 8 ÷ 39.8 ≈ <code>4.9 bits</code> per weight. NVFP4 keeps 88.5 ÷ 89.7 = <code>98.7%</code> of the BF16 SWE-bench Pro v2 score.",
+ math:[{"t":"Active share of weights per token","m":"\\frac{2.5\\text{B}}{39.8\\text{B}} = \\res{6.3\\%}"},{"t":"BF16 storage","m":"39.8\\text{B} \\times 2\\text{ bytes} = \\res{79.6}\\text{ GB}","n":"The “about 80 GB” download."},{"t":"Average bits per weight in the 24.2 GB GGUF","m":"\\frac{24.2 \\times 8}{39.8} \\approx \\res{4.9}\\text{ bits}"},{"t":"NVFP4 share of the BF16 SWE-bench Pro v2 score","m":"\\frac{88.5}{89.7} = \\res{98.7\\%}"}],
  builds:["moe","quant","streamingllm"],
  links:[["Flint model card (Hugging Face)","https://huggingface.co/RecursiveSI/flint"],["LM Studio model page","https://lmstudio.ai/models/recursive-flint"]]},
 
@@ -315,7 +317,7 @@ const CARDS=[
  why:"It puts detection, counting, OCR, segmentation and matting into one small open model that can refuse rather than invent objects, which matters for production pipelines.",
  caveat:"All scores are the authors' own, several benchmarks (WeRef-Bench, WeRefMat) were built by the same team, and fine-tuning code was not yet released.",
  how:["Build training data with a knowledge-graph-driven engine: localisation experts propose boxes, a VLM verifies them, and verified boxes are extended to masks and alpha mattes for about 100M images.","Cast tasks as next-token prediction on Qwen3-VL with coordinate tokens <0> to <1000>, None for absent targets, and an <OBJ> token after each box.","Decode each <OBJ> hidden state with the 9.6M-parameter pixel decoder into a mask or alpha matte; train with three supervised stages, then mixed-task reinforcement learning."],
- math:"Dense200 gain: 71.3 − 58.7 = <code>12.6 F1 points</code> over LocateAnything-3B. Box-matting error falls from 15.4 to 7.3 MAD: 7.3 ÷ 15.4 = <code>47%</code> of the baseline's error. The pixel decoder adds 9.6M ÷ 4B ≈ <code>0.24%</code> to the model's size.",
+ math:[{"t":"Dense200 gain over LocateAnything-3B","m":"71.3 - 58.7 = \\res{12.6}\\text{ F1 points}"},{"t":"Box-matting error against the baseline","m":"\\frac{7.3}{15.4} = \\res{47\\%}","n":"MAD falls from 15.4 to 7.3."},{"t":"Size added by the pixel decoder","m":"\\frac{9.6\\text{M}}{4\\text{B}} \\approx \\res{0.24\\%}"}],
  deepFig:{src:"https://raw.githubusercontent.com/Tencent/WeVisOne-VL/main/assets/method/pixel_decoder.jpg",alt:"Pixel decoder architecture combining the OBJ token hidden state, predicted box and multi-level ViT features",caption:"The 9.6M-parameter pixel decoder combines each <OBJ> token's hidden state, its box and multi-level ViT features to predict a mask or alpha matte.",credit:"Liang et al., WeVisOne-VL repository",url:"https://github.com/Tencent/WeVisOne-VL"},
  builds:["sam","rlvr"],
  links:[["Paper (arXiv 2610.31329)","https://arxiv.org/abs/2610.31329"],["Code (GitHub)","https://github.com/Tencent/WeVisOne-VL"],["WeVisOne-VL-4B weights","https://huggingface.co/tencent/WeVisOne-VL-4B"]]},
@@ -330,7 +332,7 @@ const CARDS=[
  why:"It gives evidence that asking a video world model to predict explicit 3D motion makes its pictures more consistent across cameras and its robot policies more reliable.",
  caveat:"Training trajectories come from simulation, the real-robot tests use 24 trials per task, and all comparisons are the authors' own.",
  how:["Process latent video tokens from all cameras in one sequence with camera conditioning, starting from a pretrained video world model (Cosmos3-Nano).","Attach a trajectory head that forecasts each chosen point's future 3D position across views and time.","Train video and trajectories jointly, optionally denoising robot action tokens alongside the future video."],
- math:"Point supervision cuts simulated FVD from 78.52 to 67.35: (78.52 − 67.35) ÷ 78.52 = <code>14.2%</code> lower. On the banana task, 79.2% of 24 trials is <code>19 successes</code> against 58.3% = 14 without points. Real-world δ3D rises 64.75 − 50.83 = <code>13.9 points</code> with point supervision.",
+ math:[{"t":"Simulated FVD with point supervision","m":"\\frac{78.52 - 67.35}{78.52} = \\res{14.2\\%}\\text{ lower}","n":"From 78.52 to 67.35."},{"t":"Banana task successes","m":"79.2\\% \\times 24 = \\res{19}\\text{ successes}","n":"Against 58.3% = 14 without points."},{"t":"Real-world δ3D gain with point supervision","m":"64.75 - 50.83 = \\res{13.9}\\text{ points}"}],
  deepFig:{src:"https://arxiv.org/html/2610.28594v1/figure4_final.png",alt:"Predicted 3D point trajectories guiding generation and action",caption:"Predicted 3D point trajectories guide generation and action (Figure 4 of the paper).",credit:"Jeon et al., arXiv 2610.28594",url:"https://arxiv.org/abs/2610.28594"},
  builds:["cotracker","diffusion"],
  links:[["Paper (arXiv 2610.28594)","https://arxiv.org/abs/2610.28594"]]},
@@ -345,7 +347,7 @@ const CARDS=[
  why:"Keeping rules in a real engine avoids the drifting physics of pure video world models, and the release runs on consumer GPUs with open weights and game code.",
  caveat:"It shipped on 15 October, just before this issue's window; speeds are Skywork's own and exclude video encoding, network and browser latency.",
  how:["Run the game engine for gameplay, physics and input, and render a clean low-poly RGB stream.","Feed that stream and a text prompt to a causal video model that renders successive four-frame chunks in one or two denoising steps.","Serve it through a single-user WebRTC browser demo, with presets for A100, RTX 5090, RTX 5080 and RTX 5070 Ti."],
- math:"SageAttention on the RTX 5080 raises throughput from 42 to 67 FPS: 67 ÷ 42 ≈ <code>1.6×</code>, for 12.8 − 9.6 = <code>3.2 GB</code> more memory. At 67 FPS each frame takes 1000 ÷ 67 ≈ <code>15 ms</code> of model time.",
+ math:[{"t":"SageAttention throughput on the RTX 5080","m":"\\frac{67}{42} \\approx \\res{1.6\\times}","n":"Throughput rises from 42 to 67 FPS."},{"t":"Extra memory it costs","m":"12.8 - 9.6 = \\res{3.2}\\text{ GB}"},{"t":"Model time per frame at 67 FPS","m":"\\frac{1000\\text{ ms}}{67} \\approx \\res{15}\\text{ ms}"}],
  builds:["causvid"],
  links:[["Code and README (GitHub)","https://github.com/SkyworkAI/Matrix-Game"],["Project page","https://matrix-game-v4-0.github.io/page/"],["Weights (Hugging Face)","https://huggingface.co/Skywork/Matrix-Game-4.0"],["Paper (arXiv 2610.27999)","https://arxiv.org/abs/2610.27999"]]},
 
@@ -358,7 +360,7 @@ const CARDS=[
  why:"It is Anthropic's entry into proactive personal agents and makes approval gates and credential isolation part of the product design.",
  caveat:"Anthropic calls it an early version that might misread a thread or miscalibrate what is urgent, and it cannot yet show the user its browser.",
  how:["Run Claude Opus 5.5 on a dedicated virtual machine with its own browser, connected to the user's apps through Claude's connectors, using the credential design of Claude Managed Agents.","Check connected accounts every few hours, send a morning brief, and carry out delegated tasks in one long-running text or voice thread.","Before sending, paying, signing or deleting, show the planned action and wait for approval; block securities trading, account transfers and sharing of card or ID numbers."],
- math:"Of the seven action types in the table, <code>4</code> require the user's approval, <code>2</code> are never allowed, and <code>1</code> (briefs, triage and drafting) runs on its own. Duet draws on more than <code>6,000</code> connectors and plugins, so the approval gate, not the tool list, is the main safety boundary.",
+ math:[{"t":"The seven action types in the table","m":"\\res{4} + \\res{2} + \\res{1} = 7","n":"4 need the user's approval, 2 are never allowed, and 1 (briefs, triage and drafting) runs on its own."},"Duet draws on more than \\(\\res{6,000}\\) connectors and plugins, so the approval gate, not the tool list, is the main safety boundary."],
  builds:["react","memgpt"],
  links:[["Anthropic: Introducing Claude Duet","https://claude.com/resources/articles/claude-duet"]]},
 
@@ -372,7 +374,7 @@ const CARDS=[
  why:"It tests the step from fixing issues to improving research systems, across databases, security, networking, HPC and robotics as well as machine learning, against real published code.",
  caveat:"The paper's per-agent results beyond the leader appear only in its figures, and the authors show that pass and score can miss what matters, such as hardware cost or bytes saved.",
  how:["Locate the code implementing a paper's contribution in its released repository, delete it, and keep it as the hidden reference.","Run the agent and the judge in separate sandboxes; the judge holds the evaluator, the reference and the held-out workloads, and returns only a development score per patch.","Grade the final patch once on the held-out suite, and place agents and tasks on a shared ability and difficulty scale (FCI and FDI)."],
- math:"Best agent: 58% of 48 runs ≈ <code>28 passing runs</code>. Unsolved share: 16 ÷ 48 = <code>33%</code> of tasks with no passing run from any agent. FCI uses 10 points per logit, so a 10-point FCI lead means the odds of success are e ≈ <code>2.7×</code> higher on a given task.",
+ math:[{"t":"Passing runs for the best agent","m":"58\\% \\times 48 \\approx \\res{28}\\text{ passing runs}"},{"t":"Unsolved share of tasks","m":"\\frac{16}{48} = \\res{33\\%}","n":"Tasks with no passing run from any agent."},{"t":"Odds from a 10-point FCI lead","m":"\\exp\\left(\\frac{10}{10}\\right) = e \\approx \\res{2.7\\times}","n":"FCI uses 10 points per logit, so this is how much higher the odds of success are on a given task."}],
  deepFig:{src:"https://raw.githubusercontent.com/FrontierCS/FrontierCS-2/main/docs/assets/judge.png",alt:"FrontierCS 2 judge: the agent sends patches to the driver and gets back only a development-suite score",caption:"How judging works: the agent sees only a development-suite score and a sanitised message per patch; the held-out suite and reference stay with the judge.",credit:"FrontierCS 2 repository",url:"https://github.com/FrontierCS/FrontierCS-2"},
  builds:["swebench","paperbench"],
  links:[["Paper (arXiv 2610.29932)","https://arxiv.org/abs/2610.29932"],["Code: FrontierCS/FrontierCS-2","https://github.com/FrontierCS/FrontierCS-2"]]},
@@ -387,7 +389,7 @@ const CARDS=[
  why:"Environment supply is a bottleneck for agent reinforcement learning, and this shows that open models alone can produce long, verifiable, cross-interface training tasks.",
  caveat:"Gains reported by the authors could not be checked in the arXiv HTML version, and synthetic worlds may not capture the messiness of real computers.",
  how:["Synthesise personas and multi-day plans, then write deterministic programs that update websites, MCP databases and files day by day.","Generate cross-interface tasks with checklist verifiers, collect rollouts from several open model and harness pairs, and accept tasks that pass five quality gates.","Fine-tune on teacher trajectories, then train with reinforcement learning using a reward of task success plus 0.1 × the checklist share, with −1 for format failures."],
- math:"Split: 208 ÷ 341 = <code>61%</code> of tasks for reinforcement learning. Reward for a failed run meeting 6 of 8 checklist items: min(1, 0 + 0.1 × 6⁄8) = <code>0.075</code>. Accepted tasks per persona: 341 ÷ 36 ≈ <code>9.5</code>.",
+ math:[{"t":"Share of tasks for reinforcement learning","m":"\\frac{208}{341} = \\res{61\\%}"},{"t":"Reward for a failed run meeting 6 of 8 checklist items","m":"\\min\\left(1, 0 + 0.1 \\times \\frac{6}{8}\\right) = \\res{0.075}"},{"t":"Accepted tasks per persona","m":"\\frac{341}{36} \\approx \\res{9.5}"}],
  builds:["rlvr","osworld"],
  links:[["Paper (arXiv 2610.26828)","https://arxiv.org/abs/2610.26828"],["Code: MSR-Orchard/WildAWM","https://github.com/MSR-Orchard/WildAWM"],["Environments and tasks (Hugging Face)","https://huggingface.co/datasets/ChilleD/WildAWM"]]},
 
@@ -401,7 +403,7 @@ const CARDS=[
  why:"On-device agents run many short steps with idle gaps, and this shows that checkpoint placement, rollback cost and NPU power state decide latency and battery life.",
  caveat:"Results are for Qwen3.5 models on two Snapdragon phones, measured by the authors, and screenshot steps gain less (16%) than text steps.",
  how:["Checkpoint the recurrent state where the new prompt stops matching the previous one, so the next step resumes there and skips chat-only passes.","Keep speculative-decoding rollback snapshots on the NPU's chunked matrix kernel, and verify drafted tokens with a column-shared kernel that unpacks each weight block once.","After an idle period, release the NPU session's power votes and restore them before the next request, adding about 20 ms."],
- math:"Text step: 1 − 1.38 ÷ 1.96 = <code>30%</code> less time; screenshot step: 1 − 4.76 ÷ 5.66 = <code>16%</code>. Energy per text step: 1 − 10.1 ÷ 15.1 = <code>33%</code> lower. Standby: 0.76 ÷ 0.22 ≈ <code>3.4×</code> less power with the model loaded.",
+ math:[{"t":"Time per text step","m":"1 - \\frac{1.38}{1.96} = \\res{30\\%}\\text{ less}"},{"t":"Time per screenshot step","m":"1 - \\frac{4.76}{5.66} = \\res{16\\%}\\text{ less}"},{"t":"Energy per text step","m":"1 - \\frac{10.1}{15.1} = \\res{33\\%}\\text{ lower}"},{"t":"Standby power with the model loaded","m":"\\frac{0.76}{0.22} \\approx \\res{3.4\\times}\\text{ less}"}],
  deepFig:{src:"https://cdn.jsdelivr.net/gh/flyingdoog/tandem/docs/tandem/text-steps.svg",alt:"Server time per text step, llama.cpp on NPU against Tandem, for Qwen3.5 2B, 4B, 9B and agent workloads",caption:"Server time per text step, llama.cpp's NPU backend against Tandem, across Qwen3.5 sizes, two phone generations and AndroidControl. Chart reproduced from the source; the measurements are the authors' own and have not been independently verified.",credit:"Tandem repository",url:"https://github.com/flyingdoog/tandem"},
  builds:["gdn","mtp","specdec"],
  links:[["Paper (arXiv 2610.26660)","https://arxiv.org/abs/2610.26660"],["Code and results (GitHub)","https://github.com/flyingdoog/tandem"]]},
@@ -416,7 +418,7 @@ const CARDS=[
  why:"Many people run PyTorch models on Macs, and expert models such as Qwen3.6-35B-A3B become practical locally without switching to another runtime.",
  caveat:"Speeds are the authors' own on an M3 Ultra with torch.compile; smaller Macs and uncompiled code will see smaller gains.",
  how:["Route single-row linear layers (the decode case) to matrix-vector kernels, and implement mixture-of-experts grouped matmul natively on MPS.","Move softmax, log-softmax and constant padding to dedicated Metal kernels, removing slow graph paths and a driver-memory leak.","Add float8_e4m3fn tensors and scaled matmul with tensorwise and rowwise scaling, at half the storage of BF16."],
- math:"Qwen3.6-35B-A3B: 61.3 ÷ 9.4 ≈ <code>6.5×</code> faster decode. LFM2.5-8B-A1B: 123.6 ÷ 23.6 ≈ <code>5.2×</code>. Softmax: 57 ÷ 7 ≈ <code>8×</code>. FP8 halves weight memory: a 35B model needs 35B × 1 byte = <code>35 GB</code> instead of 70 GB in BF16.",
+ math:[{"t":"Qwen3.6-35B-A3B decode","m":"\\frac{61.3}{9.4} \\approx \\res{6.5\\times}\\text{ faster}"},{"t":"LFM2.5-8B-A1B decode","m":"\\frac{123.6}{23.6} \\approx \\res{5.2\\times}"},{"t":"Softmax","m":"\\frac{57}{7} \\approx \\res{8\\times}"},{"t":"A 35B model in FP8","m":"35\\text{B} \\times 1\\text{ byte} = \\res{35}\\text{ GB}","n":"Instead of 70 GB in BF16: FP8 halves weight memory."}],
  deepFig:{src:"https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/mps-pytorch-2-15/wan-vae-memory.png",alt:"Stacked bar chart of peak driver memory during Wan2.2 tiled VAE decode, MPSGraph padding against Metal padding",caption:"Peak driver memory during Wan2.2 tiled VAE decoding, about 270 GiB before and about 8 GiB after. Chart reproduced from the source; the measurements are the authors' own and have not been independently verified.",credit:"Hugging Face blog, MPS in PyTorch 2.15",url:"https://huggingface.co/blog/mps-pytorch-2-15"},
  builds:["moe","mx"],
  links:[["Hugging Face blog: MPS in PyTorch 2.15","https://huggingface.co/blog/mps-pytorch-2-15"]]},
@@ -430,7 +432,7 @@ const CARDS=[
  why:"It warns developers not to assume that server-GPU speed-ups, especially speculative decoding, carry over to Apple Silicon.",
  caveat:"Only the abstract could be read on arXiv during this run, so per-machine and per-method numbers are not shown here.",
  how:["Pick four optimisation families: KV-cache pruning, speculative decoding, ported GPU kernels and post-training quantisation.","Measure each at batch size one on four Apple machines, and on an RTX 4090 where the method allows.","Compare end-to-end throughput with each runtime's unoptimised baseline."],
- math:"At 1.75×, a reply that took 20 s takes 20 ÷ 1.75 ≈ <code>11.4 s</code>. A speculative method that reaches 3× on a server GPU but falls below 1× on a Mac swings by at least <code>3×</code> between platforms.",
+ math:[{"t":"A 20 s reply at 1.75×","m":"\\frac{20\\text{ s}}{1.75} \\approx \\res{11.4}\\text{ s}"},"A speculative method that reaches \\(3\\times\\) on a server GPU but falls below \\(1\\times\\) on a Mac swings by at least \\(\\res{3\\times}\\) between platforms."],
  builds:["specdec","snapkv","quant"],
  links:[["Paper (arXiv 2610.31479)","https://arxiv.org/abs/2610.31479"]]},
 
@@ -445,7 +447,7 @@ const CARDS=[
  why:"An encoder of 17M to 150M parameters that routes requests or picks tools in tens of milliseconds on an ordinary CPU removes an LLM call from many agent loops.",
  caveat:"Reordering the options changes 16–23% of answers, the models are over-confident, and the weights are CC BY-NC 4.0 (non-commercial).",
  how:["Start from the Ettin cross-encoder reranker of each size and add an option marker before every option, reading one score per marker.","Train on typed decision questions with cross-entropy plus half the Brier score, distilling the smaller models from Crivo-400M.","At inference, put the state and all options in one sequence and act on the top score or a threshold: route, pick a tool or block."],
- math:"Weight memory for Crivo-150M: BF16 150M × 16 ÷ 8 = <code>300 MB</code>; 4-bit 150M × 4 ÷ 8 = <code>75 MB</code>. Crivo-17M in BF16: 17M × 16 ÷ 8 = <code>34 MB</code>. CPU speed-up of Crivo-17M over DeBERTa-v3-large: 728 ÷ 13.5 = <code>54×</code>, at the same 0.414 accuracy on unseen tasks.",
+ math:[{"t":"Crivo-150M weights in BF16","m":"\\frac{150\\text{M} \\times 16}{8} = \\res{300}\\text{ MB}"},{"t":"Crivo-150M at 4 bits","m":"\\frac{150\\text{M} \\times 4}{8} = \\res{75}\\text{ MB}"},{"t":"Crivo-17M in BF16","m":"\\frac{17\\text{M} \\times 16}{8} = \\res{34}\\text{ MB}"},{"t":"CPU speed-up of Crivo-17M over DeBERTa-v3-large","m":"\\frac{728}{13.5} = \\res{54\\times}","n":"At the same 0.414 accuracy on unseen tasks."}],
  deepFig:{src:"https://raw.githubusercontent.com/tardellirs/crivo-decision-encoders/main/docs/fig_overview.png",alt:"S1-Arena accuracy against parameters for Crivo and baselines, and Decision Index score against served parameters",caption:"(a) System1-Arena accuracy against parameters; (b) Decision Index score against served parameters with the Pareto frontier. Chart reproduced from the source; the results are the author's own and have not been independently verified.",credit:"Stekel, Crivo repository",url:"https://github.com/tardellirs/crivo-decision-encoders"},
  builds:["distill","nlizs"],
  links:[["Paper (arXiv 2610.30970)","https://arxiv.org/abs/2610.30970"],["Code and results (GitHub)","https://github.com/tardellirs/crivo-decision-encoders"],["Crivo-150M weights (Hugging Face)","https://huggingface.co/tardellirs/crivo-150m"]]},
@@ -459,7 +461,7 @@ const CARDS=[
  why:"A permissively licensed sub-500M transcriber that reads an hour of audio in a fraction of a second suits on-device speech front ends for small-model pipelines.",
  caveat:"IBM gives no Turbo CTC word error rate in the post's text (it is only plotted), and speeds are IBM's own on the leaderboard's hardware.",
  how:["Encode audio with a 470M-parameter Conformer-based encoder (the Turbo CTC model), without a large language-model decoder.","Train for six more languages and native punctuation and capitalisation, with added robustness to echoey and distant audio.","Compile and reuse the Conformer graph for faster warm-up and throughput, with native Transformers support."],
- math:"Weight memory at 470M parameters: BF16 470M × 16 ÷ 8 = <code>940 MB</code>; 8-bit 470M × 8 ÷ 8 = <code>470 MB</code>; 4-bit 470M × 4 ÷ 8 = <code>235 MB</code>. Speed: 19,870 ÷ 12,600 ≈ <code>1.58×</code>; at 19,870× real time an hour of audio takes 3,600 ÷ 19,870 ≈ <code>0.18 s</code>.",
+ math:[{"t":"Weights at 470M parameters in BF16","m":"\\frac{470\\text{M} \\times 16}{8} = \\res{940}\\text{ MB}"},{"t":"At 8 bits","m":"\\frac{470\\text{M} \\times 8}{8} = \\res{470}\\text{ MB}"},{"t":"At 4 bits","m":"\\frac{470\\text{M} \\times 4}{8} = \\res{235}\\text{ MB}"},{"t":"Speed against 12,600× real time","m":"\\frac{19,870}{12,600} \\approx \\res{1.58\\times}"},{"t":"An hour of audio at 19,870× real time","m":"\\frac{3,600\\text{ s}}{19,870} \\approx \\res{0.18}\\text{ s}"}],
  deepFig:{src:"https://cdn-uploads.huggingface.co/production/uploads/653fb52cbfd890805461d691/87yRtLq4X2CwMZrDhv0L_.png",alt:"granite-speech-5.0-2b average English WER compared with top open-weight ASR models",caption:"Average English WER of the 2B sibling, granite-speech-5.0-2b, against top open-weight ASR models (5.06%, ranked #2). Chart reproduced from the source; the figures are IBM's own and have not been independently verified.",credit:"IBM Granite, Hugging Face blog",url:"https://huggingface.co/blog/ibm-granite/granite-speech-5"},
  builds:["conformer"],
  links:[["Hugging Face blog: Granite Speech 5.0","https://huggingface.co/blog/ibm-granite/granite-speech-5"],["granite-speech-5.0-470m-turboctc (Hugging Face)","https://huggingface.co/ibm-granite/granite-speech-5.0-470m-turboctc"]]},
@@ -473,7 +475,7 @@ const CARDS=[
  why:"It suggests that most of the gap between a sub-1B model and a usable on-device phone agent is training data rather than size.",
  caveat:"The evaluator that scored the outputs also filtered the training data, a human study is only planned, and grounding (who said what, under which conditions) remains the main weakness.",
  how:["Write a private scenario brief, generate each agent reply from the conversation so far only, and write the summary from the full transcript.","Keep only calls that pass model-based reviews, giving 3,395 calls and 15,102 targets.","Train one shared LoRA adapter on both replying and summarising for each of six models from 0.6B to 4B."],
- math:"Weight memory at 0.6B parameters: BF16 0.6B × 16 ÷ 8 = <code>1.2 GB</code>; 4-bit 0.6B × 4 ÷ 8 = <code>0.3 GB</code>, small enough for a phone. Replies per call: 11,707 ÷ 3,395 ≈ <code>3.4</code> training replies per call. The weakest reply rate rises 94 − 21 = <code>73 points</code>.",
+ math:[{"t":"Weights at 0.6B parameters in BF16","m":"\\frac{0.6\\text{B} \\times 16}{8} = \\res{1.2}\\text{ GB}"},{"t":"At 4 bits","m":"\\frac{0.6\\text{B} \\times 4}{8} = \\res{0.3}\\text{ GB}","n":"Small enough for a phone."},{"t":"Training replies per call","m":"\\frac{11,707}{3,395} \\approx \\res{3.4}"},{"t":"Rise in the weakest reply rate","m":"94 - 21 = \\res{73}\\text{ points}"}],
  builds:["lora"],
  links:[["Paper (arXiv 2610.25458)","https://arxiv.org/abs/2610.25458"]]},
 
@@ -488,7 +490,7 @@ const CARDS=[
  why:"It turns serving techniques covered one engine at a time in recent issues (prefix caching, disaggregation, KV offload) into a shared, vendor-neutral control layer.",
  caveat:"Every number comes from the launch post of one of the project's backers, each against a different baseline, and none is independently verified.",
  how:["Put the llm-d router in front of vLLM or SGLang replicas; it scores replicas by cached-prefix overlap, load and predicted latency, and keeps sessions together.","Tier the KV cache from GPU to host memory to SSD or managed Lustre, so long multi-turn conversations are not evicted and recomputed.","Run prefill and decode as separate pools managed as one unit (DisaggregatedSet on LeaderWorkerSet), with flow control for priority lanes."],
- math:"ZenteiQ: 5.97B ÷ 1.47B = <code>4.06×</code> daily tokens; per chip 5.97B ÷ 1,000 ÷ 86,400 s ≈ <code>69 tokens/s</code>. Doubling the prefix hit rate from 35% to 70% cuts the uncached share of prompt tokens from 65% to 30%, so prefill work falls to 30 ÷ 65 ≈ <code>46%</code> of before.",
+ math:[{"t":"ZenteiQ daily tokens","m":"\\frac{5.97\\text{B}}{1.47\\text{B}} = \\res{4.06\\times}"},{"t":"Tokens per chip","m":"\\frac{5.97\\text{B}}{1,000 \\times 86,400\\text{ s}} \\approx \\res{69}\\text{ tokens/s}"},{"t":"Prefill work after doubling the prefix hit rate","m":"\\frac{30}{65} \\approx \\res{46\\%}","n":"Going from 35% to 70% hits cuts the uncached share of prompt tokens from 65% to 30%, so prefill work falls to this share of before."}],
  deepFig:{src:"https://storage.googleapis.com/gweb-cloudblog-publish/images/2_-_Figure_2_-_llm-d_1.0_and_TorchTPU_stac.max-2200x2200.png",alt:"Multi-node llm-d orchestration and single-node TorchTPU model engines on Google Kubernetes Engine and TPUs",caption:"Multi-node llm-d orchestration with single-node TorchTPU model engines on GKE and Google TPUs.",credit:"Google Cloud blog",url:"https://cloud.google.com/blog/topics/ai-infrastructure/llm-d-1-0-an-open-source-stack-for-distributed-inference"},
  builds:["distserve","radixattn","pagedattn"],
  links:[["Google Cloud blog: llm-d 1.0","https://cloud.google.com/blog/topics/ai-infrastructure/llm-d-1-0-an-open-source-stack-for-distributed-inference"],["Code (GitHub)","https://github.com/llm-d/llm-d"]]},
@@ -502,7 +504,7 @@ const CARDS=[
  why:"Teams that serve with vLLM or SGLang can move to TPUs without leaving PyTorch, which widens hardware choice for open-model serving.",
  caveat:"The cost and speed figures are Google's own, and the post does not report the GPU configurations it was compared against.",
  how:["Expose the TPU as a native PyTorch device (TorchTPU), running eagerly or compiled through torch.compile and XLA, with collectives through torch.distributed.","Keep each engine's upstream worker, scheduler and KV-cache manager, with TPU implementations and Pallas kernels underneath.","Transfer KV cache with TPU Sync for disaggregated serving and tiered offload, and support FP8, FP4 and INT checkpoints and several drafters."],
- math:"2.01 cents per million tokens is 2.01 × 1,000 ÷ 100 = <code>$20.10</code> per billion tokens. At 700 tokens/s, one user receives a 10,000-token answer in 10,000 ÷ 700 ≈ <code>14 s</code>.",
+ math:[{"t":"2.01 cents per million tokens, per billion","m":"\\frac{2.01 \\times 1,000}{100} = \\res{\\$20.10}\\text{ per billion tokens}"},{"t":"A 10,000-token answer at 700 tokens/s","m":"\\frac{10,000}{700} \\approx \\res{14}\\text{ s}"}],
  builds:["pagedattn","radixattn","specdec"],
  links:[["Google for Developers: vLLM and SGLang on TPU","https://developers.googleblog.com/announcing-new-vllm-and-sglang-inference-engines-on-tpu/"]]},
 
@@ -516,7 +518,7 @@ const CARDS=[
  why:"It moves cache management from hidden server heuristics into something the agent controls and the server can still reuse correctly.",
  caveat:"The figures are the authors' own; only the abstract and code repository could be read on arXiv during this run, so per-model results are not shown here.",
  how:["Give the agent two cache operations besides append: drop, which hides chosen KV entries from later attention, and repos, which adjusts the positions of retained keys.","Apply a policy such as keeping only recent tool responses and re-positioning keys at set turns.","Serve it through AKV, which keeps a stateless chat-completions interface while managing stateful cache reuse, eviction and restoration internally."],
- math:"A task costing 10 cents with summarisation costs about 10 × (1 − 0.277) = <code>7.2 cents</code> with rolling drop, and self-improved policies take a further 7.1% off: 7.2 × 0.929 ≈ <code>6.7 cents</code>. A P95 latency of 45 s falls to about 45 ÷ 1.5 = <code>30 s</code>.",
+ math:[{"t":"A 10-cent task with rolling drop","m":"10 \\times (1 - 0.277) = \\res{7.2}\\text{ cents}","n":"Against 10 cents with summarisation."},{"t":"With self-improved policies","m":"7.2 \\times 0.929 \\approx \\res{6.7}\\text{ cents}","n":"A further 7.1% off."},{"t":"P95 latency of 45 s","m":"\\frac{45\\text{ s}}{1.5} = \\res{30}\\text{ s}"}],
  builds:["radixattn","streamingllm","react"],
  links:[["Paper (arXiv 2610.28577)","https://arxiv.org/abs/2610.28577"],["Code (GitHub)","https://github.com/thu-nics/AKV"]]}
 ];
@@ -667,7 +669,7 @@ function openCard(id){
     <details class="deep"><summary>Technical deep dive <span>Method, worked maths, prior work and sources</span></summary>
      <div class="deep-body">
       <h4>How it works</h4><ol>${c.how.map(h=>`<li>${esc(h)}</li>`).join("")}</ol>
-      <h4>The maths, simply</h4><div class="mathbox">${c.math}</div>
+      <h4>The maths, simply</h4><div class="mathbox">${SignalMath.html(c.math)}</div>
       ${c.deepFig?figHTML(c.deepFig):""}
       ${c.deepTable?`<h4>${esc(c.deepTable.title)}</h4>${tableHTML(Object.assign({},c.deepTable,{title:null}))}`:""}
       <h4>Builds on</h4><div class="builds">${c.builds.map(b=>`<a href="#lin-${b}" data-lin="${b}">${esc(linById[b].title)}</a>`).join("")}</div>

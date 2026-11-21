@@ -19,6 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="../assets/lineage.css">
+<link rel="stylesheet" href="../assets/math.css">
 <style>
 :root{
   --bg:#F2F4F6; --surface:#FFFFFF; --surface-2:#E8ECF0; --ink:#15202B; --muted:#586674; --line:#D5DCE3;
@@ -246,6 +247,7 @@ details.deep .deep-body{padding:0 16px 18px;border-top:1px solid var(--line)}
 
 <dialog id="dlg" aria-labelledby="d-title"><div class="d-inner" id="d-inner"></div></dialog>
 
+<script src="../assets/math.js"></script>
 <script src="../assets/lineage.js"></script>
 <script>
 const COLS=[
@@ -274,7 +276,7 @@ const CARDS=[
  why:"If the weights arrive as promised, it becomes a large Apache 2.0 open-weight model that also has a hosted fine-tuning service built around it.",
  caveat:"The weights are not yet out, the company lists weak chat presentation and poor tool choice in large codebases as known limits, and Vals AI measured only 12.63% on Terminal-Bench 4.0.",
  how:["Pretrain a 594B mixture-of-experts model with 17B active parameters, extending context to 512K and then 1M tokens in later phases.","Post-train with reinforcement learning at 256K context, using compaction for longer trajectories, with variable effort settings.","Release on Tinker for sampling and fine-tuning first, then publish weights after external red-teaming."],
- math:"Active share: 17 ÷ 594 ≈ <code>2.9%</code> of parameters per token. HLE-Diamond lead over Kimi K3: 28.7 − 26.9 = <code>1.8 points</code>; DeepSWE gap to DeepSeek-V4.1-Flash-1017: 72.1 − 77.0 = <code>−4.9 points</code>. The vision encoder is 292M ÷ 594B ≈ <code>0.05%</code> of the model.",
+ math:[{"t":"Active share of parameters per token","m":"\\frac{17}{594} \\approx \\res{2.9\\%}"},{"t":"HLE-Diamond lead over Kimi K3","m":"28.7 - 26.9 = \\res{1.8}\\text{ points}"},{"t":"DeepSWE gap to DeepSeek-V4.1-Flash-1017","m":"72.1 - 77.0 = \\res{-4.9}\\text{ points}"},{"t":"Vision encoder share of the model","m":"\\frac{292\\text{M}}{594\\text{B}} \\approx \\res{0.05\\%}"}],
  builds:["moe","rlvr"],
  links:[["Thinking Machines: Introducing Inkling 2 Small","https://thinkingmachines.ai/news/inkling-2-small/"],["Vals AI results","https://www.vals.ai/models/thinkingmachines_inkling-2-small"]]},
 
@@ -292,7 +294,7 @@ const CARDS=[
  why:"It is a large Chinese model that pairs vision with computer use at a low price, and Tencent is unusually direct that it still trails closed models on the hardest tasks.",
  caveat:"Every score is Tencent's own, several on benchmarks Tencent built, and the final weights, licence and active-parameter count were not published at release.",
  how:["Scale up pre-training and post-training data over the August Hy4 preview's 770B mixture-of-experts base.","Build visual understanding into the core model rather than adding a separate encoder, and train for command-line and GUI operation.","Ship through API and Tencent apps first, with weights and a system card promised later."],
- math:"OSWorld 2.1 gap to Claude Opus 5.5: 81.8 − 78.9 = <code>2.9 points</code>; Terminal Bench 4.0 gap: 66.4 − 44.4 = <code>22.0 points</code>. Tencent's internal search hallucination rate falls from 15.76% to 5.45%, a relative cut of 10.31 ÷ 15.76 ≈ <code>65%</code>. Output costs 18 ÷ 6 = <code>3×</code> input; at the 50% discount, OpenRouter charges <code>$1.2505</code> per million output tokens.",
+ math:[{"t":"OSWorld 2.1 gap to Claude Opus 5.5","m":"81.8 - 78.9 = \\res{2.9}\\text{ points}"},{"t":"Terminal Bench 4.0 gap","m":"66.4 - 44.4 = \\res{22.0}\\text{ points}"},{"t":"Relative cut in search hallucination rate","m":"\\frac{10.31}{15.76} \\approx \\res{65\\%}","n":"Tencent's internal rate falls from 15.76% to 5.45%."},{"t":"Output price relative to input","m":"\\frac{18}{6} = \\res{3\\times}","n":"At the 50% discount, OpenRouter charges \\(\\res{\\$1.2505}\\) per million output tokens."}],
  builds:["moe","osworld"],
  links:[["Apiyi: Hy4 specifications, benchmarks and pricing","https://help.apiyi.com/en/tencent-hy4-770b-vision-computer-use-pricing-en.html"],["Digital Applied: what is confirmed about Hy4","https://www.digitalapplied.com/blog/tencent-hy4-release-what-is-confirmed"],["madrobot.blog: Hy4 release","https://madrobot.blog/2026/11/04/tencent-hy4-release-computer-use-open-weight/"],["Tencent Hunyuan: Hy4 announcement","https://hunyuan.tencent.com/research/hy4"]]},
 
@@ -310,7 +312,7 @@ const CARDS=[
  why:"It is a cheap, self-supervised way to cut reasoning cost by roughly 40% that also transferred from maths to code.",
  caveat:"Only one 7B distilled model was tested, AIME sets have 30 problems, and the code and model are promised rather than released.",
  how:["Sample the model's own reasoning traces and flag candidate overthinking steps, re-checked by a judge model.","Freeze the trace at each flagged step and regenerate eight continuations, keeping verified ones that save at least 300 tokens.","Train with DPO on pairs that share the same prefix, preferring the shorter correct continuation over the original."],
- math:"AIME24: 13,493 − 7,364 = 6,129 fewer tokens, or 6,129 ÷ 13,493 ≈ <code>45.4%</code>, while accuracy rises 54.17 − 50.83 = <code>3.34 points</code>. On MBPP accuracy is unchanged at 84.05% and tokens fall from 3,403 to 2,167, a <code>36.3%</code> cut.",
+ math:[{"t":"AIME24 token saving","m":"13,493 - 7,364 = 6,129\\text{ fewer tokens}"},{"t":"The saving as a share","m":"\\frac{6,129}{13,493} \\approx \\res{45.4\\%}"},{"t":"AIME24 accuracy gain","m":"54.17 - 50.83 = \\res{3.34}\\text{ points}"},{"t":"MBPP token cut","m":"3,403 \\to 2,167\\text{ tokens, a }\\res{36.3\\%}\\text{ cut}","n":"Accuracy is unchanged at 84.05%."}],
  builds:["dpo","lora"],
  links:[["arXiv: Think Less, Locally (2611.04814)","https://arxiv.org/abs/2611.04814"],["Code (announced)","https://github.com/MuyaoYuan/LoCo"]]},
 
@@ -329,7 +331,7 @@ const CARDS=[
  why:"Animated and vector output plus a cheap fast tier widen what an API image model can be used for without a price rise.",
  caveat:"The quality gain is small in independent tests (Sunburst at max beats 2.5 Sunburst by 5 Elo but takes 67.1 s against 23.4 s), and OpenAI's own launch page could not be read for this summary.",
  how:["Split the release into a fast model (Flare) and a detail and consistency model (Sunburst) at the same per-token price.","Expose separate planning (complexity) and rendering (quality) controls so users trade speed for detail.","Add GIF and SVG output on the generation endpoint and annotation-guided editing on the edit endpoint."],
- math:"DesignArena: 1385 − 1380 = <code>5 Elo</code> over 2.5 Sunburst, inside a ±1.7% margin (about ±23 points). Time: 67.1 ÷ 23.4 ≈ <code>2.9×</code> slower at max quality. Flare on auto: (16.2 − 12.6) ÷ 16.2 ≈ <code>22%</code> faster than 2.5 Flare at +1 Elo. Default GIF: 9 frames × 200 ms = <code>1.8 s</code>. At $30 per million, 1,000 output tokens cost <code>$0.03</code>.",
+ math:[{"t":"DesignArena lead over 2.5 Sunburst","m":"1385 - 1380 = \\res{5}\\text{ Elo}","n":"Inside a ±1.7% margin (about ±23 points)."},{"t":"Time at max quality","m":"\\frac{67.1}{23.4} \\approx \\res{2.9\\times}\\text{ slower}"},{"t":"Flare on auto versus 2.5 Flare","m":"\\frac{16.2 - 12.6}{16.2} \\approx \\res{22\\%}\\text{ faster}","n":"At +1 Elo."},{"t":"Default GIF length","m":"9\\text{ frames} \\times 200\\text{ ms} = \\res{1.8}\\text{ s}"},{"t":"Cost of 1,000 output tokens","m":"\\$30\\text{ per million} \\to \\res{\\$0.03}"}],
  builds:["diffusion"],
  links:[["DesignArena Image leaderboard","https://www.designarena.ai/leaderboard/image"],["Kingy AI: specs, benchmarks and pricing","https://kingy.ai/blog/gpt-image-2-6-sunburst-flare/"],["GIGAZINE report","https://gigazine.net/gsc_news/en/20261105-openai-image-2-6/"],["OpenAI: Introducing Images 2.6","https://openai.com/index/introducing-images-2-6/"]]},
 
@@ -348,7 +350,7 @@ const CARDS=[
  why:"It turns extra GPUs into real-time, long video output without dropping denoising steps, which matters for interactive world models and live generation.",
  caveat:"Quality was tested only on the 1.3B Wan model at fixed settings, VBench misses some long-video failures, and the training recipe has several stages.",
  how:["Assign one full-model replica to each denoising stage plus one to the cache refresh, so chunks at different stages run at once.","Train in three stages: mixed-noise denoising, motion supervision from teacher videos, then causal adaptation on self-generated history.","Run with WaveRT, which sends each layer's keys and values ahead of use, overlaps communication and pipelines VAE decoding."],
- math:"Speed-up: 134.81 ÷ 19.06 ≈ <code>7.07×</code> on eight GPUs, or 134.81 ÷ 8 ≈ <code>16.9 FPS per GPU</code>, close to the 19.06 of one GPU alone. Long-video motion: 91.45 against Rolling Forcing's 36.63 is <code>2.5×</code> higher, with subject preservation up 97.10 − 92.75 = <code>4.35 points</code>.",
+ math:[{"t":"Speed-up on eight GPUs","m":"\\frac{134.81}{19.06} \\approx \\res{7.07\\times}"},{"t":"Frames per second per GPU","m":"\\frac{134.81}{8} \\approx \\res{16.9}\\text{ FPS per GPU}","n":"Close to the 19.06 of one GPU alone."},{"t":"Long-video motion against Rolling Forcing","m":"\\frac{91.45}{36.63} \\approx \\res{2.5\\times}\\text{ higher}"},{"t":"Subject preservation gain","m":"97.10 - 92.75 = \\res{4.35}\\text{ points}"}],
  builds:["causvid","rollingforcing","wan"],
  links:[["arXiv: Wave Forcing (2611.00859)","https://arxiv.org/abs/2611.00859"],["AI Weekly summary","https://aiweekly.co/alerts/wave-forcing-hits-1348-end-to-end-fps-streaming-video-on-eight-h200s-7x-over"]]},
 
@@ -367,7 +369,7 @@ const CARDS=[
  why:"It is a rare, detailed account from a leading video lab of the non-generator models that decide output quality, with measured effects for each.",
  caveat:"Most benchmarks are internal, no models are released, and on two of three public reward benchmarks the report's own table contradicts its claim of leading.",
  how:["Train one multimodal model on image, video, audio and interleaved inputs, then specialise it for each pipeline role.","Write dense captions for training videos, and train prompt enhancers to rewrite user prompts into that caption style, refined by RL with the generator in the loop.","Score candidate videos with a general reward model that explains defects and a fast decision model that scores many dimensions in one pass."],
- math:"Decision over general reward model: 77.86 − 74.72 = <code>3.14 points</code> macro accuracy; over prompted Gemini-4-Argon: 77.86 − 73.54 = <code>4.32 points</code>. The smaller captioner activates 3 ÷ 35 ≈ <code>8.6%</code> of its parameters yet scores 95.06 against the 397B model's 95.50 on UGC-VideoCap average, a <code>0.44-point</code> gap.",
+ math:[{"t":"Decision over the general reward model","m":"77.86 - 74.72 = \\res{3.14}\\text{ points}","n":"Macro accuracy."},{"t":"Decision over prompted Gemini-4-Argon","m":"77.86 - 73.54 = \\res{4.32}\\text{ points}"},{"t":"Active share of the smaller captioner","m":"\\frac{3}{35} \\approx \\res{8.6\\%}"},{"t":"UGC-VideoCap average gap to the 397B model","m":"95.50 - 95.06 = \\res{0.44}\\text{ points}"}],
  builds:["diffusion","recaption"],
  links:[["arXiv: Behind Video Generation (2611.04916)","https://arxiv.org/abs/2611.04916"]]},
 
@@ -385,7 +387,7 @@ const CARDS=[
  why:"It gives practitioners open computer-use models at three sizes, including a 35B mixture-of-experts model with 3B active parameters, that the authors report match or beat much larger closed and open systems on standard desktop and web benchmarks.",
  caveat:"All scores are self-reported and many baselines come from different papers and protocols, and the much harder OSWorld 2.0 full-completion rate is still only 30.6% for the largest model.",
  how:["Generate executable desktop and web tasks with verifiers, run them in the NorthCUA Harness, and keep only verified trajectories; unsolved tasks are retried with evolving reusable skills.","Train Qwen3.5 base models through GUI mid-training and long-horizon supervised fine-tuning on that experience.","Run joint desktop–web reinforcement learning with group-relative policy optimisation, scoring fresh attempts with the task verifiers."],
- math:"Pro versus Qwen3.8-Max on OSWorld-Verified: 88.6 − 86.1 = <code>2.5 points</code> with 2,400 ÷ 397 ≈ <code>6×</code> fewer total parameters. The Ultrafast variant cuts mean WebArena-Verified task time from 616.8 s to 266.8 s: 616.8 ÷ 266.8 ≈ <code>2.3×</code> faster, while keeping 60.6 ÷ 64.2 ≈ <code>94%</code> of full-generation success.",
+ math:[{"t":"Pro versus Qwen3.8-Max on OSWorld-Verified","m":"88.6 - 86.1 = \\res{2.5}\\text{ points}"},{"t":"Fewer total parameters","m":"\\frac{2,400}{397} \\approx \\res{6\\times}"},{"t":"Ultrafast speed-up on WebArena-Verified","m":"\\frac{616.8\\text{ s}}{266.8\\text{ s}} \\approx \\res{2.3\\times}\\text{ faster}","n":"Mean task time falls from 616.8 s to 266.8 s."},{"t":"Share of full-generation success kept","m":"\\frac{60.6}{64.2} \\approx \\res{94\\%}"}],
  builds:["osworld","webarena","rlvr"],
  links:[["arXiv: NorthCUA Technical Report","https://arxiv.org/abs/2611.02102"],["Models on Hugging Face","https://huggingface.co/beipo-ai/models"],["Code (GitHub)","https://github.com/beipo-ai/NorthCUA"]]},
 
@@ -403,7 +405,7 @@ const CARDS=[
  why:"Agents that shop and book on users' behalf are already meeting fraud written for humans, and this is a repeatable way to measure how often they fall for it.",
  caveat:"Episodes start on the scam site itself, so how an agent would find it is not modelled, and the final responses are judged by an LLM (Cohen's κ 0.87 against human annotators).",
  how:["Collect reported scam URLs, recover full pages including from the Wayback Machine, and annotate them against a catalogue of 38 fraud mechanisms.","Rebuild representative sites as persistent local websites with event logs, each showing a key red flag before the payment or disclosure step.","Give a web agent a normal user request on each site and record whether it completes the final action, stops and warns, or reports a false alarm."],
- math:"In 220 of 492 deceived episodes the agent named a site-specific risk and proceeded anyway: 220 ÷ 492 = <code>45%</code>. A one-sentence warning in the user's request raised detection by 25 points and cut deception by 24 points, at a cost of 3 points of completion on legitimate sites. Of 363 sites, 186 fooled no model: 186 ÷ 363 ≈ <code>51%</code>.",
+ math:[{"t":"Deceived episodes where the risk was named","m":"\\frac{220}{492} = \\res{45\\%}","n":"In these episodes the agent named a site-specific risk and proceeded anyway."},"A one-sentence warning in the user's request raised detection by 25 points and cut deception by 24 points, at a cost of 3 points of completion on legitimate sites.",{"t":"Sites that fooled no model","m":"\\frac{186}{363} \\approx \\res{51\\%}"}],
  builds:["browsergym","webarena"],
  links:[["arXiv: ScamWorld","https://arxiv.org/abs/2611.04879"],["alphaXiv page","https://www.alphaxiv.org/abs/2611.04879"],["Code (GitHub, named in the paper)","https://github.com/wuyoscar/scamworld-bench"]]},
 
@@ -421,7 +423,7 @@ const CARDS=[
  why:"It shows that open-weight models can now be studied and trained as robot controllers, at a fraction of the inference cost of closed models.",
  caveat:"The real-world agents also received depth from RealSense cameras while π0.5 and Dream-1 used RGB only, and long-horizon tasks remain weaker than dedicated robot models.",
  how:["Expose the robot through a common tool interface (capture_scene, locate, move, grasp, release, view_env_state) with consistent feedback formats.","Overlap model requests with physical execution, and replace old images with text placeholders to keep the context within budget.","Run the same harness with different open and closed models on 42 RoboDojo tasks and 19 real tasks, without simulator state or verifier feedback."],
- math:"Cost per episode: $21.29 for GPT-6 Astra against $1.09 for Qwen, so 21.29 ÷ 1.09 ≈ <code>19.5×</code>. Score per dollar: 31.39 ÷ 1.09 ≈ <code>28.8</code> for Qwen versus 51.90 ÷ 21.29 ≈ <code>2.4</code> for Astra. Pipelining shortened the swap_T task from 34.7 to 12.5 minutes: 1 − 12.5 ÷ 34.7 ≈ <code>64%</code> less time.",
+ math:[{"t":"Cost per episode, GPT-6 Astra versus Qwen","m":"\\frac{\\$21.29}{\\$1.09} \\approx \\res{19.5\\times}"},{"t":"Score per dollar for Qwen","m":"\\frac{31.39}{1.09} \\approx \\res{28.8}"},{"t":"Score per dollar for Astra","m":"\\frac{51.90}{21.29} \\approx \\res{2.4}"},{"t":"Time saved on swap_T by pipelining","m":"1 - \\frac{12.5}{34.7} \\approx \\res{64\\%}\\text{ less time}","n":"The task fell from 34.7 to 12.5 minutes."}],
  builds:["codeaspolicies","react"],
  links:[["arXiv: Democratizing Robot-Use Agents","https://arxiv.org/abs/2611.01560"],["Hugging Face paper page","https://huggingface.co/papers/2611.01560"],["OpenRUA on PyPI (Apache-2.0, links the GitHub repo)","https://pypi.org/project/openrua/"]]},
 
@@ -439,7 +441,7 @@ const CARDS=[
  why:"It turns quantisation on phone GPUs into real speed rather than only smaller files, which matters for every local assistant that decodes long answers.",
  caveat:"Tests cover models of 1B to 3B on three Android phones, all numbers are the authors' own, and the paper does not say whether the engine will be released.",
  how:["Profile FP16 and INT8 decoding on mobile CPUs and GPUs to locate the costs of type conversion and KV-cache access.","Pack and lay out the KV cache adaptively as its shape grows, matching the GPU's texture-cache structure.","Keep the main matrix multiplications in the integer domain with 8-bit dot-product instructions, deferring and overlapping conversion to floating point."],
- math:"Against FP16, BitLLM reaches 1.66× at W8A8 and 2.36× at W4A8: 1.66 ÷ 2 = <code>83%</code> and 2.36 ÷ 4 = <code>59%</code> of the theoretical bounds. llama.cpp manages 0.75× at W8A8, slower than its own FP16. At a 10K-token output the W8A8 gain over llama.cpp grows from 2.0× to <code>8.35×</code>.",
+ math:["Against FP16, BitLLM reaches 1.66× at W8A8 and 2.36× at W4A8. llama.cpp manages 0.75× at W8A8, slower than its own FP16.",{"t":"W8A8 share of the theoretical bound","m":"\\frac{1.66}{2} = \\res{83\\%}"},{"t":"W4A8 share of the theoretical bound","m":"\\frac{2.36}{4} = \\res{59\\%}"},{"t":"W8A8 gain over llama.cpp at 10K-token output","m":"2.0\\times \\to \\res{8.35\\times}"}],
  builds:["quant"],
  links:[["arXiv: BitLLM","https://arxiv.org/abs/2611.00547"],["alphaXiv page","https://www.alphaxiv.org/abs/2611.00547"],["ACM DOI (ASPLOS '27)","https://doi.org/10.1145/3845814.3850028"]]},
 
@@ -457,7 +459,7 @@ const CARDS=[
  why:"It points to a practical way for a phone to tune its shared local model to one user's apps and habits overnight, with each specialist stored as a 1–5 MB file.",
  caveat:"The phone-use results come from emulated Android tasks rather than on-phone training, and the iPhone run covers one user, where the specialist answered 8 of 15 held-out queries against 5 for the base model.",
  how:["Keep one INT4 generalist on the device and represent each specialist as relative changes to block singular values.","When the phone is idle, evaluate perturbed copies on the task using forward passes only, scoring them with a verifier or the user's record likelihood.","Move the specialist towards the better-scoring perturbations, streaming decoder layers from flash so that training fits within the app memory limit."],
- math:"On the iPhone, 20 iterations took 10.4 h: 10.4 × 3,600 ÷ 20 = <code>1,872 s</code> per iteration, of which streaming weights from flash took 14 s, about <code>0.75%</code>. The INT4 model is 5.5 GB, above the 5.3 GB available to an app, yet training used 2.1 GB resident and peaked at <code>3.5 GB</code>.",
+ math:[{"t":"Time per iteration on the iPhone","m":"\\frac{10.4 \\times 3,600}{20} = \\res{1,872}\\text{ s}","n":"20 iterations took 10.4 h."},{"t":"Share spent streaming weights from flash","m":"\\frac{14\\text{ s}}{1,872\\text{ s}} \\approx \\res{0.75\\%}"},{"t":"Memory used during training","m":"2.1\\text{ GB resident}, \\quad \\res{3.5}\\text{ GB peak}","n":"The INT4 model is 5.5 GB, above the 5.3 GB available to an app."}],
  builds:["mezo","rlvr","lora"],
  links:[["arXiv: Training Specialist LLMs on Your Phone","https://arxiv.org/abs/2611.04797"],["alphaXiv page","https://www.alphaxiv.org/abs/2611.04797"]]},
 
@@ -475,7 +477,7 @@ const CARDS=[
  why:"Local assistants increasingly switch between chat, vision, speech and tool models on demand, so cold-start loading often dominates the wait a user sees.",
  caveat:"It requires modified kernel drivers and user-space runtimes (roughly 1,200 to 3,400 added lines per component for each vendor), so it is not something users can install today.",
  how:["Intercept the framework's allocation and copy calls in the user-space driver.","Rebuild the GPU buffer from the pages already holding the file data instead of copying them, while preserving independent-copy semantics.","Zero runtime allocations such as the KV-cache reservation with GPU kernels in pipelined batches, rather than on the CPU."],
- math:"For the 3.7 GB Qwen3-1.7B example on the Intel laptop, file I/O is only 61% of the 0.97 s pipelined transfer, so 0.39 × 0.97 ≈ <code>0.38 s</code> is memory preparation that UMLoad targets. Against pipelined loading on NVIDIA, the gain shrinks from 44.0% at 3B to <code>22.1%</code> at 7B as disk reads dominate.",
+ math:[{"t":"Memory preparation in the pipelined transfer","m":"0.39 \\times 0.97 \\approx \\res{0.38}\\text{ s}","n":"For the 3.7 GB Qwen3-1.7B example on the Intel laptop, file I/O is only 61% of the 0.97 s pipelined transfer; the rest is the memory preparation that UMLoad targets."},{"t":"Gain over pipelined loading on NVIDIA","m":"44.0\\%\\text{ at 3B} \\to \\res{22.1\\%}\\text{ at 7B}","n":"The gain shrinks as disk reads dominate."}],
  builds:["serverlessllm"],
  links:[["arXiv: UMLoad","https://arxiv.org/abs/2611.04253"],["alphaXiv page","https://www.alphaxiv.org/abs/2611.04253"]]},
 
@@ -493,7 +495,7 @@ const CARDS=[
  why:"It shows that a carefully labelled, single-language model of 31.6M parameters can beat the small Whisper models for offline, commercially usable transcription.",
  caveat:"Conversational speech remains hard (38.07% WER), the model is not streaming and needs voice activity detection for long audio, and it was trained with a single seed.",
  how:["Transcribe YouTube audio with Whisper large-v3-turbo and keep a transcript only if Omnilingual ASR CTC 7B reads the same audio within 10% character error.","Train a 16-layer FastConformer with TDT and CTC heads from scratch, choosing recipe changes only through pilots read by rules fixed in advance.","Export to transformers, sherpa-onnx int8, GGUF q8_0 and MLX, and ship an export only if its WER stays within 0.005 of NeMo."],
- math:"Float32 size: 31,564,935 × 32 ÷ 8 = <code>126.3 MB</code>, matching the 126,955,520-byte NeMo file. At 8 bits: 31,564,935 × 8 ÷ 8 ≈ <code>31.6 MB</code> of weights (the shipped q8_0 GGUF file is 58,147,232 bytes). On an Apple M1 at one thread the int8 TDT files run at a real-time factor of 0.0101, so audio is transcribed about 1 ÷ 0.0101 ≈ <code>99×</code> faster than real time.",
+ math:[{"t":"Float32 size","m":"\\frac{31,564,935 \\times 32}{8} = \\res{126.3}\\text{ MB}","n":"Matches the 126,955,520-byte NeMo file."},{"t":"Weights at 8 bits","m":"\\frac{31,564,935 \\times 8}{8} \\approx \\res{31.6}\\text{ MB}","n":"The shipped q8_0 GGUF file is 58,147,232 bytes."},{"t":"Speed against real time on an Apple M1","m":"\\frac{1}{0.0101} \\approx \\res{99\\times}","n":"The int8 TDT files run at one thread with a real-time factor of 0.0101."}],
  builds:["tdt","fastconformer"],
  links:[["Paper (arXiv 2611.03605)","https://arxiv.org/abs/2611.03605"],["Model on Hugging Face","https://huggingface.co/ufakai/ufakzeka-kulak"],["Code","https://github.com/ufakai/ufakzeka-kulak"]]},
 
@@ -511,7 +513,7 @@ const CARDS=[
  why:"It turns the reliability of a small model on one task from a sampled accuracy estimate into a checkable certificate, while keeping the computation inside the network.",
  caveat:"The guarantee covers the model's steps relative to a hand-written runtime, and the dialogue adapter that calls the sheet loses 5.8 points on fresh grade-school word problems.",
  how:["Render each step's three-cell view of the sheet as a 32 × 96-pixel strip that the vision encoder reads as three tokens.","Train a rank-16 LoRA adapter on 150 projection matrices so one forward pass outputs digit, carry and next operation.","Check every view in the finite tables on the target device, and recheck the weakest tenth on each new GPU."],
- math:"Total parameters: 873,438,784 (base) + 10,223,616 (adapter) = <code>883,662,400</code>, under 1B. At 16 bits: 883,662,400 × 16 ÷ 8 ≈ <code>1.77 GB</code> (the ONNX export stores token embeddings at 4 bits, so the shipped file is smaller). The adapter is 10,223,616 ÷ 873,438,784 ≈ <code>1.2%</code> of the base. Theorem 3: a margin of 3.02 logits tolerates any logit change below 3.02 ÷ 2 = <code>1.51</code>.",
+ math:[{"t":"Total parameters, base plus adapter","m":"873,438,784 + 10,223,616 = \\res{883,662,400}","n":"Under 1B."},{"t":"Size at 16 bits","m":"\\frac{883,662,400 \\times 16}{8} \\approx \\res{1.77}\\text{ GB}","n":"The ONNX export stores token embeddings at 4 bits, so the shipped file is smaller."},{"t":"Adapter share of the base","m":"\\frac{10,223,616}{873,438,784} \\approx \\res{1.2\\%}"},{"t":"Theorem 3: tolerance of a 3.02-logit margin","m":"\\frac{3.02}{2} = \\res{1.51}","n":"Any logit change below this is tolerated."}],
  builds:["lora","gdn"],
  links:[["Paper (arXiv 2611.04434)","https://arxiv.org/abs/2611.04434"],["Code and Lean proofs","https://github.com/NeoVand/sketchpad"]]},
 
@@ -529,7 +531,7 @@ const CARDS=[
  why:"Output-side moderation that runs alongside generation catches harm that input filters cannot see, such as jailbreak payloads or drifting role-play, at a size one GPU can serve for many streams.",
  caveat:"The exact parameter count is not published (the Hub lists 0.8B), the lead over Qwen3Guard-Gen-4B is only 0.06 F1, and WildGuardTest remains weak at 71.9.",
  how:["Organise 478,532 responses with the HaloGuard 1.0 constitution and label each token from the point a response becomes harmful.","Train a second phase on 106,043 counterfactual responses aimed at the base guard's own failure modes, then average the two models' weights.","At serving time, read the prompt once and update the recurrent state per generated token, stopping the stream when the latched threshold is crossed."],
- math:"Size at BF16 for the 0.8B label: 0.8 × 10⁹ × 16 ÷ 8 ≈ <code>1.6 GB</code>; the card asks for a GPU with at least 4 GB. On one H100, a step for 64 streams takes 23.7 ms, so 23.7 ÷ 64 ≈ <code>0.37 ms</code> per token per stream, or 64 ÷ 0.0237 s ≈ <code>2,700</code> tokens per second (2,705 reported). Going from batch 1 (22.2 ms) to batch 64 adds 1.5 ÷ 22.2 ≈ <code>6.8%</code> wall time (6.7% reported).",
+ math:[{"t":"Size at BF16 for the 0.8B label","m":"\\frac{0.8 \\times 10^{9} \\times 16}{8} \\approx \\res{1.6}\\text{ GB}","n":"The card asks for a GPU with at least 4 GB."},{"t":"Time per token per stream on one H100","m":"\\frac{23.7\\text{ ms}}{64} \\approx \\res{0.37}\\text{ ms}","n":"A step for 64 streams takes 23.7 ms."},{"t":"Tokens per second","m":"\\frac{64}{0.0237\\text{ s}} \\approx \\res{2,700}","n":"2,705 reported."},{"t":"Extra wall time from batch 1 to 64","m":"\\frac{1.5}{22.2} \\approx \\res{6.8\\%}","n":"Batch 1 takes 22.2 ms; 6.7% reported."}],
  builds:["gdn"],
  links:[["Paper (arXiv 2611.02134)","https://arxiv.org/abs/2611.02134"],["HaloGuard2-Stream-0.8B on Hugging Face","https://huggingface.co/astroware/HaloGuard2-Stream-0.8B"],["Multilingual variant","https://huggingface.co/ash-astro/HaloGuard2.0-Poly-0.8B"]]},
 
@@ -547,7 +549,7 @@ const CARDS=[
  why:"It makes agent-driven kernel and engine tuning a continuous production process, tracking shifts in traffic shape rather than optimising once per model release.",
  caveat:"All numbers are Together AI's own, most use at most 2 nodes and 24 hours per setting, and the compiler is not offered as open source or as a product with a release date.",
  how:["Initialise the inference engine once and expose an endpoint that accepts an agent's forward pass and patches the model's forward pointer in place.","Screen candidates in a fast tier, then confirm promising ones in a slow tier with real traffic shapes and checks for KV-cache contamination and quality.","Use an analytical-plus-measured cost model to choose parallelism layouts, then apply optimisations selectively by active batch size."],
- math:"MiniMax M3.1 Flash: 1,111 ÷ 633 ≈ <code>1.76×</code> (reported as 1.8×). DeepSeek-V4.1-Flash on GB300: 1,205 ÷ 943 ≈ <code>1.28×</code>. Engine startup: 467 ÷ 9.0 ≈ <code>52×</code> shorter, which is what lets the agents run 252 times more experiments. Megakernel comparison: up to 1.7× on Llama 1B at batch size 1 (about 2,100 tokens/s).",
+ math:[{"t":"MiniMax M3.1 Flash speed-up","m":"\\frac{1,111}{633} \\approx \\res{1.76\\times}","n":"Reported as 1.8×."},{"t":"DeepSeek-V4.1-Flash on GB300","m":"\\frac{1,205}{943} \\approx \\res{1.28\\times}"},{"t":"Engine startup","m":"\\frac{467}{9.0} \\approx \\res{52\\times}\\text{ shorter}","n":"This is what lets the agents run 252 times more experiments."},"Megakernel comparison: up to 1.7× on Llama 1B at batch size 1 (about 2,100 tokens/s)."],
  builds:["thunderkittens","flashattn"],
  links:[["Together AI blog","https://www.together.ai/blog/together-compiler-continual-compilation-for-ai-inference"]]},
 
@@ -565,7 +567,7 @@ const CARDS=[
  why:"It shows that much of the remaining speed in speculative decoding is deployment-specific engineering that agents can find, provided the evaluator blocks reward hacking through exact output checks.",
  caveat:"The speed-ups are measured by the authors on BF16 and FP8 targets with up to 48 requests, and the loop cost 530 GPU-hours over thirteen rounds.",
  how:["Model the speed-up over plain decoding as a function of step cost and accepted tokens, and compare measurements with an estimated ceiling.","Let parallel agents explore the largest gaps, accepting a patch only on a significant gain on unseen requests that passes token forcing against stock.","Store validated mechanisms as replayable code in a structured memory and reuse them for new targets, drafters and GPUs."],
- math:"Single request: 10.87 ÷ 4.46 ≈ <code>2.44×</code> more speed-up than stock. Batching: 3.93 ÷ 1.94 ≈ <code>2.03×</code>. W12 stores each in-window weight as 1 sign + 4 exponent-offset + 7 mantissa bits = <code>12 bits</code>, and averages 12.01–12.02 bits per weight, so weight reads fall to about 12.02 ÷ 16 ≈ <code>75%</code> of BF16. Loop cost: 530 GPU-hours ÷ 13 rounds ≈ <code>41 GPU-hours</code> per round.",
+ math:[{"t":"Single-request speed-up over stock","m":"\\frac{10.87}{4.46} \\approx \\res{2.44\\times}"},{"t":"Batched speed-up over stock","m":"\\frac{3.93}{1.94} \\approx \\res{2.03\\times}"},{"t":"W12 bits per in-window weight","m":"1 + 4 + 7 = \\res{12}\\text{ bits}","n":"Sign, exponent offset and mantissa; the average is 12.01–12.02 bits per weight."},{"t":"Weight reads relative to BF16","m":"\\frac{12.02}{16} \\approx \\res{75\\%}"},{"t":"Loop cost per round","m":"\\frac{530\\text{ GPU-hours}}{13\\text{ rounds}} \\approx \\res{41}\\text{ GPU-hours}"}],
  builds:["specdec","dflash","dfloat11"],
  links:[["Paper (arXiv 2611.02501)","https://arxiv.org/abs/2611.02501"],["Paper on alphaXiv","https://www.alphaxiv.org/abs/2611.02501"]]},
 
@@ -583,7 +585,7 @@ const CARDS=[
  why:"It removes the sample-rejection heuristics that asynchronous RL usually needs, so faster asynchronous training no longer trades away stability.",
  caveat:"Alignment costs time, for example a 6.8% longer mean step on OSWorld, and the cost on Kimi K3.1 for AMD is still being measured.",
  how:["Make rollout and trainer compute the same log-probability for the same weights and tokens, including prefix-cache hits and speculative decoding paths.","Divide the learner's probability by the logprob the rollout recorded, with no clipping, truncation or filtering.","Use plain REINFORCE with group-mean reward baselines, averaging tokens within each response."],
- math:"Throughput: 164.77 ÷ 68.55 hours ≈ <code>2.40×</code>. Alignment overhead on OSWorld: 944.25 ÷ 884.17 s ≈ <code>1.068</code>, so <code>6.8%</code> slower per step. Without alignment, the largest pre-clip gradient norm is 38.27 against 0.0555 with aligned kernels, about 38.27 ÷ 0.0555 ≈ <code>690×</code> larger; the sequence gate that tames this rejects 24.48% of sequences by the last 1,000 updates, against none for REINFORCE Zero.",
+ math:[{"t":"Throughput gain","m":"\\frac{164.77\\text{ h}}{68.55\\text{ h}} \\approx \\res{2.40\\times}"},{"t":"Alignment overhead per step on OSWorld","m":"\\frac{944.25\\text{ s}}{884.17\\text{ s}} \\approx \\res{1.068}","n":"So \\(\\res{6.8\\%}\\) slower per step."},{"t":"Largest pre-clip gradient norm, unaligned versus aligned","m":"\\frac{38.27}{0.0555} \\approx \\res{690\\times}\\text{ larger}"},"The sequence gate that tames this rejects 24.48% of sequences by the last 1,000 updates, against none for REINFORCE Zero."],
  builds:["rlvr"],
  links:[["vLLM blog: Zero Mismatch, Simple Async RL","https://vllm.ai/blog/2026-11-06-zero-mismatch-async-rl"],["REINFORCE Zero paper and code","https://github.com/hijkzzz/REINFORCE-Zero"],["Zero-mismatch agent skill and recipes","https://github.com/Inferact/zero-mismatch-rl"]]}
 ];
@@ -734,7 +736,7 @@ function openCard(id){
     <details class="deep"><summary>Technical deep dive <span>Method, worked maths, prior work and sources</span></summary>
      <div class="deep-body">
       <h4>How it works</h4><ol>${c.how.map(h=>`<li>${esc(h)}</li>`).join("")}</ol>
-      <h4>The maths, simply</h4><div class="mathbox">${c.math}</div>
+      <h4>The maths, simply</h4><div class="mathbox">${SignalMath.html(c.math)}</div>
       ${c.deepFig?figHTML(c.deepFig):""}
       ${c.deepTable?`<h4>${esc(c.deepTable.title)}</h4>${tableHTML(Object.assign({},c.deepTable,{title:null}))}`:""}
       <h4>Builds on</h4><div class="builds">${c.builds.map(b=>`<a href="#lin-${b}" data-lin="${b}">${esc(linById[b].title)}</a>`).join("")}</div>

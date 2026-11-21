@@ -19,6 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="../assets/lineage.css">
+<link rel="stylesheet" href="../assets/math.css">
 <style>
 :root{
   --bg:#F2F4F6; --surface:#FFFFFF; --surface-2:#E8ECF0; --ink:#15202B; --muted:#586674; --line:#D5DCE3;
@@ -248,6 +249,7 @@ details.deep .deep-body{padding:0 16px 18px;border-top:1px solid var(--line)}
 
 <dialog id="dlg" aria-labelledby="d-title"><div class="d-inner" id="d-inner"></div></dialog>
 
+<script src="../assets/math.js"></script>
 <script src="../assets/lineage.js"></script>
 <script>
 const COLS=[
@@ -275,7 +277,7 @@ const CARDS=[
  why:"It is Anthropic's strongest generally available model, and the reported gains are largest on long-horizon tasks such as remote labour.",
  caveat:"Several comparisons use effort settings that differ by model, and none of the numbers has yet been reproduced independently.",
  how:["Choose an effort level up to xhigh or max; higher effort spends more reasoning tokens.","Optionally switch on fast mode for up to 2.5 times the token speed at double the price.","Cyber and biology requests pass through safeguards, which Anthropic says block about 55% fewer queries than in 5.1."],
- math:"FrontierCode 2.0 gain: 49.1 − 32.4 = <code>16.7 points</code>, or 49.1 ÷ 32.4 ≈ <code>1.52×</code> Fable 5.1. Cost of 1M input plus 100K output tokens: $8 + 0.1 × $40 = <code>$12</code>.",
+ math:[{"t":"FrontierCode 2.0 gain over Fable 5.1","m":"49.1 - 32.4 = \\res{16.7}\\text{ points}"},{"t":"The same gain as a ratio","m":"\\frac{49.1}{32.4} \\approx \\res{1.52\\times}"},{"t":"Cost of 1M input plus 100K output tokens","m":"\\$8 + 0.1 \\times \\$40 = \\res{\\$12}"}],
  builds:["osworld"],
  links:[["Anthropic: Claude Fable 5.2 and Mythos 5.2","https://www.anthropic.com/claude-fable-and-mythos-5-2"],["System card","https://www.anthropic.com/document/claude-fable-5-2-mythos-5-2-system-card"],["SD Times coverage","https://sdtimes.com/ai/anthropic-introduces-claude-fable-5-2-mythos-5-2/"]]},
 
@@ -293,7 +295,7 @@ const CARDS=[
  why:"It sets a new price point for 1M-context agent models, with one flat price across the whole window.",
  caveat:"The model card reports more unjustified refusals than Gemini 3.8 Flash (+5.57 points), especially on multimodal prompts, and the full safety report is not yet published.",
  how:["Pick one of four thinking levels: low, medium, high (the default) or the new xhigh.","Use it alone or in Google's Carbon and Hydrogen orchestrator, which Google says nears Carbon's Terminal-Bench 4.0 success with 24% less quota.","Partners report 2 to 2.8 times faster runs and 12% to 23% fewer tokens than Gemini 3.8 Flash on data-heavy workflows (Google-reported)."],
- math:"Terminal-Bench 4.1: 57.0 ÷ 18.2 ≈ <code>3.1×</code> Gemini 3.8 Flash. Cost of 1M input plus 100K output tokens: $1.50 + 0.1 × $7.50 = <code>$2.25</code>, against $12 for Fable 5.2, so 12 ÷ 2.25 ≈ <code>5.3×</code> cheaper.",
+ math:[{"t":"Terminal-Bench 4.1 against Gemini 3.8 Flash","m":"\\frac{57.0}{18.2} \\approx \\res{3.1\\times}"},{"t":"Cost of 1M input plus 100K output tokens","m":"\\$1.50 + 0.1 \\times \\$7.50 = \\res{\\$2.25}"},{"t":"Price advantage over Fable 5.2","m":"\\frac{\\$12}{\\$2.25} \\approx \\res{5.3\\times}\\text{ cheaper}"}],
  builds:["osworld"],
  links:[["Google blog: Introducing Gemini 4 Hydrogen","https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-hydrogen/"],["Gemini 4 Hydrogen model card","https://deepmind.google/models/model-cards/gemini-4-hydrogen/"]]},
 
@@ -311,7 +313,7 @@ const CARDS=[
  why:"Labs are running short of high-quality text, and this gives a tested alternative to repeating epochs at the same serving cost.",
  caveat:"The largest model has 778M parameters, so every prediction at 10B to 100B is an extrapolation of the fitted law.",
  how:["During training, run either a single pass (probability 0.15) or a no-gradient pass whose top states feed the next token, computing the loss on the last pass only.","When decoding, the previous token's top state is already available, so each new token costs the same as in a Transformer.","Compare against a Transformer that spends the same FLOPs on more epochs, and fit a law with an effective-parameter factor of 1.10–1.19."],
- math:"Saving 48% of compute means the Transformer needs 1 ÷ (1 − 0.48) ≈ <code>1.92×</code> the FLOPs. At 778M, 50N unique tokens and 2 epochs: 2.0452 − 2.0421 = <code>0.0031</code> lower loss for latent feedback.",
+ math:[{"t":"FLOPs the Transformer needs","m":"\\frac{1}{1 - 0.48} \\approx \\res{1.92\\times}","n":"Latent feedback saves 48% of compute."},{"t":"Loss gap at 778M, 50N tokens, 2 epochs","m":"2.0452 - 2.0421 = \\res{0.0031}","n":"Lower loss for latent feedback, with 50N unique tokens."}],
  builds:["datacon","feedbacktf"],
  links:[["Paper (alphaXiv)","https://www.alphaxiv.org/abs/2611.latent-feedback-transformers-scaling-law"],["Code: LoRM (Apache 2.0)","https://github.com/ifm-ai/LoRM"]]},
 
@@ -329,7 +331,7 @@ const CARDS=[
  why:"It supports a simpler multimodal design with no separate encoder pretraining stage and no serial encoder pass at inference.",
  caveat:"Models are trained at 224×224 pixels on one data mix and stop at 6.4B, so the conclusions may not carry over to frontier-scale or high-resolution models.",
  how:["Keep the backbone's shared attention and feed-forward weights, and add zero-initialised vision-only counterparts used only by image tokens.","Place that 0.4B budget in layers 1 to 8, where image tokens are still close to raw patches.","Train everything jointly from scratch and compare recipes at equal lifetime FLOPs, counting any encoder pretraining."],
- math:"Encoder-free gap at 1.7B: 44.4 − 39.0 = <code>5.4 VQA points</code>, with OCR and chart tasks accounting for 38.2 − 25.2 = <code>13.0 points</code>. Free MetaCLIP pretraining raised ImageNet linear-probe accuracy from 80.4% to 84.4% but did not raise VQA.",
+ math:[{"t":"Encoder-free gap at 1.7B","m":"44.4 - 39.0 = \\res{5.4}\\text{ VQA points}"},{"t":"Part due to OCR and chart tasks","m":"38.2 - 25.2 = \\res{13.0}\\text{ points}"},"Free MetaCLIP pretraining raised ImageNet linear-probe accuracy from 80.4% to 84.4% but did not raise VQA."],
  builds:["moe"],
  links:[["arXiv: 2611.17334","https://arxiv.org/abs/2611.17334"],["alphaXiv page","https://www.alphaxiv.org/abs/2611.17334"]]},
 
@@ -347,7 +349,7 @@ const CARDS=[
  why:"It is a large action-conditioned world model with both weights and training code open, so other groups can study planning by simulation directly.",
  caveat:"IFM itself says about two in three simulated plans contain at least one step that is not carried out, and appearance drifts over long interactions.",
  how:["A language model rewrites the observation and requested actions into a structured caption of events, timed actions and camera motion.","The frozen Qwen3.5-9B encoder reads the caption and the diffusion transformer denoises video latents in 50 flow-matching steps.","The Wan 2.2 VAE decodes the latents, and an agent compares the simulated outcomes of candidate plans before acting."],
- math:"A 44 × 78 latent grid with 2 × 2 patches gives 22 × 39 = <code>858</code> tokens per latent frame. For 481 frames at 4× temporal compression: (481 − 1) ÷ 4 + 1 = 121 latent frames, so 121 × 858 ≈ <code>103.8K</code> video tokens per 20-second clip.",
+ math:[{"t":"Tokens per latent frame","m":"\\frac{44 \\times 78}{2 \\times 2} = 22 \\times 39 = \\res{858}","n":"A 44 × 78 latent grid with 2 × 2 patches."},{"t":"Latent frames for 481 frames","m":"\\frac{481 - 1}{4} + 1 = 121","n":"At 4× temporal compression."},{"t":"Video tokens per 20-second clip","m":"121 \\times 858 \\approx \\res{103.8\\text{K}}"}],
  builds:["glp","wan"],
  links:[["Model card (Hugging Face)","https://huggingface.co/IFM/PAN2"],["Code (GitHub)","https://github.com/ifm-ai/PAN2"],["Middle East AI News coverage","https://www.middleeastainews.com/p/mbzuais-ifm-opens-pan-2-world-model"]]},
 
@@ -365,7 +367,7 @@ const CARDS=[
  why:"Action labels are scarce and incompatible across datasets, and this makes unlabelled video a better source of action conditioning.",
  caveat:"Scene swapping works only for static cameras, and video fidelity after fine-tuning is about the same as the baselines.",
  how:["Encode a frame pair as a two-frame clip with V-JEPA 2 plus low-rank adapters.","Build a positive by cutting the moving region out with optical flow and pasting it onto another scene; draw a hard negative from another window of the same video.","Freeze the encoder and use its action embedding to condition an autoregressive video world model."],
- math:"Gain over the frozen backbone: 0.490 − 0.347 = <code>0.143</code> R². Controllability on nuScenes: 0.928 − 0.722 = <code>0.206</code> (the paper reports +0.207 from unrounded values).",
+ math:[{"t":"R² gain over the frozen backbone","m":"0.490 - 0.347 = \\res{0.143}"},{"t":"Controllability gain on nuScenes","m":"0.928 - 0.722 = \\res{0.206}","n":"The paper reports +0.207 from unrounded values."}],
  builds:["vjepa2","adaworld"],
  links:[["arXiv: 2611.14420","https://arxiv.org/abs/2611.14420"],["alphaXiv page","https://www.alphaxiv.org/abs/2611.14420"]]},
 
@@ -383,7 +385,7 @@ const CARDS=[
  why:"It is long-horizon agent work in which every output is checked mechanically, not by a rubric or a human grader.",
  caveat:"Humans still approved every specification, the symbolic model idealises cryptographic primitives, and the effort figures come from DeepMind alone.",
  how:["Agents draft Lean specifications from papers and standards, reviewer agents critique them, and a human approves the final version.","libsignal is compiled unmodified and loaded into a Lean semantics of 467 instructions and 31 system calls.","Prover teams of 40 to 80 agents write proofs, and a gatekeeper accepts only kernel-checked proofs that match the held-out specification."],
- math:"Trusted share: 26,000 ÷ 6,500,000 ≈ <code>0.4%</code> of the Lean code. As a test, 2 previously fixed libsignal bugs were reintroduced, and in both cases the system proved that the resulting binaries violate the security theorems.",
+ math:[{"t":"Trusted share of the Lean code","m":"\\frac{26,000}{6,500,000} \\approx \\res{0.4\\%}"},"As a test, 2 previously fixed libsignal bugs were reintroduced, and in both cases the system proved that the resulting binaries violate the security theorems."],
  builds:["codemender","react"],
  links:[["DeepMind blog: Introducing AlphaProof Code","https://deepmind.google/blog/introducing-alphaproof-code/"],["Project page and paper","https://google-deepmind.github.io/code-verification/"],["Code","https://github.com/google-deepmind/code-verification"]]},
 
@@ -401,7 +403,7 @@ const CARDS=[
  why:"Most agent benchmarks hold the rest of the stack fixed, while this one measures whether agents can rebuild that stack.",
  caveat:"Each agent ran once per task, and the index averages unbounded ratios, so one large win can lift it.",
  how:["Each task supplies a starting point, a 4 to 12 hour budget and one objective on GB300 GPUs.","The agent works inside Breakwater, which routes model access through a gateway and logs activity outside the agent's reach.","A read-only verifier recomputes the score, a judge checks integrity, and the score is divided by the human baseline."],
- math:"Opus 5.5's index is the mean of six ratios: 14.22 ÷ 12.77 = 1.114, 0.319 ÷ 0.175 = 1.823, 0.533 ÷ 0.539 = 0.989, 11.52 ÷ 8.18 = 1.408, 0.468 ÷ 0.438 = 1.068 and 0.510 ÷ 0.460 = 1.109. Their sum is 7.511, and 7.511 ÷ 6 = <code>1.252</code>.",
+ math:["Opus 5.5's index is the mean of six ratios.",{"t":"First and second ratios","m":"\\frac{14.22}{12.77} = 1.114, \\quad \\frac{0.319}{0.175} = 1.823"},{"t":"Third and fourth ratios","m":"\\frac{0.533}{0.539} = 0.989, \\quad \\frac{11.52}{8.18} = 1.408"},{"t":"Fifth and sixth ratios","m":"\\frac{0.468}{0.438} = 1.068, \\quad \\frac{0.510}{0.460} = 1.109"},{"t":"Mean of the six ratios","m":"\\frac{7.511}{6} = \\res{1.252}","n":"The six ratios sum to 7.511."}],
  builds:["swebench"],
  links:[["arXiv: 2611.16591","https://arxiv.org/abs/2611.16591"],["Code","https://github.com/infini-ai-lab/singularity-bench"],["Website","https://infini-ai-lab.github.io/singularity-bench/"]]},
 
@@ -419,7 +421,7 @@ const CARDS=[
  why:"Once the harness barely moves accuracy, it becomes the place to control spending.",
  caveat:"The benchmark tasks are 2 to 3 times shorter than real traces by the authors' own measure, and no public code was found.",
  how:["Intercept the harness's model calls so the context, tools and environment can be rewritten.","Compact tool outputs, remove context the agent no longer uses, and run subtasks on a stack.","Cut turns with an index of files and line ranges and a prompt that asks for batched tool calls."],
- math:"Context garbage collection on coding tasks cuts cache reads from 860K to 667K tokens: (860 − 667) ÷ 860 = <code>22%</code> fewer, and cost per task falls from $0.0202 to $0.0177, a ratio of <code>0.88</code>. Metadata search on OfficeQA: steps 16.7 → 13.5, cost ratio <code>0.68</code>.",
+ math:[{"t":"Cache reads cut by context garbage collection","m":"\\frac{860 - 667}{860} = \\res{22\\%}\\text{ fewer}","n":"On coding tasks cache reads fall from 860K to 667K tokens."},{"t":"Cost per task ratio","m":"\\frac{\\$0.0177}{\\$0.0202} \\approx \\res{0.88}","n":"Cost per task falls from $0.0202 to $0.0177."},{"t":"Metadata search on OfficeQA","m":"\\text{steps } 16.7 \\to 13.5, \\quad \\text{cost ratio } \\res{0.68}"}],
  builds:["swebench","react"],
  links:[["Paper (alphaXiv): 2611.12122","https://www.alphaxiv.org/abs/2611.12122"]]},
 
@@ -437,7 +439,7 @@ const CARDS=[
  why:"Support for a new model in some phone engines lagged release by up to 30 days in the authors' survey, and that lag decides how fast users get new models.",
  caveat:"The benchmark has only 12 tasks and three models, so it is not yet clear how well the result generalises.",
  how:["Index the engine as layers with cross-layer dependencies, and pre-validate build, run and debug scripts for each backend.","For a new model, a builder agent maps each new module, such as Gated DeltaNet, onto every layer that needs a change.","An auditor agent checks completeness, deploys to the phone and repeats until on-device logits match the PyTorch reference."],
- math:"Cost per success with DeepSeek-V4-Flash: $1.53 × 12 ÷ 9 = <code>$2.04</code> for EngineAgent, against $2.28 × 12 ÷ 1 = <code>$27.36</code> for OpenCode. Removing the layer index drops success from 9 to 3 and raises exploration turns from 42 to 271, or <code>6.5×</code>.",
+ math:[{"t":"EngineAgent cost per success, DeepSeek-V4-Flash","m":"\\frac{\\$1.53 \\times 12}{9} = \\res{\\$2.04}"},{"t":"OpenCode cost per success","m":"\\frac{\\$2.28 \\times 12}{1} = \\res{\\$27.36}"},{"t":"Exploration turns without the layer index","m":"\\frac{271}{42} \\approx \\res{6.5\\times}","n":"Removing the layer index also drops success from 9 to 3."}],
  builds:["sweagent","quant"],
  links:[["Paper (alphaXiv): 2611.14356","https://www.alphaxiv.org/abs/2611.14356"]]},
 
@@ -455,7 +457,7 @@ const CARDS=[
  why:"The right model, runtime and backend change from phone to phone: GPU prefill in llama.cpp is 5.4 times faster than CPU on a OnePlus 15 but 7.4 times slower on a OnePlus 8 Pro.",
  caveat:"Developers still write the scorer, NPUs are not yet profiled, and each phone is measured idle and cool.",
  how:["Profile each phone once for speed, peak memory and energy across models, quantisations, runtimes and backends.","Start from the smallest size bucket that meets the app's limits, applying one intervention per round and rolling back regressions.","Move up a bucket only when accuracy plateaus below the goal, then ship the best model with its recommended runtime."],
- math:"On BFCL function calling, the untrained 4B model scores 0.818; fine-tuning and search add 0.034, giving <code>0.852</code>. Without phone measurements, Claude Opus 5.5 picked configurations that miss the app's limits in <code>25%</code> of easy and moderate cases and <code>60%</code> of hard ones.",
+ math:[{"t":"BFCL function calling after fine-tuning and search","m":"0.818 + 0.034 = \\res{0.852}","n":"The untrained 4B model scores 0.818."},"Without phone measurements, Claude Opus 5.5 picked configurations that miss the app's limits in \\(\\res{25\\%}\\) of easy and moderate cases and \\(\\res{60\\%}\\) of hard ones."],
  builds:["lora","quant"],
  links:[["Paper (alphaXiv): 2611.13509","https://www.alphaxiv.org/abs/2611.13509"],["Code","https://github.com/evanly-gh/SLM_Factory"]]},
 
@@ -473,7 +475,7 @@ const CARDS=[
  why:"Long, multi-turn agent sessions are where spilling hurts most, and on replayed coding-agent sessions Tideway cut total request time by up to 3.14 times.",
  caveat:"Only a desktop RTX 5090 was tested, and two of the four baselines are the authors' own reimplementations.",
  how:["Merge VRAM and host RAM into one expert pool backed by SSD, with no duplicate copies across tiers.","During prefill, pin reusable experts in RAM and stream the rest; during decode, switch to a layout tuned for sparse expert hits.","Fetch missing experts asynchronously while keeping CUDA Graph replay around the paging handler."],
- math:"DeepSeek-V4-Flash in FP4 is 155 GiB. With 32 GB of VRAM plus 64 GiB of RAM, about 96 GiB is resident, so roughly 155 − 96 = <code>59 GiB</code> stays on SSD. Time-to-first-token gains range from <code>1.15×</code> to <code>9.04×</code> across settings.",
+ math:[{"t":"DeepSeek-V4-Flash left on SSD","m":"155 - 96 = \\res{59}\\text{ GiB}","n":"In FP4 the model is 155 GiB; with 32 GB of VRAM plus 64 GiB of RAM, about 96 GiB is resident."},{"t":"Time-to-first-token gains across settings","m":"\\res{1.15\\times}\\text{ to }\\res{9.04\\times}"}],
  builds:["moe","pagedattn"],
  links:[["Paper (alphaXiv): 2611.14848","https://www.alphaxiv.org/abs/2611.14848"],["Code","https://github.com/Afterglow231/Tideway"]]},
 
@@ -491,7 +493,7 @@ const CARDS=[
  why:"It is an open sub-1B model with a published phone deployment path, a 173 MB footprint and a working on-device voice assistant.",
  caveat:"Knowledge scores still trail larger models (C-Eval 38.86 against 67.98 for MiniCPM4-0.5B), and Android decode is slower at 138 tokens per second.",
  how:["Fix the model size by device budget: the largest model under 300 MB peak memory and over 200 tokens per second at 4-bit weights.","Pretrain on about 4.1T tokens in four stages, then fine-tune on 3M question-answer pairs.","Distil four RL teachers into the student on its own outputs, then train it to 4-bit with its 16-bit copy as teacher."],
- math:"Quantised size: 300M × 4 bits ÷ 8 = <code>150 MB</code> of raw weights; peak memory is 228 MB at 512 tokens. With a speculative draft model on the iPad, 435 tokens per second × 1.65 average speed-up ≈ <code>717</code> tokens per second, as the authors report.",
+ math:[{"t":"Quantised raw weight size","m":"\\frac{300\\text{M} \\times 4\\text{ bits}}{8} = \\res{150}\\text{ MB}","n":"Peak memory is 228 MB at 512 tokens."},{"t":"Speed with a speculative draft on the iPad","m":"435 \\times 1.65 \\approx \\res{717}\\text{ tokens/s}","n":"435 tokens per second times a 1.65 average speed-up, as the authors report."}],
  deepTable:{title:"Structured extraction after LoRA fine-tuning (Table 10, exact-match F1)",cols:["Backbone","Parameters","F1"],num:[2],rows:[["MNN-Pocket-0.3B","0.3B","80.15"],["Qwen3-1.7B","1.7B","78.59"],["Qwen3-0.6B","0.6B","77.47"],["LFM2.5-350M","0.35B","76.19"],["Gemma-3-270M","0.27B","72.23"]],hl:[0],note:"E-commerce opinion mining; the authors' measurements."},
  builds:["distill","quant"],
  links:[["Paper (alphaXiv): 2611.12311","https://www.alphaxiv.org/abs/2611.12311"],["Model (Hugging Face)","https://huggingface.co/taobao-mnn/MNN-Pocket-0.3B"],["MNN runtime","https://github.com/alibaba/MNN"]]},
@@ -510,7 +512,7 @@ const CARDS=[
  why:"Function calling is the main job of an on-phone assistant, and this is a permissively licensed sub-1B model built for it.",
  caveat:"All comparisons come from Tether's harness, and Qwen's own card reports 43.6 on BFCL v4 for Qwen3.5-2B, within 0.4 points of BotPsy.",
  how:["Start from Qwen3.5-0.8B and fine-tune on tool-use data.","Distil from three Qwen3.5-4B teachers, each trained with its own RL process, on the student's own outputs.","Run two rounds of RL on the student, then release 16-bit weights and 8-bit and 4-bit GGUF builds."],
- math:"Gain over the base model: 45.0 − 24.7 = <code>20.3 points</code>. With Qwen's own 2B figure of 43.6, the BFCL v4 gap shrinks from 44.0 − 37.7 = 6.3 to 44.0 − 43.6 = <code>0.4 points</code>.",
+ math:[{"t":"Gain over the base model","m":"45.0 - 24.7 = \\res{20.3}\\text{ points}"},{"t":"BFCL v4 gap before","m":"44.0 - 37.7 = 6.3"},{"t":"Gap with Qwen's own 2B figure","m":"44.0 - 43.6 = \\res{0.4}\\text{ points}"}],
  builds:["distill","rlvr"],
  links:[["Model card (Hugging Face)","https://huggingface.co/qvac/BotPsy-0.8B"],["TechTimes: what Qwen's own score shows","https://www.techtimes.com/articles/330543/20261112/tether-launches-device-ai-agent-botpsy-claims-win-over-larger-qwen-that-qwens-own-score-narrows.htm"]]},
 
@@ -528,7 +530,7 @@ const CARDS=[
  why:"It is a clearly reported recipe for adapting a small embedder to a low-resource language for retrieval-augmented generation.",
  caveat:"Nine open models of 0.6B or fewer still score higher, the weights are gated, and speed on small hardware was not measured.",
  how:["Generate questions grounded in Kazakh passages with a 27B model and keep only those a second model confirms.","Drop any row that overlaps the test corpora (69,404 rows) and mine one hard negative per pair from BGE-M3 ranks 10 to 50.","Fully fine-tune EmbeddingGemma-300M for 410 steps with English and Russian replay so those languages hold steady."],
- math:"Gap to BGE-M3 before tuning: 84.6 − 60.8 = 23.8 points; fine-tuning recovers 17.2 of them, or 17.2 ÷ 23.8 ≈ <code>72%</code>, with 308M against 568M parameters. Steps: 208,511 ÷ 512 ≈ <code>407</code>, rounded up to 410 because each of 5 data parts ends in a partial batch.",
+ math:[{"t":"Gap to BGE-M3 before tuning","m":"84.6 - 60.8 = 23.8\\text{ points}"},{"t":"Share recovered by fine-tuning","m":"\\frac{17.2}{23.8} \\approx \\res{72\\%}","n":"With 308M against 568M parameters."},{"t":"Training steps","m":"\\frac{208,511}{512} \\approx \\res{407}","n":"Rounded up to 410 because each of 5 data parts ends in a partial batch."}],
  builds:["embeddinggemma","inpars"],
  links:[["Paper (alphaXiv): 2611.16399","https://www.alphaxiv.org/abs/2611.16399"]]},
 
@@ -547,7 +549,7 @@ const CARDS=[
  why:"Open-weight models are moving to hybrid attention while agents depend on prefix reuse, so engines now hit this mismatch routinely.",
  caveat:"All results are the authors' replays of coding-agent traces, and the gains are largest at high concurrency; at 24 sessions throughput is about the same.",
  how:["Record a recurrent checkpoint exactly at the end of each agent turn, not at the last KV block boundary.","Treat each cached prefix, its KV and its checkpoint as one unit for eviction, so dependencies stay together.","Rank units by estimated prefill saved per byte freed, combined with reuse history, for both admission and eviction."],
- math:"Prefill throughput: 4.658 ÷ 1.484 = <code>3.14×</code>. Uncached tokens per request: (24,671 − 1,025) ÷ 24,671 = <code>95.8%</code> fewer. p90 time to first token: (20.4 − 2.36) ÷ 20.4 ≈ <code>88%</code> lower.",
+ math:[{"t":"Prefill throughput","m":"\\frac{4.658}{1.484} = \\res{3.14\\times}"},{"t":"Fewer uncached tokens per request","m":"\\frac{24,671 - 1,025}{24,671} = \\res{95.8\\%}"},{"t":"Lower p90 time to first token","m":"\\frac{20.4 - 2.36}{20.4} \\approx \\res{88\\%}"}],
  deepTable:{title:"Peak gains over vLLM by model (paper abstract)",cols:["Model","Prefill throughput","p90 TTFT reduction"],num:[1,2],rows:[["GLM-5.3-Flash","3.14×","88.4%"],["Nemotron 3 Super","2.27×","77.1%"],["Qwen3.8-Flash-Next","1.54×","79.0%"]],hl:[0],note:"The authors' measurements."},
  builds:["pagedattn","radixattn"],
  links:[["Paper (alphaXiv)","https://www.alphaxiv.org/abs/2611.flashstate"],["Code","https://github.com/FutureMLS-Lab/FlashStates"]]},
@@ -567,7 +569,7 @@ const CARDS=[
  why:"Agent harnesses that compact, fork and pause their context break the recency assumption behind standard caches and fixed splits.",
  caveat:"Results come from replayed traces with fixed tool durations, and the baseline is Dynamo's relaunch-based planner.",
  how:["Run identical engines over a shared host-memory KV pool so a node can change role without restarting.","Fit iteration-time models online and change the split only when the predicted gain lasts over a 600-second window.","Route each prefill to the node with the shortest predicted time to first token, and evict KV that no live branch references."],
- math:"Role switch: 754 ÷ 6.2 ≈ <code>122×</code> faster than relaunching. In Claude Code traces, <code>98%</code> of the prompt after a 359-second sub-agent call matches earlier KV, against <code>14%</code> after a 12-second compaction, so recency does not predict reuse.",
+ math:[{"t":"Role switch versus relaunching","m":"\\frac{754}{6.2} \\approx \\res{122\\times}\\text{ faster}"},"In Claude Code traces, \\(\\res{98\\%}\\) of the prompt after a 359-second sub-agent call matches earlier KV, against \\(\\res{14\\%}\\) after a 12-second compaction, so recency does not predict reuse."],
  builds:["distserve","mooncake"],
  links:[["arXiv: 2611.12304","https://arxiv.org/abs/2611.12304"],["Code","https://github.com/mit-han-lab/EvolvingInfra"],["Traces","https://huggingface.co/datasets/crmsndu/evolving-infra-traces"]]},
 
@@ -585,7 +587,7 @@ const CARDS=[
  why:"It applies the coding-agent loop to training jobs and adds the guards that stop such a loop from accepting fake speed-ups.",
  caveat:"Offline re-verification rejected 400 of 1,212 runs, and the results cover only one- and two-node workloads.",
  how:["Fix what the agent may edit and freeze the workload, loss and timing; profile the baseline and the cluster's noise.","Search launch settings and code patches, updating speed and memory models after every trial, including out-of-memory failures.","Re-run the best setup back to back against the baseline, record failed-trial costs, and commit only the verified change."],
- math:"Gemma-4-26B-A4B: MFU rises from 6.4% to 17.6%, and 17.6 ÷ 6.4 = <code>2.75×</code>, matching the reported speed-up for a fixed workload. Rejected runs: 400 ÷ 1,212 ≈ <code>33%</code>.",
+ math:[{"t":"Gemma-4-26B-A4B speed-up from MFU","m":"\\frac{17.6\\%}{6.4\\%} = \\res{2.75\\times}","n":"MFU rises from 6.4% to 17.6%, matching the reported speed-up for a fixed workload."},{"t":"Share of rejected runs","m":"\\frac{400}{1,212} \\approx \\res{33\\%}"}],
  builds:["dsv3fp8"],
  links:[["arXiv: 2611.11558","https://arxiv.org/abs/2611.11558"],["Code","https://github.com/TokenRhythm/InfraRSI"],["Project page","https://infrarsi.github.io"]]}
 ];
@@ -734,7 +736,7 @@ function openCard(id){
     <details class="deep"><summary>Technical deep dive <span>Method, worked maths, prior work and sources</span></summary>
      <div class="deep-body">
       <h4>How it works</h4><ol>${c.how.map(h=>`<li>${esc(h)}</li>`).join("")}</ol>
-      <h4>The maths, simply</h4><div class="mathbox">${c.math}</div>
+      <h4>The maths, simply</h4><div class="mathbox">${SignalMath.html(c.math)}</div>
       ${c.deepFig?figHTML(c.deepFig):""}
       ${c.deepTable?`<h4>${esc(c.deepTable.title)}</h4>${tableHTML(Object.assign({},c.deepTable,{title:null}))}`:""}
       <h4>Builds on</h4><div class="builds">${c.builds.map(b=>`<a href="#lin-${b}" data-lin="${b}">${esc(linById[b].title)}</a>`).join("")}</div>
